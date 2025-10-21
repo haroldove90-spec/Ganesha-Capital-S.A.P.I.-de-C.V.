@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { MOCK_CLIENTS } from '../constants';
 import type { Client } from '../types';
@@ -6,8 +5,10 @@ import ClientList from './ClientList';
 import ClientDetail from './ClientDetail';
 import Analytics from './Analytics';
 import Sidebar from './Sidebar';
+import RequestsView from './RequestsView';
+import IntegrationsView from './IntegrationsView';
 
-type CrmView = 'clients' | 'analytics' | 'requests';
+type CrmView = 'clients' | 'analytics' | 'requests' | 'integrations';
 
 const Dashboard: React.FC = () => {
   const [selectedClient, setSelectedClient] = useState<Client | null>(MOCK_CLIENTS[0]);
@@ -29,7 +30,9 @@ const Dashboard: React.FC = () => {
           </div>
         );
       case 'requests':
-        return <div className="text-center p-8 bg-white rounded-lg shadow-md border border-gray-200 text-gray-500">Request management module coming soon.</div>;
+        return <RequestsView />;
+      case 'integrations':
+        return <IntegrationsView />;
       default:
         return null;
     }

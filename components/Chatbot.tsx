@@ -1,8 +1,7 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import type { ChatMessage } from '../types';
 import { getChatbotResponse } from '../services/geminiService';
-import { PaperAirplaneIcon, ChatBubbleOvalLeftEllipsisIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { PaperAirplaneIcon, ChatBubbleOvalLeftEllipsisIcon, XMarkIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 
 const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,6 +53,16 @@ const Chatbot: React.FC = () => {
       setIsLoading(false);
     }
   };
+  
+  const handleRequestAgent = () => {
+    const botMessage: ChatMessage = {
+      id: Date.now(),
+      sender: 'bot',
+      text: '¡Entendido! Un agente de GANESHA Capital se pondrá en contacto contigo a la brevedad para darte asistencia personalizada. Normalmente te contactarán por email en las próximas 2 horas hábiles.',
+      timestamp: new Date().toISOString(),
+    };
+    setMessages(prev => [...prev, botMessage]);
+  };
 
   return (
     <>
@@ -70,9 +79,14 @@ const Chatbot: React.FC = () => {
       <div className={`fixed bottom-5 right-5 z-40 w-full max-w-sm h-[70vh] bg-white rounded-xl shadow-2xl flex flex-col transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
         <header className="flex items-center justify-between p-4 bg-blue-600 text-white rounded-t-xl">
           <h3 className="font-bold text-lg">Asistente GANESHA</h3>
-          <button onClick={() => setIsOpen(false)} className="hover:bg-blue-700 p-1 rounded-full" aria-label="Close chat">
-            <XMarkIcon className="h-6 w-6" />
-          </button>
+          <div className="flex items-center space-x-2">
+            <button onClick={handleRequestAgent} className="hover:bg-blue-700 p-1 rounded-full" aria-label="Hablar con un agente">
+                <UserPlusIcon className="h-6 w-6" title="Hablar con un agente"/>
+            </button>
+            <button onClick={() => setIsOpen(false)} className="hover:bg-blue-700 p-1 rounded-full" aria-label="Close chat">
+              <XMarkIcon className="h-6 w-6" />
+            </button>
+          </div>
         </header>
 
         <div className="flex-1 p-4 overflow-y-auto bg-gray-50">

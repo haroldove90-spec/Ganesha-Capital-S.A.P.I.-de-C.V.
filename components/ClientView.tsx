@@ -4,12 +4,16 @@ import EducationalModule from './EducationalModule';
 import type { EducationalTopic } from '../types';
 import EducationalModal from './EducationalModal';
 import FinancialTestModal from './FinancialTestModal';
+import PlanModal from './PlanModal'; // Import the new modal
 import { BeakerIcon } from '@heroicons/react/24/outline';
 
 
 const ClientView: React.FC = () => {
   const [selectedTopic, setSelectedTopic] = useState<EducationalTopic | null>(null);
   const [isTestModalOpen, setIsTestModalOpen] = useState(false);
+  const [isPlanModalOpen, setIsPlanModalOpen] = useState(false); // State for the new modal
+  const [testLevel, setTestLevel] = useState<'Basic' | 'Intermediate' | 'Advanced'>('Basic');
+
 
   const handleOpenTopic = (topic: EducationalTopic) => {
     setSelectedTopic(topic);
@@ -31,13 +35,27 @@ const ClientView: React.FC = () => {
         {/* Hero Section */}
         <div className="text-center bg-white p-8 rounded-xl shadow-lg border border-gray-200">
           <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">Tu Camino hacia la Prosperidad Financiera</h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
-            En GANESHA Capital, te empoderamos con el conocimiento para construir un futuro financiero sólido y alcanzar tus metas.
+          <p className="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+            <strong>Nuestra Misión:</strong> Empoderarte con el conocimiento y las herramientas para que tomes el control de tu futuro financiero. En GANESHA Capital, creemos en la educación como pilar para construir un patrimonio sólido y alcanzar la tranquilidad, libertad y abundancia que mereces.
           </p>
-          <button className="mt-6 px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <button 
+            onClick={() => setIsPlanModalOpen(true)} // Activate the modal
+            className="mt-8 px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
             Comienza tu Plan de Previsión
           </button>
         </div>
+        
+        {/* Featured Content Section */}
+        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">Contenido Destacado</h3>
+            <p className="text-gray-500 mb-6">Nuestros últimos videos para mantenerte al día en tu camino financiero.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[EDUCATIONAL_TOPICS[0], EDUCATIONAL_TOPICS[2]].map(topic => (
+                     <EducationalModule key={`featured-${topic.id}`} topic={topic} onSelectTopic={handleOpenTopic} />
+                ))}
+            </div>
+        </div>
+
 
         {/* Financial Knowledge Test Section */}
         <div className="bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
@@ -48,14 +66,27 @@ const ClientView: React.FC = () => {
                     </div>
                     <div>
                         <h3 className="text-2xl font-bold text-gray-800">Pon a Prueba tu Conocimiento</h3>
-                        <p className="mt-2 text-gray-600">Realiza nuestro test rápido para descubrir tu nivel de conocimiento financiero y obtener recomendaciones personalizadas.</p>
+                        <p className="mt-2 text-gray-600">Elige un nivel y realiza nuestro test para obtener recomendaciones personalizadas.</p>
                     </div>
                 </div>
-                <button 
-                    onClick={() => setIsTestModalOpen(true)}
-                    className="mt-4 md:mt-0 flex-shrink-0 px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    Comenzar Test
-                </button>
+                <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 md:mt-0">
+                     <div className="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg">
+                        {(['Basic', 'Intermediate', 'Advanced'] as const).map(level => (
+                            <button
+                                key={level}
+                                onClick={() => setTestLevel(level)}
+                                className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${testLevel === level ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:bg-gray-200'}`}
+                            >
+                                {level === 'Basic' ? 'Básico' : level === 'Intermediate' ? 'Intermedio' : 'Avanzado'}
+                            </button>
+                        ))}
+                    </div>
+                    <button 
+                        onClick={() => setIsTestModalOpen(true)}
+                        className="flex-shrink-0 w-full sm:w-auto px-6 py-2.5 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105">
+                        Comenzar
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -112,7 +143,8 @@ const ClientView: React.FC = () => {
 
       </div>
       {selectedTopic && <EducationalModal topic={selectedTopic} onClose={handleCloseModal} />}
-      {isTestModalOpen && <FinancialTestModal onClose={() => setIsTestModalOpen(false)} />}
+      {isTestModalOpen && <FinancialTestModal onClose={() => setIsTestModalOpen(false)} level={testLevel} />}
+      {isPlanModalOpen && <PlanModal onClose={() => setIsPlanModalOpen(false)} />} 
     </>
   );
 };

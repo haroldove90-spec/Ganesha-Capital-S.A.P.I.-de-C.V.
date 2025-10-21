@@ -1,8 +1,7 @@
-
 import React from 'react';
-import { UserCircleIcon, ChartBarIcon, TicketIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
+import { UserCircleIcon, ChartBarIcon, TicketIcon, ShareIcon } from '@heroicons/react/24/outline';
 
-type CrmView = 'clients' | 'analytics' | 'requests';
+type CrmView = 'clients' | 'analytics' | 'requests' | 'integrations';
 
 interface SidebarProps {
   currentView: CrmView;
@@ -14,10 +13,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
     { id: 'clients' as CrmView, name: 'Clients', icon: UserCircleIcon },
     { id: 'analytics' as CrmView, name: 'Analytics', icon: ChartBarIcon },
     { id: 'requests' as CrmView, name: 'Requests', icon: TicketIcon },
+    { id: 'integrations' as CrmView, name: 'Integrations', icon: ShareIcon },
   ];
 
   return (
-    <aside className="bg-white p-4 rounded-lg shadow-md border border-gray-200 w-full md:w-56 flex flex-row md:flex-col justify-between">
+    <aside className="bg-white p-4 rounded-lg shadow-md border border-gray-200 w-full md:w-56 flex flex-row md:flex-col justify-start">
       <nav>
         <ul className="flex flex-row md:flex-col gap-2">
           {navItems.map(item => (
@@ -37,14 +37,6 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
           ))}
         </ul>
       </nav>
-      <div className="mt-auto hidden md:block">
-        <button
-          className="w-full flex items-center p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors duration-200"
-        >
-          <Cog6ToothIcon className="h-5 w-5 mr-3" />
-          Settings
-        </button>
-      </div>
     </aside>
   );
 };

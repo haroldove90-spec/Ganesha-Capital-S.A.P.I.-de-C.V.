@@ -52,3 +52,18 @@ export interface TestResult {
   feedback: string;
   recommendations: string[];
 }
+
+export interface SocialLead {
+  id: number;
+  name: string;
+  platform: 'Facebook' | 'Instagram' | 'WhatsApp';
+  message: string;
+  timestamp: string;
+}
+
+export interface ChatEscalation {
+  id: number;
+  clientName: string;
+  lastMessage: string;
+  timestamp: string;
+}

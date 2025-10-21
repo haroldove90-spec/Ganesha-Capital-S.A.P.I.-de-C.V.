@@ -1,5 +1,4 @@
-
-import type { Client, EducationalTopic } from './types';
+import type { Client, EducationalTopic, SocialLead, ChatEscalation } from './types';
 import { ShieldCheckIcon, ChartBarIcon, CurrencyDollarIcon, SparklesIcon, ScaleIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 
@@ -68,4 +67,15 @@ export const SALES_FUNNEL_DATA = [
   { name: 'Prospects', value: 80 },
   { name: 'Clients', value: 45 },
   { name: 'Advocates', value: 25 },
+];
+
+export const MOCK_SOCIAL_LEADS: SocialLead[] = [
+  { id: 1, name: 'Ricardo Morales', platform: 'Instagram', message: 'Hola, me interesa saber más sobre sus planes de inversión.', timestamp: '2024-07-26 10:30 AM' },
+  { id: 2, name: 'Lucia Fernandez', platform: 'Facebook', message: 'Vi su video sobre fondos de emergencia y tengo una pregunta.', timestamp: '2024-07-26 09:15 AM' },
+  { id: 3, name: 'Jorge Campos', platform: 'WhatsApp', message: 'Me gustaría agendar una asesoría.', timestamp: '2024-07-25 04:55 PM' },
+];
+
+export const MOCK_CHAT_ESCALATIONS: ChatEscalation[] = [
+    { id: 1, clientName: 'Sofia Gomez', lastMessage: 'No entiendo la diferencia entre interés simple y compuesto, ¿me puede ayudar un asesor?', timestamp: '2024-07-26 11:00 AM' },
+    { id: 2, clientName: 'Javier Fernandez', lastMessage: 'Quiero hablar con alguien sobre mi plan actual.', timestamp: '2024-07-25 02:10 PM' },
 ];

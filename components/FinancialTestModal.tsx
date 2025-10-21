@@ -8,6 +8,7 @@ import { EDUCATIONAL_TOPICS } from '../constants';
 
 interface FinancialTestModalProps {
   onClose: () => void;
+  level: 'Basic' | 'Intermediate' | 'Advanced';
 }
 
 type TestStatus = 'loading' | 'testing' | 'submitting' | 'results' | 'error';
@@ -35,7 +36,7 @@ const ErrorState: React.FC<{ onRetry: () => void }> = ({ onRetry }) => (
 );
 
 
-const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose }) => {
+const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose, level }) => {
     const [status, setStatus] = useState<TestStatus>('loading');
     const [questions, setQuestions] = useState<TestQuestion[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -45,7 +46,7 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose }) => {
     const fetchQuestions = async () => {
         setStatus('loading');
         try {
-            const fetchedQuestions = await generateTestQuestions();
+            const fetchedQuestions = await generateTestQuestions(level);
             if (fetchedQuestions.length === 0) throw new Error("No questions returned");
             setQuestions(fetchedQuestions);
             setStatus('testing');
@@ -57,7 +58,7 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose }) => {
 
     useEffect(() => {
         fetchQuestions();
-    }, []);
+    }, [level]);
 
     const handleAnswerSelect = (questionId: number, answer: string) => {
         setUserAnswers(prev => ({ ...prev, [questionId]: answer }));
@@ -99,7 +100,7 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose }) => {
     };
 
     const currentQuestion = questions[currentQuestionIndex];
-    const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+    const progress = questions.length > 0 ? ((currentQuestionIndex + 1) / questions.length) * 100 : 0;
     
     return (
         <div 
