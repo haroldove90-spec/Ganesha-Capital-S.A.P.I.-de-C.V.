@@ -5,15 +5,16 @@ import { EDUCATIONAL_TOPICS } from '../constants';
 
 const API_KEY = process.env.API_KEY;
 
-if (!API_KEY) {
-  console.error("API_KEY environment variable not set.");
+// Initialize ai only if API_KEY is available to prevent the app from crashing.
+const ai = API_KEY ? new GoogleGenAI({ apiKey: API_KEY }) : null;
+
+if (!ai) {
+  console.error("API_KEY environment variable not set. AI features will be disabled.");
 }
 
-const ai = new GoogleGenAI({ apiKey: API_KEY! });
-
 export const getChatbotResponse = async (prompt: string): Promise<string> => {
-  if (!API_KEY) {
-    return "API key is not configured. Please check your environment variables.";
+  if (!ai) {
+    return "Lo siento, la función de IA no está disponible en este momento debido a un problema de configuración.";
   }
 
   try {
@@ -33,7 +34,7 @@ export const getChatbotResponse = async (prompt: string): Promise<string> => {
 };
 
 export const generateTestQuestions = async (level: 'Basic' | 'Intermediate' | 'Advanced' = 'Basic'): Promise<TestQuestion[]> => {
-    if (!API_KEY) {
+    if (!ai) {
         throw new Error("API key is not configured.");
     }
     try {
@@ -77,7 +78,7 @@ export const generateTestQuestions = async (level: 'Basic' | 'Intermediate' | 'A
 };
 
 export const evaluateTestAnswers = async (answers: UserAnswer[]) => {
-    if (!API_KEY) {
+    if (!ai) {
         throw new Error("API key is not configured.");
     }
     const topicTitles = EDUCATIONAL_TOPICS.map(t => t.title).join(', ');
