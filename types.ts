@@ -1,4 +1,4 @@
-// FIX: Import React types to resolve namespace errors for React.SVGProps and JSX.Element
+// Fix: Import React types to resolve namespace errors.
 import type React from 'react';
 
 export interface Client {
@@ -28,8 +28,7 @@ export interface EducationalTopic {
   category: 'Paz Financiera' | 'Libertad Financiera' | 'Abundancia Financiera';
   description: string;
   videoUrl: string;
-  // FIX: Replaced JSX.Element with React.ReactElement to resolve 'Cannot find namespace JSX' error.
-  icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
+  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
 }
 
 export interface TestQuestion {

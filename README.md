@@ -17,56 +17,62 @@ This project was built as a demonstration of a modern, AI-integrated web applica
 ## 🛠️ Tech Stack
 
 -   **Frontend**: React, TypeScript
--   **Styling**: Tailwind CSS
+-   **Build Tool**: Vite
+-   **Styling**: Tailwind CSS (via CDN)
 -   **AI**: Google Gemini API (`@google/genai`)
 -   **Charts**: Recharts
 -   **Icons**: Heroicons
 
 ## 🚀 Getting Started
 
-This project is a static web application and does not require a complex build process. It's designed to run directly in the browser.
+This project is now configured with Vite for a modern development and build process.
 
 ### Prerequisites
 
--   A modern web browser.
+-   Node.js (v18+) and npm.
 -   A Google Gemini API Key.
 
 ### Running Locally
 
-1.  Clone the repository or download the source code.
-2.  Because the app uses ES modules, you'll need to serve the files through a local web server. Opening `index.html` directly from the filesystem will not work.
-
-    A simple way to do this is to use a command-line server or a code editor extension.
-
-    **Using VS Code's Live Server Extension:**
-    - Install the "Live Server" extension.
-    - Right-click on `index.html` in the file explorer and select "Open with Live Server".
-
-    **Using a command-line server (if you have Node.js or Python):**
+1.  **Install dependencies**:
+    Open your terminal in the project's root directory and run:
     ```bash
-    # If you have Node.js
-    npx serve .
-
-    # If you have Python
-    python3 -m http.server
+    npm install
     ```
-3.  Open your browser and navigate to the local address provided by your server (e.g., `http://localhost:3000` or `http://localhost:8000`).
 
-**Note on API Key for Local Development:** The application is designed to fetch the API key from environment variables, which is ideal for deployment. For local testing, you might need to temporarily modify `services/geminiService.ts` and replace `process.env.API_KEY` with your actual key. Remember to **never** commit your API key to a public repository.
+2.  **Set up environment variables**:
+    The application requires your Google Gemini API key. Create a file named `.env.local` in the root of the project and add your API key to it:
+    ```
+    API_KEY=YOUR_GEMINI_API_KEY
+    ```
+    Vite will automatically load this variable during development.
+
+3.  **Run the development server**:
+    ```bash
+    npm run dev
+    ```
+
+4.  Open your browser and navigate to the local address provided by Vite (e.g., `http://localhost:5173`).
 
 ## 📦 Deployment to Vercel
 
-This application is ready to be deployed on any static hosting platform. Vercel is a great choice.
+This project is configured for easy deployment to Vercel.
 
 1.  **Push to GitHub**: Create a new repository on GitHub and push the project files to it.
+
 2.  **Import to Vercel**:
     - Sign up or log in to [Vercel](https://vercel.com/).
     - From your dashboard, click "Add New... -> Project".
     - Import your GitHub repository.
+
 3.  **Configure Project**:
-    - Vercel should automatically detect that this is a static project. No "Framework Preset" is needed.
-    - Before deploying, go to the "Environment Variables" section in the project settings.
-    - Add a new variable:
+    - Vercel will automatically detect that this is a Vite project and set the correct build settings.
+      - **Framework Preset**: `Vite`
+      - **Build Command**: `npm run build`
+      - **Output Directory**: `dist`
+    - Go to the "Environment Variables" section in the project settings.
+    - Add your Google Gemini API key as an environment variable:
       - **Name**: `API_KEY`
-      - **Value**: Your Google Gemini API Key.
-4.  **Deploy**: Click the "Deploy" button. Vercel will deploy your site and provide you with a URL.
+      - **Value**: `YOUR_GEMINI_API_KEY`
+
+4.  **Deploy**: Click the "Deploy" button. Vercel will build and deploy your site, providing you with a URL.
