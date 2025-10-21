@@ -1,4 +1,4 @@
-import type { Client, EducationalTopic, SocialLead, ChatEscalation } from './types';
+import type { Client, EducationalTopic, SocialLead, ChatEscalation, TestQuestion } from './types';
 import { ShieldCheckIcon, ChartBarIcon, CurrencyDollarIcon, SparklesIcon, ScaleIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 
@@ -79,3 +79,27 @@ export const MOCK_CHAT_ESCALATIONS: ChatEscalation[] = [
     { id: 1, clientName: 'Sofia Gomez', lastMessage: 'No entiendo la diferencia entre interés simple y compuesto, ¿me puede ayudar un asesor?', timestamp: '2024-07-26 11:00 AM' },
     { id: 2, clientName: 'Javier Fernandez', lastMessage: 'Quiero hablar con alguien sobre mi plan actual.', timestamp: '2024-07-25 02:10 PM' },
 ];
+
+export const MOCK_TEST_QUESTIONS: Record<'Basic' | 'Intermediate' | 'Advanced', TestQuestion[]> = {
+  Basic: [
+    { id: 1, question: '¿Qué es un presupuesto?', options: ['Un plan para gastar tu dinero', 'Una forma de pedir un préstamo', 'Un tipo de inversión', 'Un impuesto del gobierno'], correctAnswer: 'Un plan para gastar tu dinero' },
+    { id: 2, question: '¿Por qué es importante tener un fondo de emergencia?', options: ['Para comprar artículos de lujo', 'Para cubrir gastos inesperados sin endeudarse', 'Para invertir en la bolsa', 'Para pagar la hipoteca'], correctAnswer: 'Para cubrir gastos inesperados sin endeudarse' },
+    { id: 3, question: '¿Qué significa "interés compuesto"?', options: ['Un interés que solo se paga una vez', 'Ganar intereses sobre tus intereses', 'Un tipo de tarjeta de crédito', 'Un descuento en una compra'], correctAnswer: 'Ganar intereses sobre tus intereses' },
+    { id: 4, question: '¿Cuál de estos es un ejemplo de un "activo"?', options: ['Un préstamo de coche', 'Una casa de tu propiedad', 'La deuda de una tarjeta de crédito', 'Una multa por exceso de velocidad'], correctAnswer: 'Una casa de tu propiedad' },
+    { id: 5, question: '¿Cuál es el propósito principal del ahorro?', options: ['Gastar más dinero en el futuro', 'Acumular dinero para metas específicas', 'Pagar las facturas diarias', 'Evitar pagar impuestos'], correctAnswer: 'Acumular dinero para metas específicas' },
+  ],
+  Intermediate: [
+    { id: 1, question: '¿Qué es la diversificación en las inversiones?', options: ['Poner todo tu dinero en una sola acción', 'Distribuir tus inversiones en diferentes activos para reducir el riesgo', 'Invertir solo en empresas de tecnología', 'Sacar todo tu dinero del mercado'], correctAnswer: 'Distribuir tus inversiones en diferentes activos para reducir el riesgo' },
+    { id: 2, question: '¿Cuál es la diferencia entre una acción y un bono?', options: ['No hay diferencia', 'Una acción es una parte de la propiedad de una empresa, un bono es un préstamo a una entidad', 'Un bono te hace dueño de la empresa', 'Una acción te garantiza un pago fijo'], correctAnswer: 'Una acción es una parte de la propiedad de una empresa, un bono es un préstamo a una entidad' },
+    { id: 3, question: '¿Qué mide el puntaje de crédito (score crediticio)?', options: ['Tu nivel de ingresos', 'Tu historial educativo', 'Tu confiabilidad para pagar deudas', 'La cantidad de dinero que tienes en el banco'], correctAnswer: 'Tu confiabilidad para pagar deudas' },
+    { id: 4, question: '¿Qué es un fondo de inversión indexado (index fund)?', options: ['Un fondo que intenta superar al mercado eligiendo acciones específicas', 'Un fondo que invierte en un solo tipo de industria', 'Un fondo que busca replicar el rendimiento de un índice de mercado específico, como el S&P 500', 'Un fondo gestionado por un robot'], correctAnswer: 'Un fondo que busca replicar el rendimiento de un índice de mercado específico, como el S&P 500' },
+    { id: 5, question: '¿Qué es la inflación?', options: ['El aumento del valor del dinero con el tiempo', 'La tasa de interés que paga un banco', 'La disminución del poder adquisitivo de una moneda con el tiempo', 'Un impuesto sobre las ventas'], correctAnswer: 'La disminución del poder adquisitivo de una moneda con el tiempo' },
+  ],
+  Advanced: [
+    { id: 1, question: '¿Qué son las opciones financieras (financial options)?', options: ['Diferentes tipos de cuentas de ahorro', 'Contratos que dan al comprador el derecho, pero no la obligación, de comprar o vender un activo a un precio específico en una fecha determinada', 'Acciones de empresas muy seguras', 'Un plan de jubilación ofrecido por el gobierno'], correctAnswer: 'Contratos que dan al comprador el derecho, pero no la obligación, de comprar o vender un activo a un precio específico en una fecha determinada' },
+    { id: 2, question: '¿Cuál es la función principal de un "fideicomiso" (trust)?', options: ['Es una cuenta corriente con altos intereses', 'Es un vehículo legal para mantener y administrar activos en nombre de un beneficiario', 'Es un tipo de seguro de vida', 'Es una forma de evadir impuestos ilegalmente'], correctAnswer: 'Es un vehículo legal para mantener y administrar activos en nombre de un beneficiario' },
+    { id: 3, question: '¿Qué es el "arbitraje" en los mercados financieros?', options: ['El proceso de elegir acciones al azar', 'La práctica de comprar y vender simultáneamente un activo en diferentes mercados para beneficiarse de una diferencia de precio', 'Un tipo de análisis técnico', 'Invertir a muy largo plazo'], correctAnswer: 'La práctica de comprar y vender simultáneamente un activo en diferentes mercados para beneficiarse de una diferencia de precio' },
+    { id: 4, question: '¿Qué significa "beta" en el contexto de una acción?', options: ['La rentabilidad por dividendo de la acción', 'El precio de la acción en el último año', 'Una medida de la volatilidad de una acción en relación con el mercado en general', 'La calificación de riesgo de la empresa'], correctAnswer: 'Una medida de la volatilidad de una acción en relación con el mercado en general' },
+    { id: 5, question: '¿Qué es la planificación fiscal (tax planning)?', options: ['No pagar impuestos', 'Pagar más impuestos para apoyar al gobierno', 'El análisis de una situación financiera para minimizar la obligación tributaria de manera legal', 'Declarar tus impuestos el último día posible'], correctAnswer: 'El análisis de una situación financiera para minimizar la obligación tributaria de manera legal' },
+  ],
+};

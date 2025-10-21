@@ -1,6 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import type { TestQuestion, UserAnswer } from '../types';
-import { EDUCATIONAL_TOPICS } from '../constants';
+import { EDUCATIONAL_TOPICS, MOCK_TEST_QUESTIONS } from '../constants';
 
 
 const API_KEY = process.env.API_KEY;
@@ -34,9 +34,12 @@ export const getChatbotResponse = async (prompt: string): Promise<string> => {
 };
 
 export const generateTestQuestions = async (level: 'Basic' | 'Intermediate' | 'Advanced' = 'Basic'): Promise<TestQuestion[]> => {
+    // If AI is not configured, fall back to mock questions immediately.
     if (!ai) {
-        throw new Error("API key is not configured.");
+        console.warn(`Gemini API not configured. Falling back to mock test questions for level: ${level}`);
+        return Promise.resolve(MOCK_TEST_QUESTIONS[level]);
     }
+
     try {
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
@@ -72,8 +75,9 @@ export const generateTestQuestions = async (level: 'Basic' | 'Intermediate' | 'A
         }));
 
     } catch (error) {
-        console.error("Error generating test questions:", error);
-        throw new Error("Failed to generate test questions.");
+        console.error("Error generating test questions via Gemini, falling back to mock data:", error);
+        // Fallback to mock data on any API error
+        return Promise.resolve(MOCK_TEST_QUESTIONS[level]);
     }
 };
 
