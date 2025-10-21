@@ -28,7 +28,8 @@ export interface EducationalTopic {
   category: 'Paz Financiera' | 'Libertad Financiera' | 'Abundancia Financiera';
   description: string;
   videoUrl: string;
-  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  // Fix: Use React.ReactElement instead of JSX.Element to resolve namespace error.
+  icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
 }
 
 export interface TestQuestion {
