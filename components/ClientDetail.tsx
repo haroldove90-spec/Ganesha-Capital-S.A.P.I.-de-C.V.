@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import type { Client } from '../types';
 import { UserIcon, CakeIcon, MapPinIcon, SparklesIcon, CalendarDaysIcon, ChatBubbleLeftRightIcon, ShieldCheckIcon, AcademicCapIcon, ClipboardDocumentListIcon } from '@heroicons/react/24/outline';
@@ -40,7 +41,7 @@ const ClientDetail: React.FC<ClientDetailProps> = ({ client }) => {
               {client.salesStage}
             </span>
         </div>
-        <button className="px-4 py-2 bg-secondary text-black text-sm font-bold rounded-lg shadow-md hover:bg-secondary/90 transition-transform transform hover:scale-105">
+        <button className="px-4 py-2 bg-secondary text-white text-sm font-bold rounded-lg shadow-md hover:bg-secondary/90 transition-transform transform hover:scale-105">
             Editar Cliente
         </button>
       </div>

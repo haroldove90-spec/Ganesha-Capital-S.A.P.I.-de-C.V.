@@ -7,7 +7,7 @@ const AdminEducationalView: React.FC = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Gestión de Contenido Educativo</h1>
-        <button className="flex items-center gap-2 px-4 py-2 bg-secondary text-black font-bold rounded-lg shadow-md hover:bg-secondary/90 transition-transform transform hover:scale-105">
+        <button className="flex items-center gap-2 px-4 py-2 bg-secondary text-white font-bold rounded-lg shadow-md hover:bg-secondary/90 transition-transform transform hover:scale-105">
             <PlusIcon className="h-5 w-5"/>
             <span>Publicar Nuevo Módulo</span>
         </button>

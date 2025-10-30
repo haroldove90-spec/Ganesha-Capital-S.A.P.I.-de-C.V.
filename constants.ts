@@ -1,14 +1,14 @@
-import type { Client, EducationalTopic, SocialLead, ChatEscalation, TestQuestion, FinancialProduct, Transaction, AdminActivityLog } from './types';
+import type { Client, EducationalTopic, SocialLead, ChatEscalation, TestQuestion, FinancialProduct, Transaction, AdminActivityLog, PortfolioSummary, Investment, Notification, FinancialGoal } from './types';
 import { ShieldCheckIcon, ChartBarIcon, CurrencyDollarIcon, SparklesIcon, ScaleIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 
 export const MOCK_CLIENTS: Client[] = [
-  { id: 1, name: 'Ana Torres', dob: '1990-05-15', age: 34, gender: 'Female', email: 'ana.torres@example.com', city: 'Mexico City', financialKnowledge: 'Intermediate', joinDate: '2023-01-20', lastInteraction: '2024-07-15', salesStage: 'Client', role: 'Client' },
-  { id: 2, name: 'Carlos Rodriguez', dob: '1985-11-22', age: 38, gender: 'Male', email: 'carlos.r@example.com', city: 'Guadalajara', financialKnowledge: 'Advanced', joinDate: '2022-11-10', lastInteraction: '2024-07-20', salesStage: 'Advocate', role: 'Client' },
-  { id: 3, name: 'Sofia Gomez', dob: '1998-02-10', age: 26, gender: 'Female', email: 'sofia.g@example.com', city: 'Monterrey', financialKnowledge: 'Basic', joinDate: '2024-03-05', lastInteraction: '2024-07-22', salesStage: 'Prospect', role: 'Client' },
-  { id: 4, name: 'Javier Fernandez', dob: '1992-08-30', age: 31, gender: 'Male', email: 'javier.f@example.com', city: 'Puebla', financialKnowledge: 'Intermediate', joinDate: '2023-09-01', lastInteraction: '2024-06-30', salesStage: 'Client', role: 'Client' },
-  { id: 5, name: 'Laura Martinez', dob: '2000-07-07', age: 24, gender: 'Female', email: 'laura.m@example.com', city: 'Cancun', financialKnowledge: 'Basic', joinDate: '2024-06-12', lastInteraction: '2024-07-25', salesStage: 'Lead', role: 'Client' },
-  { id: 6, name: 'David Lopez', dob: '1980-03-12', age: 44, gender: 'Male', email: 'david.l@example.com', city: 'Tijuana', financialKnowledge: 'Advanced', joinDate: '2021-05-18', lastInteraction: '2024-07-18', salesStage: 'Client', role: 'Client' },
+  { id: 1, name: 'Ana Torres', dob: '1990-05-15', age: 34, gender: 'Female', email: 'ana.torres@example.com', city: 'Mexico City', financialKnowledge: 'Intermediate', joinDate: '2023-01-20', lastInteraction: '2024-07-15', salesStage: 'Client', role: 'Client', kycStatus: 'Verified', accountStatus: 'Active' },
+  { id: 2, name: 'Carlos Rodriguez', dob: '1985-11-22', age: 38, gender: 'Male', email: 'carlos.r@example.com', city: 'Guadalajara', financialKnowledge: 'Advanced', joinDate: '2022-11-10', lastInteraction: '2024-07-20', salesStage: 'Advocate', role: 'Client', kycStatus: 'Verified', accountStatus: 'Active' },
+  { id: 3, name: 'Sofia Gomez', dob: '1998-02-10', age: 26, gender: 'Female', email: 'sofia.g@example.com', city: 'Monterrey', financialKnowledge: 'Basic', joinDate: '2024-03-05', lastInteraction: '2024-07-22', salesStage: 'Prospect', role: 'Client', kycStatus: 'Pending', accountStatus: 'Active' },
+  { id: 4, name: 'Javier Fernandez', dob: '1992-08-30', age: 31, gender: 'Male', email: 'javier.f@example.com', city: 'Puebla', financialKnowledge: 'Intermediate', joinDate: '2023-09-01', lastInteraction: '2024-06-30', salesStage: 'Client', role: 'Client', kycStatus: 'Verified', accountStatus: 'Active' },
+  { id: 5, name: 'Laura Martinez', dob: '2000-07-07', age: 24, gender: 'Female', email: 'laura.m@example.com', city: 'Cancun', financialKnowledge: 'Basic', joinDate: '2024-06-12', lastInteraction: '2024-07-25', salesStage: 'Lead', role: 'Client', kycStatus: 'Rejected', accountStatus: 'Suspended' },
+  { id: 6, name: 'David Lopez', dob: '1980-03-12', age: 44, gender: 'Male', email: 'david.l@example.com', city: 'Tijuana', financialKnowledge: 'Advanced', joinDate: '2021-05-18', lastInteraction: '2024-07-18', salesStage: 'Client', role: 'Client', kycStatus: 'Verified', accountStatus: 'Active' },
 ];
 
 export const EDUCATIONAL_TOPICS: EducationalTopic[] = [
@@ -125,4 +125,38 @@ export const MOCK_ACTIVITY_LOGS: AdminActivityLog[] = [
     { id: 2, user: 'support@ganesha.com', action: 'Editó el perfil del cliente ID: 3', timestamp: '2024-07-26 09:45 AM', ip: '201.150.33.12' },
     { id: 3, user: 'admin@ganesha.com', action: 'Creó el nuevo producto financiero FP005', timestamp: '2024-07-25 03:20 PM', ip: '192.168.1.10' },
     { id: 4, user: 'auditor@ganesha.com', action: 'Inició sesión', timestamp: '2024-07-25 09:00 AM', ip: '187.210.55.98' },
+];
+
+// Mock data for the new Client Dashboard
+export const MOCK_PORTFOLIO_SUMMARY: PortfolioSummary = {
+    investedCapital: 150000,
+    currentValue: 162500,
+    totalReturn: 12500,
+    roiPercentage: 8.33,
+};
+
+export const MOCK_INVESTMENTS: Investment[] = [
+    { id: 'INV001', productName: 'Fondo Crecimiento Global', category: 'Fondo de Inversión', investedAmount: 75000, currentValue: 82500, returnPercentage: 10.0 },
+    { id: 'INV002', productName: 'Plan Futuro Seguro 2040', category: 'Plan de Ahorro', investedAmount: 50000, currentValue: 52500, returnPercentage: 5.0 },
+    { id: 'INV003', productName: 'Retiro Dorado Plus', category: 'Seguro de Retiro', investedAmount: 25000, currentValue: 27500, returnPercentage: 10.0 },
+];
+
+export const MOCK_PORTFOLIO_HISTORY = [
+  { month: 'Ene', value: 150000 },
+  { month: 'Feb', value: 151000 },
+  { month: 'Mar', value: 153500 },
+  { month: 'Abr', value: 155000 },
+  { month: 'May', value: 158200 },
+  { month: 'Jun', value: 160100 },
+  { month: 'Jul', value: 162500 },
+];
+
+export const MOCK_NOTIFICATIONS: Notification[] = [
+    { id: 1, title: 'Intereses generados', description: 'Has recibido $350.75 en tu "Plan Futuro Seguro 2040".', timestamp: 'hace 2 días', read: false },
+    { id: 2, title: 'Nuevo Módulo Educativo', description: '¡No te pierdas nuestro nuevo video sobre "Mentalidad de Abundancia"!', timestamp: 'hace 5 días', read: false },
+    { id: 3, title: 'Depósito Confirmado', description: 'Tu depósito de $10,000.00 ha sido aprobado.', timestamp: 'hace 1 semana', read: true },
+];
+
+export const MOCK_FINANCIAL_GOALS: FinancialGoal[] = [
+    { id: 1, name: 'Enganche para casa', targetAmount: 300000, currentAmount: 120000, deadline: '2026-12-31' },
 ];

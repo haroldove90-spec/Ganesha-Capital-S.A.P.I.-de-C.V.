@@ -83,7 +83,7 @@ const PlanModal: React.FC<PlanModalProps> = ({ onClose }) => {
             <div className="mt-6 bg-primary/5 border-l-4 border-primary p-5 rounded-r-lg text-center">
                  <h4 className="text-xl font-bold text-primary">¿Estás listo para tomar el control?</h4>
                  <p className="text-primary/90 mt-2">El primer paso es el más importante. Agenda una asesoría gratuita con uno de nuestros expertos y comienza a construir el futuro que deseas.</p>
-                 <button className="mt-4 px-6 py-3 bg-secondary text-black font-bold rounded-lg shadow-md hover:bg-secondary/90 transition-transform transform hover:scale-105">
+                 <button className="mt-4 px-6 py-3 bg-secondary text-white font-bold rounded-lg shadow-md hover:bg-secondary/90 transition-transform transform hover:scale-105">
                     Agendar Asesoría Gratuita
                  </button>
             </div>

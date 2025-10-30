@@ -66,10 +66,10 @@ const Chatbot: React.FC = () => {
 
   return (
     <>
-      <div className={`fixed bottom-5 right-5 z-30 transition-all duration-300 ${isOpen ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
+      <div className={`fixed bottom-20 right-5 md:bottom-5 z-30 transition-all duration-300 ${isOpen ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-secondary text-black p-4 rounded-full shadow-lg hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary"
+          className="bg-secondary text-white p-4 rounded-full shadow-lg hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary"
           aria-label="Open chat"
         >
           <ChatBubbleOvalLeftEllipsisIcon className="h-8 w-8" />

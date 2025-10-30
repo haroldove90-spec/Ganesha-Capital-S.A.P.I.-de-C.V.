@@ -18,7 +18,7 @@ const CommunicationView: React.FC = () => {
                 <p className="text-gray-600 italic mt-1">"{lead.message}"</p>
                 <p className="text-xs text-gray-400 mt-2">{lead.timestamp}</p>
               </div>
-              <button className="flex-shrink-0 bg-secondary text-black font-semibold px-4 py-2 rounded-lg text-sm hover:bg-secondary/90 transition-colors flex items-center gap-2">
+              <button className="flex-shrink-0 bg-secondary text-white font-semibold px-4 py-2 rounded-lg text-sm hover:bg-secondary/90 transition-colors flex items-center gap-2">
                 <CheckCircleIcon className="h-5 w-5" />
                 Agregar al CRM
               </button>

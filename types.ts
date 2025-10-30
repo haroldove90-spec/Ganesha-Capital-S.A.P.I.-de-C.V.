@@ -1,4 +1,3 @@
-// Fix: Import React types to resolve namespace errors.
 import type React from 'react';
 
 export interface Client {
@@ -14,6 +13,8 @@ export interface Client {
   lastInteraction: string;
   salesStage: 'Lead' | 'Prospect' | 'Client' | 'Advocate';
   role: 'Client' | 'Admin' | 'Auditor';
+  kycStatus: 'Verified' | 'Pending' | 'Rejected';
+  accountStatus: 'Active' | 'Suspended';
 }
 
 export interface ChatMessage {
@@ -29,7 +30,6 @@ export interface EducationalTopic {
   category: 'Paz Financiera' | 'Libertad Financiera' | 'Abundancia Financiera';
   description: string;
   videoUrl: string;
-  // Fix: Use React.ReactElement instead of JSX.Element to resolve namespace error.
   icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
 }
 
@@ -95,3 +95,37 @@ export interface AdminActivityLog {
   timestamp: string;
   ip: string;
 }
+
+export interface PortfolioSummary {
+    investedCapital: number;
+    currentValue: number;
+    totalReturn: number;
+    roiPercentage: number;
+}
+
+export interface Investment {
+    id: string;
+    productName: string;
+    category: string;
+    investedAmount: number;
+    currentValue: number;
+    returnPercentage: number;
+}
+
+export interface Notification {
+    id: number;
+    title: string;
+    description: string;
+    timestamp: string;
+    read: boolean;
+}
+
+export interface FinancialGoal {
+    id: number;
+    name: string;
+    targetAmount: number;
+    currentAmount: number;
+    deadline: string;
+}
+
+export type ClientModuleView = 'panel' | 'movimientos' | 'educacion' | 'herramientas' | 'asesoria' | 'perfil';

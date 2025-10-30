@@ -28,7 +28,7 @@ const ErrorState: React.FC<{ onRetry: () => void }> = ({ onRetry }) => (
         <p className="text-gray-500 mt-2">No pudimos generar el test. Por favor, intenta de nuevo.</p>
         <button
             onClick={onRetry}
-            className="mt-6 px-6 py-2 bg-secondary text-black font-bold rounded-lg shadow-md hover:bg-secondary/90 transition-transform transform hover:scale-105"
+            className="mt-6 px-6 py-2 bg-secondary text-white font-bold rounded-lg shadow-md hover:bg-secondary/90 transition-transform transform hover:scale-105"
         >
             Reintentar
         </button>
@@ -189,7 +189,7 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose, level 
                                 <button
                                     onClick={handleNext}
                                     disabled={!userAnswers[currentQuestion.id]}
-                                    className="px-6 py-2 bg-secondary text-black font-bold rounded-lg shadow-md hover:bg-secondary/90 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                    className="px-6 py-2 bg-secondary text-white font-bold rounded-lg shadow-md hover:bg-secondary/90 disabled:bg-gray-400 disabled:cursor-not-allowed"
                                 >
                                     Siguiente
                                 </button>
@@ -197,7 +197,7 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose, level 
                                 <button
                                     onClick={handleSubmit}
                                     disabled={!userAnswers[currentQuestion.id]}
-                                    className="px-6 py-2 bg-secondary text-black font-bold rounded-lg shadow-md hover:bg-secondary/90 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                    className="px-6 py-2 bg-secondary text-white font-bold rounded-lg shadow-md hover:bg-secondary/90 disabled:bg-gray-400 disabled:cursor-not-allowed"
                                 >
                                     Finalizar y Ver Resultados
                                 </button>
@@ -206,7 +206,7 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose, level 
                     )}
                     {status === 'results' && (
                         <div className="text-center">
-                            <button onClick={onClose} className="px-8 py-3 bg-secondary text-black font-bold rounded-lg shadow-md hover:bg-secondary/90">
+                            <button onClick={onClose} className="px-8 py-3 bg-secondary text-white font-bold rounded-lg shadow-md hover:bg-secondary/90">
                                 Volver al Portal
                             </button>
                         </div>
