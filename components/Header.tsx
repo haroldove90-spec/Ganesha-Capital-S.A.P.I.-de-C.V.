@@ -14,9 +14,14 @@ const Header: React.FC<HeaderProps> = ({ currentView, setCurrentView }) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-800 tracking-tight">
-              GANESHA <span className="text-blue-600">Capital</span>
-            </h1>
+            <img 
+              src="https://appdesignmex.com/libertadfinanciera.png" 
+              alt="Ganesha Capital Logo" 
+              className="h-12 w-auto"
+            />
+            <span className="ml-3 text-xl font-bold text-gray-800 hidden sm:block">
+              Ganesha Capital Financial
+            </span>
           </div>
           <div className="flex items-center bg-gray-200 rounded-full p-1">
             <button
