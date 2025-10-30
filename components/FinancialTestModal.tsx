@@ -15,7 +15,7 @@ type TestStatus = 'loading' | 'testing' | 'submitting' | 'results' | 'error';
 
 const LoadingState: React.FC<{ text: string }> = ({ text }) => (
     <div className="flex flex-col items-center justify-center h-full text-center">
-        <ArrowPathIcon className="h-12 w-12 text-blue-600 animate-spin mb-4" />
+        <ArrowPathIcon className="h-12 w-12 text-primary animate-spin mb-4" />
         <h3 className="text-xl font-bold text-gray-800">{text}</h3>
         <p className="text-gray-500 mt-2">Por favor, espera un momento...</p>
     </div>
@@ -28,7 +28,7 @@ const ErrorState: React.FC<{ onRetry: () => void }> = ({ onRetry }) => (
         <p className="text-gray-500 mt-2">No pudimos generar el test. Por favor, intenta de nuevo.</p>
         <button
             onClick={onRetry}
-            className="mt-6 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105"
+            className="mt-6 px-6 py-2 bg-primary text-white font-bold rounded-lg shadow-md hover:bg-primary/90 transition-transform transform hover:scale-105"
         >
             Reintentar
         </button>
@@ -127,20 +127,20 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose, level 
                     {status === 'testing' && currentQuestion && (
                         <div>
                             <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-                                <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${progress}%`, transition: 'width 0.3s' }}></div>
+                                <div className="bg-primary h-2.5 rounded-full" style={{ width: `${progress}%`, transition: 'width 0.3s' }}></div>
                             </div>
-                            <p className="text-sm font-semibold text-blue-600 mb-2">Pregunta {currentQuestionIndex + 1} de {questions.length}</p>
+                            <p className="text-sm font-semibold text-primary mb-2">Pregunta {currentQuestionIndex + 1} de {questions.length}</p>
                             <h3 className="text-2xl font-bold text-gray-800 mb-6">{currentQuestion.question}</h3>
                             <div className="space-y-4">
                                 {currentQuestion.options.map((option, idx) => (
-                                    <label key={idx} className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors duration-200 ${userAnswers[currentQuestion.id] === option ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-300'}`}>
+                                    <label key={idx} className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors duration-200 ${userAnswers[currentQuestion.id] === option ? 'border-primary bg-primary/10' : 'border-gray-200 hover:border-primary/50'}`}>
                                         <input
                                             type="radio"
                                             name={`question-${currentQuestion.id}`}
                                             value={option}
                                             checked={userAnswers[currentQuestion.id] === option}
                                             onChange={() => handleAnswerSelect(currentQuestion.id, option)}
-                                            className="h-5 w-5 text-blue-600 focus:ring-blue-500"
+                                            className="h-5 w-5 text-primary focus:ring-primary"
                                         />
                                         <span className="ml-4 text-gray-700 font-medium">{option}</span>
                                     </label>
@@ -153,7 +153,7 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose, level 
                         <div className="text-center">
                             <CheckCircleIcon className="h-16 w-16 text-green-500 mx-auto mb-4" />
                             <h3 className="text-3xl font-extrabold text-gray-900">¡Resultados Listos!</h3>
-                            <p className="text-2xl font-semibold text-gray-700 mt-4">Tu Puntuación: <span className="text-blue-600">{finalResults.score} / {questions.length}</span></p>
+                            <p className="text-2xl font-semibold text-gray-700 mt-4">Tu Puntuación: <span className="text-primary">{finalResults.score} / {questions.length}</span></p>
                             <div className="mt-8 text-left bg-gray-50 p-6 rounded-lg max-w-2xl mx-auto">
                                 <div className="flex items-start">
                                     <LightBulbIcon className="h-8 w-8 text-yellow-500 mr-4 flex-shrink-0 mt-1" />
@@ -169,8 +169,8 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose, level 
                                     {EDUCATIONAL_TOPICS.filter(t => finalResults.recommendations.includes(t.title)).map(topic => (
                                         <div key={topic.id} className="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
                                             <div className="flex items-center">
-                                                <div className="flex-shrink-0 bg-blue-100 rounded-md p-2">
-                                                    <topic.icon className="h-5 w-5 text-blue-600" />
+                                                <div className="flex-shrink-0 bg-primary/10 rounded-md p-2">
+                                                    <topic.icon className="h-5 w-5 text-primary" />
                                                 </div>
                                                 <p className="ml-3 font-semibold text-gray-700">{topic.title}</p>
                                             </div>
@@ -189,7 +189,7 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose, level 
                                 <button
                                     onClick={handleNext}
                                     disabled={!userAnswers[currentQuestion.id]}
-                                    className="px-6 py-2 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                    className="px-6 py-2 bg-primary text-white font-bold rounded-lg shadow-md hover:bg-primary/90 disabled:bg-gray-400 disabled:cursor-not-allowed"
                                 >
                                     Siguiente
                                 </button>
@@ -206,7 +206,7 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose, level 
                     )}
                     {status === 'results' && (
                         <div className="text-center">
-                            <button onClick={onClose} className="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700">
+                            <button onClick={onClose} className="px-8 py-3 bg-primary text-white font-bold rounded-lg shadow-md hover:bg-primary/90">
                                 Volver al Portal
                             </button>
                         </div>

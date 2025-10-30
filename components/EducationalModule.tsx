@@ -20,15 +20,15 @@ const EducationalModule: React.FC<EducationalModuleProps> = ({ topic, onSelectTo
     >
       <div className="p-6">
         <div className="flex items-center">
-          <div className="flex-shrink-0 bg-blue-100 rounded-md p-3">
-            <Icon className="h-6 w-6 text-blue-600" />
+          <div className="flex-shrink-0 bg-primary/10 rounded-md p-3">
+            <Icon className="h-6 w-6 text-primary" />
           </div>
           <div className="ml-4">
             <h4 className="text-lg font-bold text-gray-900">{title}</h4>
           </div>
         </div>
         <p className="mt-4 text-gray-600">{description}</p>
-        <div className="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800 group-hover:underline">
+        <div className="mt-4 text-sm font-semibold text-primary hover:text-primary/90 group-hover:underline">
           Aprender más &rarr;
         </div>
       </div>

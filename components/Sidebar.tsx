@@ -17,21 +17,24 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
   ];
 
   return (
-    <aside className="bg-white p-4 rounded-lg shadow-md border border-gray-200 w-full md:w-56 flex flex-row md:flex-col justify-start">
-      <nav>
-        <ul className="flex flex-row md:flex-col gap-2">
+    <aside className="
+      fixed bottom-0 left-0 right-0 z-30 bg-primary shadow-[0_-2px_5px_rgba(0,0,0,0.1)]
+      md:relative md:bg-primary md:p-4 md:rounded-lg md:shadow-md md:w-56 flex md:flex-col justify-start
+    ">
+      <nav className="w-full">
+        <ul className="flex flex-row justify-around p-2 md:flex-col md:gap-2 md:p-0">
           {navItems.map(item => (
-            <li key={item.id}>
+            <li key={item.id} className="flex-1 md:flex-initial">
               <button
                 onClick={() => setView(item.id)}
-                className={`w-full flex items-center p-3 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                className={`w-full flex flex-col items-center justify-center p-2 rounded-lg text-xs font-medium transition-colors duration-200 md:flex-row md:justify-start md:p-3 md:text-sm ${
                   currentView === item.id 
-                    ? 'bg-blue-100 text-blue-700' 
-                    : 'text-gray-600 hover:bg-gray-100'
+                    ? 'bg-white/20 text-white' 
+                    : 'text-gray-300 hover:bg-white/10 hover:text-white'
                 }`}
               >
-                <item.icon className="h-5 w-5 mr-3" />
-                <span className="hidden md:inline">{item.name}</span>
+                <item.icon className="h-5 w-5 mb-1 md:mb-0 md:mr-3" />
+                <span>{item.name}</span>
               </button>
             </li>
           ))}

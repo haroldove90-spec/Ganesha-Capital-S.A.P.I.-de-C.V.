@@ -40,7 +40,7 @@ const ClientView: React.FC = () => {
           </p>
           <button 
             onClick={() => setIsPlanModalOpen(true)} // Activate the modal
-            className="mt-8 px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            className="mt-8 px-8 py-3 bg-primary text-white font-bold rounded-lg shadow-md hover:bg-primary/90 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
             Comienza tu Plan de Previsión
           </button>
         </div>
@@ -61,8 +61,8 @@ const ClientView: React.FC = () => {
         <div className="bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
             <div className="p-8 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="flex items-center gap-6">
-                    <div className="hidden sm:block flex-shrink-0 bg-blue-100 p-4 rounded-full">
-                        <BeakerIcon className="h-10 w-10 text-blue-600" />
+                    <div className="hidden sm:block flex-shrink-0 bg-primary/10 p-4 rounded-full">
+                        <BeakerIcon className="h-10 w-10 text-primary" />
                     </div>
                     <div>
                         <h3 className="text-2xl font-bold text-gray-800">Pon a Prueba tu Conocimiento</h3>
@@ -75,7 +75,7 @@ const ClientView: React.FC = () => {
                             <button
                                 key={level}
                                 onClick={() => setTestLevel(level)}
-                                className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${testLevel === level ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:bg-gray-200'}`}
+                                className={`px-3 py-1 text-sm font-semibold rounded-md transition-colors ${testLevel === level ? 'bg-white text-primary shadow-sm' : 'text-gray-500 hover:bg-gray-200'}`}
                             >
                                 {level === 'Basic' ? 'Básico' : level === 'Intermediate' ? 'Intermedio' : 'Avanzado'}
                             </button>
@@ -83,7 +83,7 @@ const ClientView: React.FC = () => {
                     </div>
                     <button 
                         onClick={() => setIsTestModalOpen(true)}
-                        className="flex-shrink-0 w-full sm:w-auto px-6 py-2.5 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105">
+                        className="flex-shrink-0 w-full sm:w-auto px-6 py-2.5 bg-primary text-white font-bold rounded-lg shadow-md hover:bg-primary/90 transition-transform transform hover:scale-105">
                         Comenzar
                     </button>
                 </div>

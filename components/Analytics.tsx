@@ -23,7 +23,7 @@ const SalesFunnelChart: React.FC = () => {
                     <YAxis dataKey="name" type="category" width={80} />
                     <Tooltip wrapperClassName="rounded-md shadow-lg border-none" contentStyle={{backgroundColor: 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(5px)'}}/>
                     <Legend />
-                    <Bar dataKey="value" fill="#3b82f6" barSize={30} />
+                    <Bar dataKey="value" fill="#132D48" barSize={30} />
                 </BarChart>
             </ResponsiveContainer>
         </div>
@@ -36,7 +36,7 @@ const ClientKnowledgeChart: React.FC = () => {
         { name: 'Intermediate', value: 300 },
         { name: 'Advanced', value: 300 },
     ];
-    const COLORS = ['#facc15', '#60a5fa', '#3b82f6'];
+    const COLORS = ['#D2AD5C', '#132D48', '#5e768e'];
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 h-96">

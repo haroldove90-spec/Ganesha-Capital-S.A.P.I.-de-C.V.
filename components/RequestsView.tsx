@@ -8,7 +8,7 @@ const RequestsView: React.FC = () => {
       {/* Social Media Leads */}
       <div>
         <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-          <UserPlusIcon className="h-7 w-7 mr-3 text-blue-600" />
+          <UserPlusIcon className="h-7 w-7 mr-3 text-primary" />
           Nuevos Leads de Redes Sociales
         </h2>
         <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 space-y-4">
@@ -31,7 +31,7 @@ const RequestsView: React.FC = () => {
       {/* Chat Escalations */}
       <div>
         <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-          <ChatBubbleLeftRightIcon className="h-7 w-7 mr-3 text-blue-600" />
+          <ChatBubbleLeftRightIcon className="h-7 w-7 mr-3 text-primary" />
           Escalaciones del Chat
         </h2>
         <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 space-y-4">

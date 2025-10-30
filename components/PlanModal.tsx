@@ -8,8 +8,8 @@ interface PlanModalProps {
 
 const Step: React.FC<{ icon: React.ElementType; title: string; description: string }> = ({ icon: Icon, title, description }) => (
     <div className="flex items-start space-x-4">
-        <div className="flex-shrink-0 bg-blue-100 rounded-lg p-3">
-            <Icon className="h-6 w-6 text-blue-600" />
+        <div className="flex-shrink-0 bg-primary/10 rounded-lg p-3">
+            <Icon className="h-6 w-6 text-primary" />
         </div>
         <div>
             <h4 className="text-lg font-bold text-gray-800">{title}</h4>
@@ -80,10 +80,10 @@ const PlanModal: React.FC<PlanModalProps> = ({ onClose }) => {
                 />
             </div>
 
-            <div className="mt-6 bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-lg text-center">
-                 <h4 className="text-xl font-bold text-blue-800">¿Estás listo para tomar el control?</h4>
-                 <p className="text-blue-700 mt-2">El primer paso es el más importante. Agenda una asesoría gratuita con uno de nuestros expertos y comienza a construir el futuro que deseas.</p>
-                 <button className="mt-4 px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105">
+            <div className="mt-6 bg-primary/5 border-l-4 border-primary p-5 rounded-r-lg text-center">
+                 <h4 className="text-xl font-bold text-primary">¿Estás listo para tomar el control?</h4>
+                 <p className="text-primary/90 mt-2">El primer paso es el más importante. Agenda una asesoría gratuita con uno de nuestros expertos y comienza a construir el futuro que deseas.</p>
+                 <button className="mt-4 px-6 py-3 bg-primary text-white font-bold rounded-lg shadow-md hover:bg-primary/90 transition-transform transform hover:scale-105">
                     Agendar Asesoría Gratuita
                  </button>
             </div>

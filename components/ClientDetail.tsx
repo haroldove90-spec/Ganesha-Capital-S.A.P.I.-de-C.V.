@@ -21,8 +21,8 @@ const DetailItem: React.FC<{ icon: React.ElementType, label: string, value: stri
 const ClientDetail: React.FC<ClientDetailProps> = ({ client }) => {
     const getStageColor = (stage: Client['salesStage']) => {
         switch (stage) {
-            case 'Lead': return 'bg-yellow-100 text-yellow-800';
-            case 'Prospect': return 'bg-blue-100 text-blue-800';
+            case 'Lead': return 'bg-secondary/20 text-yellow-800';
+            case 'Prospect': return 'bg-primary/10 text-primary';
             case 'Client': return 'bg-green-100 text-green-800';
             case 'Advocate': return 'bg-purple-100 text-purple-800';
         }

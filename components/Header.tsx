@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, setCurrentView }) => {
             <button
               onClick={() => setCurrentView('client')}
               className={`px-4 py-1.5 text-sm font-semibold rounded-full transition-colors duration-300 flex items-center space-x-2 ${
-                currentView === 'client' ? 'bg-white text-blue-600 shadow' : 'text-gray-600 hover:bg-gray-300'
+                currentView === 'client' ? 'bg-white text-primary shadow' : 'text-gray-600 hover:bg-gray-300'
               }`}
             >
               <UserGroupIcon className="h-5 w-5" />
@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, setCurrentView }) => {
             <button
               onClick={() => setCurrentView('crm')}
               className={`px-4 py-1.5 text-sm font-semibold rounded-full transition-colors duration-300 flex items-center space-x-2 ${
-                currentView === 'crm' ? 'bg-white text-blue-600 shadow' : 'text-gray-600 hover:bg-gray-300'
+                currentView === 'crm' ? 'bg-white text-primary shadow' : 'text-gray-600 hover:bg-gray-300'
               }`}
             >
                <ChartPieIcon className="h-5 w-5" />

@@ -69,7 +69,7 @@ const Chatbot: React.FC = () => {
       <div className={`fixed bottom-5 right-5 z-30 transition-all duration-300 ${isOpen ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
           aria-label="Open chat"
         >
           <ChatBubbleOvalLeftEllipsisIcon className="h-8 w-8" />
@@ -77,13 +77,13 @@ const Chatbot: React.FC = () => {
       </div>
 
       <div className={`fixed bottom-5 right-5 z-40 w-full max-w-sm h-[70vh] bg-white rounded-xl shadow-2xl flex flex-col transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
-        <header className="flex items-center justify-between p-4 bg-blue-600 text-white rounded-t-xl">
+        <header className="flex items-center justify-between p-4 bg-primary text-white rounded-t-xl">
           <h3 className="font-bold text-lg">Asistente GANESHA</h3>
           <div className="flex items-center space-x-2">
-            <button onClick={handleRequestAgent} className="hover:bg-blue-700 p-1 rounded-full" aria-label="Hablar con un agente">
+            <button onClick={handleRequestAgent} className="hover:bg-primary/90 p-1 rounded-full" aria-label="Hablar con un agente">
                 <UserPlusIcon className="h-6 w-6" title="Hablar con un agente"/>
             </button>
-            <button onClick={() => setIsOpen(false)} className="hover:bg-blue-700 p-1 rounded-full" aria-label="Close chat">
+            <button onClick={() => setIsOpen(false)} className="hover:bg-primary/90 p-1 rounded-full" aria-label="Close chat">
               <XMarkIcon className="h-6 w-6" />
             </button>
           </div>
@@ -93,7 +93,7 @@ const Chatbot: React.FC = () => {
           <div className="space-y-4">
             {messages.map(msg => (
               <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${msg.sender === 'user' ? 'bg-blue-500 text-white rounded-br-none' : 'bg-gray-200 text-gray-800 rounded-bl-none'}`}>
+                <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${msg.sender === 'user' ? 'bg-primary text-white rounded-br-none' : 'bg-gray-200 text-gray-800 rounded-bl-none'}`}>
                   <p className="text-sm" dangerouslySetInnerHTML={{ __html: msg.text.replace(/\n/g, '<br />') }} />
                 </div>
               </div>
@@ -125,7 +125,7 @@ const Chatbot: React.FC = () => {
             />
             <button
               type="submit"
-              className="p-2 text-blue-600 disabled:text-gray-400 hover:text-blue-800"
+              className="p-2 text-primary disabled:text-gray-400 hover:text-primary/90"
               disabled={isLoading || !userInput.trim()}
               aria-label="Send message"
             >

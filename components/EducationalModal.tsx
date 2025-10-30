@@ -83,10 +83,10 @@ const EducationalModal: React.FC<EducationalModalProps> = ({ topic, onClose }) =
           </div>
           <p className="text-gray-600 mb-6">{topic.description}</p>
           
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
-             <h4 className="font-bold text-blue-800">¿Listo para el siguiente paso?</h4>
-             <p className="text-sm text-blue-700 mt-1">Aplica este conocimiento a tu futuro. Descubre cómo nuestros Planes de Previsión Financiera pueden ayudarte a alcanzar tus metas.</p>
-             <button className="mt-3 px-4 py-2 bg-blue-600 text-white text-sm font-bold rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105">
+          <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
+             <h4 className="font-bold text-primary">{`¿Listo para el siguiente paso?`}</h4>
+             <p className="text-sm text-primary/90 mt-1">Aplica este conocimiento a tu futuro. Descubre cómo nuestros Planes de Previsión Financiera pueden ayudarte a alcanzar tus metas.</p>
+             <button className="mt-3 px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg shadow-md hover:bg-primary/90 transition-transform transform hover:scale-105">
                 Conocer los Planes
              </button>
           </div>

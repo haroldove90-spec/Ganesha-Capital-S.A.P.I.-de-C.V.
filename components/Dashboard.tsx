@@ -41,7 +41,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="flex flex-col md:flex-row gap-6" style={{ height: 'calc(100vh - 6rem)'}}>
       <Sidebar currentView={currentCrmView} setView={setCurrentCrmView} />
-      <div className="flex-1">
+      <div className="flex-1 pb-20 md:pb-0">
         {renderContent()}
       </div>
     </div>
