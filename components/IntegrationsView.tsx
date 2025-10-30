@@ -58,7 +58,7 @@ const IntegrationsView: React.FC = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-1">Integraciones y Conectividad Social</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-1">Integraciones y Conectividad Social</h2>
             <p className="text-gray-500 mb-6">Conecta tus redes sociales para automatizar interacciones y capturar leads.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {platforms.map(platform => (
@@ -66,7 +66,7 @@ const IntegrationsView: React.FC = () => {
                         <div>
                             <div className="flex items-center mb-4">
                                 <platform.icon className="h-8 w-8 mr-4" style={{ color: platform.color }}/>
-                                <h3 className="text-xl font-bold text-gray-800">{platform.name}</h3>
+                                <h3 className="text-xl font-bold text-gray-900">{platform.name}</h3>
                             </div>
                             <p className="text-gray-600 mb-6">{platform.description}</p>
                         </div>

@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, setCurrentView }) => {
               alt="Ganesha Capital Logo" 
               className="h-12 w-auto"
             />
-            <span className="ml-3 text-xl font-bold text-gray-800 hidden sm:block">
+            <span className="ml-3 text-xl font-bold text-gray-900 hidden sm:block">
               Ganesha Capital Financial
             </span>
           </div>

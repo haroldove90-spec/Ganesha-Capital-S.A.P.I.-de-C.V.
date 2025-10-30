@@ -40,14 +40,14 @@ const ClientView: React.FC = () => {
           </p>
           <button 
             onClick={() => setIsPlanModalOpen(true)} // Activate the modal
-            className="mt-8 px-8 py-3 bg-primary text-white font-bold rounded-lg shadow-md hover:bg-primary/90 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+            className="mt-8 px-8 py-3 bg-secondary text-black font-bold rounded-lg shadow-md hover:bg-secondary/90 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary">
             Comienza tu Plan de Previsión
           </button>
         </div>
         
         {/* Featured Content Section */}
         <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">Contenido Destacado</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">Contenido Destacado</h3>
             <p className="text-gray-500 mb-6">Nuestros últimos videos para mantenerte al día en tu camino financiero.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[EDUCATIONAL_TOPICS[0], EDUCATIONAL_TOPICS[2]].map(topic => (
@@ -65,7 +65,7 @@ const ClientView: React.FC = () => {
                         <BeakerIcon className="h-10 w-10 text-primary" />
                     </div>
                     <div>
-                        <h3 className="text-2xl font-bold text-gray-800">Pon a Prueba tu Conocimiento</h3>
+                        <h3 className="text-2xl font-bold text-gray-900">Pon a Prueba tu Conocimiento</h3>
                         <p className="mt-2 text-gray-600">Elige un nivel y realiza nuestro test para obtener recomendaciones personalizadas.</p>
                     </div>
                 </div>
@@ -83,7 +83,7 @@ const ClientView: React.FC = () => {
                     </div>
                     <button 
                         onClick={() => setIsTestModalOpen(true)}
-                        className="flex-shrink-0 w-full sm:w-auto px-6 py-2.5 bg-primary text-white font-bold rounded-lg shadow-md hover:bg-primary/90 transition-transform transform hover:scale-105">
+                        className="flex-shrink-0 w-full sm:w-auto px-6 py-2.5 bg-secondary text-black font-bold rounded-lg shadow-md hover:bg-secondary/90 transition-transform transform hover:scale-105">
                         Comenzar
                     </button>
                 </div>
@@ -93,21 +93,21 @@ const ClientView: React.FC = () => {
 
         {/* Educational Modules */}
         <div>
-          <h3 className="text-2xl font-bold text-gray-800 mb-2">Paz Financiera</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Paz Financiera</h3>
           <p className="text-gray-500 mb-6">Establece las bases para una vida financiera sin estrés.</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {renderTopicsByCategory('Paz Financiera')}
           </div>
         </div>
         <div>
-          <h3 className="text-2xl font-bold text-gray-800 mb-2">Libertad Financiera</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Libertad Financiera</h3>
           <p className="text-gray-500 mb-6">Haz que tu dinero trabaje para ti y logra tus grandes objetivos.</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {renderTopicsByCategory('Libertad Financiera')}
           </div>
         </div>
         <div>
-          <h3 className="text-2xl font-bold text-gray-800 mb-2">Abundancia Financiera</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Abundancia Financiera</h3>
           <p className="text-gray-500 mb-6">Expande tus horizontes y crea un legado de prosperidad.</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {renderTopicsByCategory('Abundancia Financiera')}
@@ -116,14 +116,14 @@ const ClientView: React.FC = () => {
 
         {/* Testimonials */}
          <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
-            <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">Lo que dicen nuestros clientes</h3>
+            <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">Lo que dicen nuestros clientes</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-gray-100 p-6 rounded-lg">
                 <p className="text-gray-600 italic">"Gracias a GANESHA Capital, por fin entiendo mis finanzas. Su enfoque educativo me dio la confianza para empezar a invertir."</p>
                 <div className="flex items-center mt-4">
                   <img className="w-12 h-12 rounded-full mr-4" src="https://picsum.photos/seed/test1/100/100" alt="Avatar"/>
                   <div>
-                    <p className="font-semibold text-gray-800">Ana Torres</p>
+                    <p className="font-semibold text-gray-900">Ana Torres</p>
                     <p className="text-sm text-gray-500">Cliente Satisfecho</p>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ const ClientView: React.FC = () => {
                 <div className="flex items-center mt-4">
                   <img className="w-12 h-12 rounded-full mr-4" src="https://picsum.photos/seed/test2/100/100" alt="Avatar"/>
                   <div>
-                    <p className="font-semibold text-gray-800">Carlos Rodriguez</p>
+                    <p className="font-semibold text-gray-900">Carlos Rodriguez</p>
                     <p className="text-sm text-gray-500">Cliente y Defensor</p>
                   </div>
                 </div>

@@ -6,7 +6,7 @@ import { SALES_FUNNEL_DATA } from '../constants';
 const KpiCard: React.FC<{ title: string; value: string; change: string; isPositive: boolean }> = ({ title, value, change, isPositive }) => (
   <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
     <h3 className="text-sm font-medium text-gray-500">{title}</h3>
-    <p className="text-3xl font-bold text-gray-800 mt-1">{value}</p>
+    <p className="text-3xl font-bold text-gray-900 mt-1">{value}</p>
     <p className={`text-sm mt-2 ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
       {change}
     </p>
@@ -36,7 +36,7 @@ const ClientKnowledgeChart: React.FC = () => {
         { name: 'Intermediate', value: 300 },
         { name: 'Advanced', value: 300 },
     ];
-    const COLORS = ['#D2AD5C', '#132D48', '#5e768e'];
+    const COLORS = ['#BA933D', '#132D48', '#5e768e'];
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 h-96">

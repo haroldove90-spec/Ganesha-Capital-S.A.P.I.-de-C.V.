@@ -12,7 +12,7 @@ const DetailItem: React.FC<{ icon: React.ElementType, label: string, value: stri
         <Icon className="h-5 w-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
         <div>
             <p className="font-medium text-gray-500">{label}</p>
-            <p className="text-gray-800">{value}</p>
+            <p className="text-gray-900">{value}</p>
         </div>
     </div>
 );
@@ -31,9 +31,9 @@ const ClientDetail: React.FC<ClientDetailProps> = ({ client }) => {
   return (
     <div className="p-4 space-y-6">
       <div className="flex items-center space-x-4">
-        <img src={`https://picsum.photos/seed/${client.id}/80/80`} alt="Client" className="h-20 w-20 rounded-full"/>
+        <img src={`httpshttps://picsum.photos/seed/${client.id}/80/80`} alt="Client" className="h-20 w-20 rounded-full"/>
         <div>
-            <h2 className="text-2xl font-bold text-gray-800">{client.name}</h2>
+            <h2 className="text-2xl font-bold text-gray-900">{client.name}</h2>
             <p className="text-gray-500">{client.email}</p>
             <span className={`mt-2 inline-block px-3 py-1 text-xs font-semibold rounded-full ${getStageColor(client.salesStage)}`}>
               {client.salesStage}

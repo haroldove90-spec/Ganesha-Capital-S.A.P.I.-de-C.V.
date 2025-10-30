@@ -69,7 +69,7 @@ const Chatbot: React.FC = () => {
       <div className={`fixed bottom-5 right-5 z-30 transition-all duration-300 ${isOpen ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+          className="bg-secondary text-black p-4 rounded-full shadow-lg hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary"
           aria-label="Open chat"
         >
           <ChatBubbleOvalLeftEllipsisIcon className="h-8 w-8" />
@@ -93,14 +93,14 @@ const Chatbot: React.FC = () => {
           <div className="space-y-4">
             {messages.map(msg => (
               <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${msg.sender === 'user' ? 'bg-primary text-white rounded-br-none' : 'bg-gray-200 text-gray-800 rounded-bl-none'}`}>
+                <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${msg.sender === 'user' ? 'bg-primary text-white rounded-br-none' : 'bg-gray-200 text-gray-900 rounded-bl-none'}`}>
                   <p className="text-sm" dangerouslySetInnerHTML={{ __html: msg.text.replace(/\n/g, '<br />') }} />
                 </div>
               </div>
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                  <div className="px-4 py-2 rounded-2xl bg-gray-200 text-gray-800 rounded-bl-none">
+                  <div className="px-4 py-2 rounded-2xl bg-gray-200 text-gray-900 rounded-bl-none">
                       <div className="flex items-center space-x-1">
                           <span className="h-2 w-2 bg-gray-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
                           <span className="h-2 w-2 bg-gray-500 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
@@ -120,12 +120,12 @@ const Chatbot: React.FC = () => {
               value={userInput}
               onChange={e => setUserInput(e.target.value)}
               placeholder="Escribe tu pregunta..."
-              className="flex-1 bg-transparent px-4 py-2 text-sm text-gray-800 focus:outline-none"
+              className="flex-1 bg-transparent px-4 py-2 text-sm text-black focus:outline-none"
               disabled={isLoading}
             />
             <button
               type="submit"
-              className="p-2 text-primary disabled:text-gray-400 hover:text-primary/90"
+              className="p-2 text-secondary disabled:text-gray-400 hover:text-secondary/90"
               disabled={isLoading || !userInput.trim()}
               aria-label="Send message"
             >

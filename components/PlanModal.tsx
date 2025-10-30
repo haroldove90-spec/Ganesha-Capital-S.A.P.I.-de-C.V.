@@ -12,7 +12,7 @@ const Step: React.FC<{ icon: React.ElementType; title: string; description: stri
             <Icon className="h-6 w-6 text-primary" />
         </div>
         <div>
-            <h4 className="text-lg font-bold text-gray-800">{title}</h4>
+            <h4 className="text-lg font-bold text-gray-900">{title}</h4>
             <p className="mt-1 text-gray-600">{description}</p>
         </div>
     </div>
@@ -42,7 +42,7 @@ const PlanModal: React.FC<PlanModalProps> = ({ onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <header className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h2 id="plan-modal-title" className="text-xl font-bold text-gray-800">Tu Futuro Financiero Comienza Hoy</h2>
+          <h2 id="plan-modal-title" className="text-xl font-bold text-gray-900">Tu Futuro Financiero Comienza Hoy</h2>
           <button 
             onClick={onClose} 
             className="p-1 rounded-full text-gray-500 hover:bg-gray-200 hover:text-gray-800"
@@ -83,7 +83,7 @@ const PlanModal: React.FC<PlanModalProps> = ({ onClose }) => {
             <div className="mt-6 bg-primary/5 border-l-4 border-primary p-5 rounded-r-lg text-center">
                  <h4 className="text-xl font-bold text-primary">¿Estás listo para tomar el control?</h4>
                  <p className="text-primary/90 mt-2">El primer paso es el más importante. Agenda una asesoría gratuita con uno de nuestros expertos y comienza a construir el futuro que deseas.</p>
-                 <button className="mt-4 px-6 py-3 bg-primary text-white font-bold rounded-lg shadow-md hover:bg-primary/90 transition-transform transform hover:scale-105">
+                 <button className="mt-4 px-6 py-3 bg-secondary text-black font-bold rounded-lg shadow-md hover:bg-secondary/90 transition-transform transform hover:scale-105">
                     Agendar Asesoría Gratuita
                  </button>
             </div>
