@@ -13,6 +13,7 @@ export interface Client {
   joinDate: string;
   lastInteraction: string;
   salesStage: 'Lead' | 'Prospect' | 'Client' | 'Advocate';
+  role: 'Client' | 'Admin' | 'Auditor';
 }
 
 export interface ChatMessage {
@@ -66,4 +67,31 @@ export interface ChatEscalation {
   clientName: string;
   lastMessage: string;
   timestamp: string;
+}
+
+export interface FinancialProduct {
+  id: string;
+  name: string;
+  type: 'Fondo de Inversión' | 'Plan de Ahorro' | 'Seguro de Retiro';
+  annualReturn: string;
+  riskLevel: 'Bajo' | 'Medio' | 'Alto';
+  minInvestment: number;
+  status: 'Activo' | 'Inactivo';
+}
+
+export interface Transaction {
+  id: string;
+  clientName: string;
+  date: string;
+  type: 'Depósito' | 'Retiro' | 'Intereses generados';
+  amount: number;
+  status: 'Aprobado' | 'Pendiente' | 'Rechazado';
+}
+
+export interface AdminActivityLog {
+  id: number;
+  user: string;
+  action: string;
+  timestamp: string;
+  ip: string;
 }

@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, setCurrentView }) => {
               className="h-12 w-auto"
             />
             <span className="ml-3 text-xl font-bold text-gray-900 hidden sm:block">
-              Ganesha Capital Financial
+              Ganesha Capital SAPI de CV
             </span>
           </div>
           <div className="flex items-center bg-gray-200 rounded-full p-1">
@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, setCurrentView }) => {
               }`}
             >
                <ChartPieIcon className="h-5 w-5" />
-              <span>CRM</span>
+              <span>Admin</span>
             </button>
           </div>
         </div>

@@ -1,7 +1,14 @@
 import React from 'react';
-import { UserCircleIcon, ChartBarIcon, TicketIcon, ShareIcon } from '@heroicons/react/24/outline';
-
-type CrmView = 'clients' | 'analytics' | 'requests' | 'integrations';
+import { 
+  UsersIcon, 
+  CircleStackIcon, 
+  ArrowsRightLeftIcon, 
+  ChatBubbleLeftRightIcon, 
+  AcademicCapIcon, 
+  ChartBarIcon, 
+  ShieldCheckIcon 
+} from '@heroicons/react/24/outline';
+import type { CrmView } from './Dashboard';
 
 interface SidebarProps {
   currentView: CrmView;
@@ -10,16 +17,19 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
   const navItems = [
-    { id: 'clients' as CrmView, name: 'Clients', icon: UserCircleIcon },
-    { id: 'analytics' as CrmView, name: 'Analytics', icon: ChartBarIcon },
-    { id: 'requests' as CrmView, name: 'Requests', icon: TicketIcon },
-    { id: 'integrations' as CrmView, name: 'Integrations', icon: ShareIcon },
+    { id: 'analisis' as CrmView, name: 'Análisis', icon: ChartBarIcon },
+    { id: 'usuarios' as CrmView, name: 'Usuarios', icon: UsersIcon },
+    { id: 'productos' as CrmView, name: 'Productos', icon: CircleStackIcon },
+    { id: 'movimientos' as CrmView, name: 'Movimientos', icon: ArrowsRightLeftIcon },
+    { id: 'comunicacion' as CrmView, name: 'Comunicación', icon: ChatBubbleLeftRightIcon },
+    { id: 'educacion' as CrmView, name: 'Educación', icon: AcademicCapIcon },
+    { id: 'seguridad' as CrmView, name: 'Seguridad', icon: ShieldCheckIcon },
   ];
 
   return (
     <aside className="
       fixed bottom-0 left-0 right-0 z-30 bg-primary shadow-[0_-2px_5px_rgba(0,0,0,0.1)]
-      md:relative md:bg-primary md:p-4 md:rounded-lg md:shadow-md md:w-56 flex md:flex-col justify-start
+      md:relative md:bg-primary md:p-4 md:rounded-lg md:shadow-md md:w-64 flex md:flex-col justify-start
     ">
       <nav className="w-full">
         <ul className="flex flex-row justify-around p-2 md:flex-col md:gap-2 md:p-0">
@@ -32,9 +42,10 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
                     ? 'bg-white/20 text-white' 
                     : 'text-gray-300 hover:bg-white/10 hover:text-white'
                 }`}
+                aria-current={currentView === item.id ? 'page' : undefined}
               >
                 <item.icon className="h-5 w-5 mb-1 md:mb-0 md:mr-3" />
-                <span>{item.name}</span>
+                <span className="capitalize">{item.name}</span>
               </button>
             </li>
           ))}

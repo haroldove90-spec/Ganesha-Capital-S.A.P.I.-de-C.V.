@@ -1,14 +1,14 @@
-import type { Client, EducationalTopic, SocialLead, ChatEscalation, TestQuestion } from './types';
+import type { Client, EducationalTopic, SocialLead, ChatEscalation, TestQuestion, FinancialProduct, Transaction, AdminActivityLog } from './types';
 import { ShieldCheckIcon, ChartBarIcon, CurrencyDollarIcon, SparklesIcon, ScaleIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 
 export const MOCK_CLIENTS: Client[] = [
-  { id: 1, name: 'Ana Torres', dob: '1990-05-15', age: 34, gender: 'Female', email: 'ana.torres@example.com', city: 'Mexico City', financialKnowledge: 'Intermediate', joinDate: '2023-01-20', lastInteraction: '2024-07-15', salesStage: 'Client' },
-  { id: 2, name: 'Carlos Rodriguez', dob: '1985-11-22', age: 38, gender: 'Male', email: 'carlos.r@example.com', city: 'Guadalajara', financialKnowledge: 'Advanced', joinDate: '2022-11-10', lastInteraction: '2024-07-20', salesStage: 'Advocate' },
-  { id: 3, name: 'Sofia Gomez', dob: '1998-02-10', age: 26, gender: 'Female', email: 'sofia.g@example.com', city: 'Monterrey', financialKnowledge: 'Basic', joinDate: '2024-03-05', lastInteraction: '2024-07-22', salesStage: 'Prospect' },
-  { id: 4, name: 'Javier Fernandez', dob: '1992-08-30', age: 31, gender: 'Male', email: 'javier.f@example.com', city: 'Puebla', financialKnowledge: 'Intermediate', joinDate: '2023-09-01', lastInteraction: '2024-06-30', salesStage: 'Client' },
-  { id: 5, name: 'Laura Martinez', dob: '2000-07-07', age: 24, gender: 'Female', email: 'laura.m@example.com', city: 'Cancun', financialKnowledge: 'Basic', joinDate: '2024-06-12', lastInteraction: '2024-07-25', salesStage: 'Lead' },
-  { id: 6, name: 'David Lopez', dob: '1980-03-12', age: 44, gender: 'Male', email: 'david.l@example.com', city: 'Tijuana', financialKnowledge: 'Advanced', joinDate: '2021-05-18', lastInteraction: '2024-07-18', salesStage: 'Client' },
+  { id: 1, name: 'Ana Torres', dob: '1990-05-15', age: 34, gender: 'Female', email: 'ana.torres@example.com', city: 'Mexico City', financialKnowledge: 'Intermediate', joinDate: '2023-01-20', lastInteraction: '2024-07-15', salesStage: 'Client', role: 'Client' },
+  { id: 2, name: 'Carlos Rodriguez', dob: '1985-11-22', age: 38, gender: 'Male', email: 'carlos.r@example.com', city: 'Guadalajara', financialKnowledge: 'Advanced', joinDate: '2022-11-10', lastInteraction: '2024-07-20', salesStage: 'Advocate', role: 'Client' },
+  { id: 3, name: 'Sofia Gomez', dob: '1998-02-10', age: 26, gender: 'Female', email: 'sofia.g@example.com', city: 'Monterrey', financialKnowledge: 'Basic', joinDate: '2024-03-05', lastInteraction: '2024-07-22', salesStage: 'Prospect', role: 'Client' },
+  { id: 4, name: 'Javier Fernandez', dob: '1992-08-30', age: 31, gender: 'Male', email: 'javier.f@example.com', city: 'Puebla', financialKnowledge: 'Intermediate', joinDate: '2023-09-01', lastInteraction: '2024-06-30', salesStage: 'Client', role: 'Client' },
+  { id: 5, name: 'Laura Martinez', dob: '2000-07-07', age: 24, gender: 'Female', email: 'laura.m@example.com', city: 'Cancun', financialKnowledge: 'Basic', joinDate: '2024-06-12', lastInteraction: '2024-07-25', salesStage: 'Lead', role: 'Client' },
+  { id: 6, name: 'David Lopez', dob: '1980-03-12', age: 44, gender: 'Male', email: 'david.l@example.com', city: 'Tijuana', financialKnowledge: 'Advanced', joinDate: '2021-05-18', lastInteraction: '2024-07-18', salesStage: 'Client', role: 'Client' },
 ];
 
 export const EDUCATIONAL_TOPICS: EducationalTopic[] = [
@@ -103,3 +103,26 @@ export const MOCK_TEST_QUESTIONS: Record<'Basic' | 'Intermediate' | 'Advanced', 
     { id: 5, question: '¿Qué es la planificación fiscal (tax planning)?', options: ['No pagar impuestos', 'Pagar más impuestos para apoyar al gobierno', 'El análisis de una situación financiera para minimizar la obligación tributaria de manera legal', 'Declarar tus impuestos el último día posible'], correctAnswer: 'El análisis de una situación financiera para minimizar la obligación tributaria de manera legal' },
   ],
 };
+
+export const MOCK_FINANCIAL_PRODUCTS: FinancialProduct[] = [
+    { id: 'FP001', name: 'Plan Futuro Seguro 2040', type: 'Plan de Ahorro', annualReturn: '5-7%', riskLevel: 'Bajo', minInvestment: 5000, status: 'Activo' },
+    { id: 'FP002', name: 'Fondo Crecimiento Global', type: 'Fondo de Inversión', annualReturn: '8-12%', riskLevel: 'Medio', minInvestment: 10000, status: 'Activo' },
+    { id: 'FP003', name: 'Retiro Dorado Plus', type: 'Seguro de Retiro', annualReturn: '4-6%', riskLevel: 'Bajo', minInvestment: 15000, status: 'Activo' },
+    { id: 'FP004', name: 'Fondo Tecnológico Disruptivo', type: 'Fondo de Inversión', annualReturn: '15-25%', riskLevel: 'Alto', minInvestment: 25000, status: 'Activo' },
+    { id: 'FP005', name: 'Plan de Ahorro Legado', type: 'Plan de Ahorro', annualReturn: '3-5%', riskLevel: 'Bajo', minInvestment: 5000, status: 'Inactivo' },
+];
+
+export const MOCK_TRANSACTIONS: Transaction[] = [
+    { id: 'TRN001', clientName: 'Ana Torres', date: '2024-07-25', type: 'Depósito', amount: 10000, status: 'Aprobado' },
+    { id: 'TRN002', clientName: 'Carlos Rodriguez', date: '2024-07-24', type: 'Retiro', amount: 5000, status: 'Aprobado' },
+    { id: 'TRN003', clientName: 'Sofia Gomez', date: '2024-07-23', type: 'Depósito', amount: 7500, status: 'Pendiente' },
+    { id: 'TRN004', clientName: 'Javier Fernandez', date: '2024-07-22', type: 'Intereses generados', amount: 350.75, status: 'Aprobado' },
+    { id: 'TRN005', clientName: 'Ana Torres', date: '2024-07-21', type: 'Retiro', amount: 2000, status: 'Rechazado' },
+];
+
+export const MOCK_ACTIVITY_LOGS: AdminActivityLog[] = [
+    { id: 1, user: 'admin@ganesha.com', action: 'Aprobó la transacción TRN002', timestamp: '2024-07-26 10:05 AM', ip: '192.168.1.10' },
+    { id: 2, user: 'support@ganesha.com', action: 'Editó el perfil del cliente ID: 3', timestamp: '2024-07-26 09:45 AM', ip: '201.150.33.12' },
+    { id: 3, user: 'admin@ganesha.com', action: 'Creó el nuevo producto financiero FP005', timestamp: '2024-07-25 03:20 PM', ip: '192.168.1.10' },
+    { id: 4, user: 'auditor@ganesha.com', action: 'Inició sesión', timestamp: '2024-07-25 09:00 AM', ip: '187.210.55.98' },
+];
