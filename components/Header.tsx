@@ -1,52 +1,47 @@
-
 import React from 'react';
-import type { View } from '../App';
-import { ChartPieIcon, UserGroupIcon } from '@heroicons/react/24/solid';
+import { ArrowLeftOnRectangleIcon, BellIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
 interface HeaderProps {
-  currentView: View;
-  setCurrentView: (view: View) => void;
+    userRole: 'admin' | 'client';
+    onLogout: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentView, setCurrentView }) => {
-  return (
-    <header className="bg-white shadow-md sticky top-0 z-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <img 
-              src="https://appdesignmex.com/libertadfinanciera.png" 
-              alt="Ganesha Capital Logo" 
-              className="h-12 w-auto"
-            />
-            <span className="ml-3 text-xl font-bold text-gray-900 hidden sm:block">
-              Ganesha Capital SAPI de CV
-            </span>
-          </div>
-          <div className="flex items-center bg-gray-200 rounded-full p-1">
-            <button
-              onClick={() => setCurrentView('client')}
-              className={`px-4 py-1.5 text-sm font-semibold rounded-full transition-colors duration-300 flex items-center space-x-2 ${
-                currentView === 'client' ? 'bg-white text-primary shadow' : 'text-gray-600 hover:bg-gray-300'
-              }`}
-            >
-              <UserGroupIcon className="h-5 w-5" />
-              <span>Portal Cliente</span>
-            </button>
-            <button
-              onClick={() => setCurrentView('crm')}
-              className={`px-4 py-1.5 text-sm font-semibold rounded-full transition-colors duration-300 flex items-center space-x-2 ${
-                currentView === 'crm' ? 'bg-white text-primary shadow' : 'text-gray-600 hover:bg-gray-300'
-              }`}
-            >
-               <ChartPieIcon className="h-5 w-5" />
-              <span>Admin</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
+const Header: React.FC<HeaderProps> = ({ userRole, onLogout }) => {
+    const userName = userRole === 'admin' ? 'Admin Ganesha' : 'Ana Torres';
+    const userEmail = userRole === 'admin' ? 'admin@ganesha.com' : 'ana.torres@example.com';
+
+    return (
+        <header className="bg-primary shadow-md sticky top-0 z-40 h-24">
+            <div className="mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+                <div className="flex items-center">
+                    {/* Placeholder for a logo */}
+                    <svg className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0 3.517-1.009 6.789-2.75 9.566-1.74 2.777-2.5 5.434-2.5 5.434H12M12 11c0-3.517 1.009-6.789 2.75-9.566 1.74-2.777 2.5-5.434 2.5-5.434H12M12 11H2.5M12 11h9.5" />
+                    </svg>
+                    <h1 className="text-2xl font-bold text-white ml-3">GANESHA <span className="font-light">Capital</span></h1>
+                </div>
+                <div className="flex items-center space-x-4">
+                    <button className="p-2 rounded-full text-gray-300 hover:bg-white/10 hover:text-white">
+                        <BellIcon className="h-6 w-6" />
+                    </button>
+                    <div className="flex items-center">
+                         <UserCircleIcon className="h-10 w-10 text-white" />
+                         <div className="ml-3 hidden md:block">
+                            <p className="text-sm font-medium text-white">{userName}</p>
+                            <p className="text-xs text-gray-300">{userEmail}</p>
+                        </div>
+                    </div>
+                    <button 
+                        onClick={onLogout}
+                        className="flex items-center p-2 rounded-full text-gray-300 hover:bg-white/10 hover:text-white"
+                        title="Cerrar sesión"
+                    >
+                        <ArrowLeftOnRectangleIcon className="h-6 w-6" />
+                    </button>
+                </div>
+            </div>
+        </header>
+    );
 };
 
 export default Header;
