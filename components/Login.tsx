@@ -48,7 +48,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                                 type="text"
                                 autoComplete="username"
                                 required
-                                className="appearance-none relative block w-full px-4 py-3 border border-secondary/50 placeholder-gray-300 text-white rounded-md focus:outline-none focus:ring-secondary focus:border-secondary focus:z-10 sm:text-sm bg-[#3F5873]"
+                                className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white"
                                 placeholder="Usuario"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
@@ -62,7 +62,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                                 type="password"
                                 autoComplete="current-password"
                                 required
-                                className="appearance-none relative block w-full px-4 py-3 border border-secondary/50 placeholder-gray-300 text-white rounded-md focus:outline-none focus:ring-secondary focus:border-secondary focus:z-10 sm:text-sm bg-[#3F5873]"
+                                className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white"
                                 placeholder="Contraseña"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
