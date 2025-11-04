@@ -104,7 +104,7 @@ export interface PortfolioSummary {
 }
 
 export interface Investment {
-    id: string;
+    id:string;
     productName: string;
     category: string;
     investedAmount: number;
@@ -128,4 +128,4 @@ export interface FinancialGoal {
     deadline: string;
 }
 
-export type ClientModuleView = 'panel' | 'movimientos' | 'educacion' | 'herramientas' | 'asesoria' | 'perfil';
+export type ClientModuleView = 'educacion' | 'planes';

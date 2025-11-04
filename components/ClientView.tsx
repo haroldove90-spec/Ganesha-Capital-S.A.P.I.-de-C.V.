@@ -1,32 +1,20 @@
 import React, { useState } from 'react';
 import ClientSidebar from './ClientSidebar';
-import ClientDashboardView from './ClientDashboardView';
-import ClientTransactionsView from './ClientTransactionsView';
 import ClientEducationView from './ClientEducationView';
-import ClientToolsView from './ClientToolsView';
-import ClientAdvisoryView from './ClientAdvisoryView';
-import ClientProfileView from './ClientProfileView';
+import FinancialPlansView from './FinancialPlansView';
 import type { ClientModuleView } from '../types';
 
 const ClientView: React.FC = () => {
-    const [currentView, setCurrentView] = useState<ClientModuleView>('panel');
+    const [currentView, setCurrentView] = useState<ClientModuleView>('educacion');
 
     const renderContent = () => {
         switch (currentView) {
-            case 'panel':
-                return <ClientDashboardView />;
-            case 'movimientos':
-                return <ClientTransactionsView />;
             case 'educacion':
                 return <ClientEducationView />;
-            case 'herramientas':
-                return <ClientToolsView />;
-            case 'asesoria':
-                return <ClientAdvisoryView />;
-            case 'perfil':
-                return <ClientProfileView />;
+            case 'planes':
+                return <FinancialPlansView />;
             default:
-                return <ClientDashboardView />;
+                return <ClientEducationView />;
         }
     };
 

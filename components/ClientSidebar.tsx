@@ -1,11 +1,7 @@
 import React from 'react';
 import { 
-  HomeIcon,
-  ArrowsRightLeftIcon, 
   AcademicCapIcon, 
-  WrenchScrewdriverIcon,
-  CalendarDaysIcon,
-  UserCircleIcon
+  CircleStackIcon,
 } from '@heroicons/react/24/outline';
 import type { ClientModuleView } from '../types';
 
@@ -16,12 +12,8 @@ interface ClientSidebarProps {
 
 const ClientSidebar: React.FC<ClientSidebarProps> = ({ currentView, setView }) => {
   const navItems = [
-    { id: 'panel' as ClientModuleView, name: 'Panel', icon: HomeIcon },
-    { id: 'movimientos' as ClientModuleView, name: 'Movimientos', icon: ArrowsRightLeftIcon },
-    { id: 'educacion' as ClientModuleView, name: 'Educación', icon: AcademicCapIcon },
-    { id: 'herramientas' as ClientModuleView, name: 'Herramientas', icon: WrenchScrewdriverIcon },
-    { id: 'asesoria' as ClientModuleView, name: 'Asesoría', icon: CalendarDaysIcon },
-    { id: 'perfil' as ClientModuleView, name: 'Perfil', icon: UserCircleIcon },
+    { id: 'educacion' as ClientModuleView, name: 'Educación Financiera', icon: AcademicCapIcon },
+    { id: 'planes' as ClientModuleView, name: 'Planes de Previsión', icon: CircleStackIcon },
   ];
 
   return (
