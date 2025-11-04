@@ -54,7 +54,7 @@ const FinancialPlanningInfoView: React.FC = () => {
                         Es una estrategia que permite diversificar tus ahorros y aprovechar los rendimientos del mercado financiero, es una combinación de acciones, bonos y otros instrumentos financieros.
                     </p>
                     <p>
-                        Ixa Services, ofrece dichos Planes, que están diseñados para fomentar el ahorro a mediano y largo plazo mediante tasas de interés competitivas y beneficios fiscales.
+                        GANESHA Capital, ofrece dichos Planes, que están diseñados para fomentar el ahorro a mediano y largo plazo mediante tasas de interés competitivas y beneficios fiscales.
                     </p>
                     <ul className="list-disc list-inside space-y-3 pl-4">
                         <li><span className="font-semibold">Seguridad:</span> Proporciona tranquilidad y estabilidad.</li>
@@ -66,10 +66,71 @@ const FinancialPlanningInfoView: React.FC = () => {
                                 <li>Reduces tu carga fiscal.</li>
                             </ul>
                         </li>
-                        <li><span className="font-semibold">Facilidad de Manejo:</span> Son fáciles de administrar, en Ixa Services, puedes encontrar Planes con flexibilidad de plazo y liquidez, son seguros y tienen acceso a diferentes alternativas de inversión.</li>
+                        <li><span className="font-semibold">Facilidad de Manejo:</span> Son fáciles de administrar, en GANESHA Capital, puedes encontrar Planes con flexibilidad de plazo y liquidez, son seguros y tienen acceso a diferentes alternativas de inversión.</li>
                         <li><span className="font-semibold">Cobertura Adicional:</span> Los Planes de Previsión Financiera incluyen beneficios adicionales como cobertura por fallecimiento, protegiendo a tus seres queridos.</li>
                         <li><span className="font-semibold">Mayores Rendimientos:</span> Los Planes de Previsión Financiera tienen mejores rendimientos que las Afores.</li>
                     </ul>
+
+                    <div className="my-6 overflow-x-auto">
+                        <table className="w-full border-collapse border-2 border-gray-600 text-gray-800">
+                            <thead>
+                                <tr>
+                                    <th className="bg-primary text-white p-3 text-lg font-semibold border-2 border-gray-600 text-center">Fondos de inversión</th>
+                                    <th className="bg-primary text-white p-3 text-lg font-semibold border-2 border-gray-600 text-center">Plan de previsión financiera</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="border-2 border-gray-600 p-3 text-center">Diversificación</td>
+                                    <td className="border-2 border-gray-600 p-3 text-center">Seguridad</td>
+                                </tr>
+                                <tr>
+                                    <td className="border-2 border-gray-600 p-3 text-center">Accesibilidad</td>
+                                    <td className="border-2 border-gray-600 p-3 text-center">Personalización</td>
+                                </tr>
+                                <tr>
+                                    <td className="border-2 border-gray-600 p-3 text-center">Potencial de Rendimiento.</td>
+                                    <td className="border-2 border-gray-600 p-3 text-center">Beneficios Fiscales</td>
+                                </tr>
+                                <tr>
+                                    <td className="border-2 border-gray-600 p-3"></td>
+                                    <td className="border-2 border-gray-600 p-3 text-center">Facilidad de Manejo</td>
+                                </tr>
+                                <tr>
+                                    <td className="border-2 border-gray-600 p-3"></td>
+                                    <td className="border-2 border-gray-600 p-3 text-center">Cobertura Adicional</td>
+                                </tr>
+                                <tr>
+                                    <td className="border-2 border-gray-600 p-3"></td>
+                                    <td className="border-2 border-gray-600 p-3 text-center">Mayores Rendimientos</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="mt-8 pt-6 border-t border-gray-200">
+                        <h3 className="text-xl font-bold text-gray-800">Conclusión:</h3>
+                        <p className="mt-4">
+                            Planificar tu retiro es una tarea esencial que no debe ser
+                            postergada. Al explorar y combinar diferentes
+                            mecánicas de ahorro e inversión, puedes construir un
+                            fondo robusto que te permita disfrutar una vejez
+                            tranquila y financieramente segura.
+                        </p>
+                        <h4 className="mt-4 text-md font-semibold text-gray-600 italic">
+                            La clave es iniciar lo antes posible y ser constante en tus aportaciones.
+                        </h4>
+                        <p className="mt-4">
+                            Más de 10 años en el Sector Financiero, promoviendo
+                            servicios bancarios y bursátiles de manera amigable y
+                            accesible.
+                            Brindamos experiencia eficiente, basada en Educación
+                            Financiera.
+                            Nuestro objetivo es ayudar a más personas a alcanzar
+                            su Libertad Financiera.
+                        </p>
+                    </div>
+
                 </InfoSection>
                 
                 <div className="mt-6 bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg text-center">
