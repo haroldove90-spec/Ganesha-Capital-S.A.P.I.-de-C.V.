@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ClientSidebar from './ClientSidebar';
 import ClientEducationView from './ClientEducationView';
 import FinancialPlansView from './FinancialPlansView';
+import FinancialPlanningInfoView from './FinancialPlanningInfoView';
 import type { ClientModuleView } from '../types';
 
 const ClientView: React.FC = () => {
@@ -11,6 +12,8 @@ const ClientView: React.FC = () => {
         switch (currentView) {
             case 'educacion':
                 return <ClientEducationView />;
+            case 'prevision':
+                return <FinancialPlanningInfoView />;
             case 'planes':
                 return <FinancialPlansView />;
             default:

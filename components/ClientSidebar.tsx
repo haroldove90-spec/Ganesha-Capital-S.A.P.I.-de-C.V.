@@ -2,6 +2,7 @@ import React from 'react';
 import { 
   AcademicCapIcon, 
   CircleStackIcon,
+  InformationCircleIcon,
 } from '@heroicons/react/24/outline';
 import type { ClientModuleView } from '../types';
 
@@ -13,6 +14,7 @@ interface ClientSidebarProps {
 const ClientSidebar: React.FC<ClientSidebarProps> = ({ currentView, setView }) => {
   const navItems = [
     { id: 'educacion' as ClientModuleView, name: 'Educación Financiera', icon: AcademicCapIcon },
+    { id: 'prevision' as ClientModuleView, name: '¿Qué es la Previsión?', icon: InformationCircleIcon },
     { id: 'planes' as ClientModuleView, name: 'Planes de Previsión', icon: CircleStackIcon },
   ];
 

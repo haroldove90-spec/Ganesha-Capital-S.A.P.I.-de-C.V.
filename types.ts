@@ -129,4 +129,4 @@ export interface FinancialGoal {
     deadline: string;
 }
 
-export type ClientModuleView = 'educacion' | 'planes';
+export type ClientModuleView = 'educacion' | 'prevision' | 'planes';
