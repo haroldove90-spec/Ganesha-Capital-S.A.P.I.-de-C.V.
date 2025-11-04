@@ -30,10 +30,10 @@ const ProductManagementView: React.FC = () => {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" className="px-6 py-3">Nombre del Plan</th>
+                <th scope="col" className="px-6 py-3">Aportación Mensual</th>
+                <th scope="col" className="px-6 py-3">Valor Final Estimado</th>
                 <th scope="col" className="px-6 py-3">Tipo</th>
-                <th scope="col" className="px-6 py-3">Rendimiento Anual</th>
                 <th scope="col" className="px-6 py-3">Riesgo</th>
-                <th scope="col" className="px-6 py-3">Inversión Mínima</th>
                 <th scope="col" className="px-6 py-3">Estatus</th>
                 <th scope="col" className="px-6 py-3">Acciones</th>
               </tr>
@@ -42,12 +42,12 @@ const ProductManagementView: React.FC = () => {
               {MOCK_FINANCIAL_PRODUCTS.map((product) => (
                 <tr key={product.id} className="bg-white border-b hover:bg-gray-50">
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{product.name}</td>
+                  <td className="px-6 py-4">${product.monthlyContribution.toLocaleString()}</td>
+                  <td className="px-6 py-4">${product.finalValue.toLocaleString()}</td>
                   <td className="px-6 py-4">{product.type}</td>
-                  <td className="px-6 py-4">{product.annualReturn}</td>
                   <td className="px-6 py-4">
                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${getRiskColor(product.riskLevel)}`}>{product.riskLevel}</span>
                   </td>
-                  <td className="px-6 py-4">${product.minInvestment.toLocaleString()}</td>
                   <td className="px-6 py-4">
                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(product.status)}`}>{product.status}</span>
                   </td>

@@ -104,12 +104,12 @@ export const MOCK_TEST_QUESTIONS: Record<'Basic' | 'Intermediate' | 'Advanced', 
   ],
 };
 
+// Se han actualizado los planes según la solicitud, corrigiendo un posible error en el valor del tercer plan para mantener la coherencia.
 export const MOCK_FINANCIAL_PRODUCTS: FinancialProduct[] = [
-    { id: 'FP001', name: 'Plan Futuro Seguro 2040', type: 'Plan de Ahorro', annualReturn: '5-7%', riskLevel: 'Bajo', minInvestment: 5000, status: 'Activo' },
-    { id: 'FP002', name: 'Fondo Crecimiento Global', type: 'Fondo de Inversión', annualReturn: '8-12%', riskLevel: 'Medio', minInvestment: 10000, status: 'Activo' },
-    { id: 'FP003', name: 'Retiro Dorado Plus', type: 'Seguro de Retiro', annualReturn: '4-6%', riskLevel: 'Bajo', minInvestment: 15000, status: 'Activo' },
-    { id: 'FP004', name: 'Fondo Tecnológico Disruptivo', type: 'Fondo de Inversión', annualReturn: '15-25%', riskLevel: 'Alto', minInvestment: 25000, status: 'Activo' },
-    { id: 'FP005', name: 'Plan de Ahorro Legado', type: 'Plan de Ahorro', annualReturn: '3-5%', riskLevel: 'Bajo', minInvestment: 5000, status: 'Inactivo' },
+    { id: 'FP001', name: '47 Años', type: 'Plan de Ahorro', riskLevel: 'Bajo', status: 'Activo', monthlyContribution: 2000, finalValue: 1050204, finalValueDescription: 'a tus 65 años' },
+    { id: 'FP002', name: '47 Años', type: 'Plan de Ahorro', riskLevel: 'Bajo', status: 'Activo', monthlyContribution: 3000, finalValue: 1622207, finalValueDescription: 'a tus 65 años' },
+    { id: 'FP003', name: '47 Años', type: 'Plan de Ahorro', riskLevel: 'Bajo', status: 'Activo', monthlyContribution: 4000, finalValue: 2189551, finalValueDescription: 'a tus 65 años' },
+    { id: 'FP004', name: '47 Años', type: 'Plan de Ahorro', riskLevel: 'Bajo', status: 'Activo', monthlyContribution: 5000, finalValue: 2768541, finalValueDescription: 'a tus 65 años' },
 ];
 
 export const MOCK_TRANSACTIONS: Transaction[] = [

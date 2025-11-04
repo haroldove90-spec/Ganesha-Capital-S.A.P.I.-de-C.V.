@@ -73,10 +73,11 @@ export interface FinancialProduct {
   id: string;
   name: string;
   type: 'Fondo de Inversión' | 'Plan de Ahorro' | 'Seguro de Retiro';
-  annualReturn: string;
   riskLevel: 'Bajo' | 'Medio' | 'Alto';
-  minInvestment: number;
   status: 'Activo' | 'Inactivo';
+  monthlyContribution: number;
+  finalValue: number;
+  finalValueDescription: string;
 }
 
 export interface Transaction {
