@@ -32,7 +32,10 @@ const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user, isViewingAsCl
                     <div className="flex items-center">
                          <UserCircleIcon className="h-10 w-10 text-white" />
                          <div className="ml-3 hidden md:block">
-                            <p className="text-sm font-medium text-white">{userName}</p>
+                            <p className="text-sm font-medium text-white">
+                                {userRole === 'admin' && <span className="font-bold text-secondary">Admin: </span>}
+                                {userName}
+                            </p>
                             <p className="text-xs text-gray-300">{userEmail}</p>
                         </div>
                     </div>
