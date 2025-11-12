@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../services/supabase';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 interface LoginProps {
   initialAuthError?: string | null;
@@ -14,6 +15,7 @@ const Login: React.FC<LoginProps> = ({ initialAuthError }) => {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         if (initialAuthError) {
@@ -95,6 +97,7 @@ const Login: React.FC<LoginProps> = ({ initialAuthError }) => {
         setDob('');
         setError('');
         setSuccessMessage('');
+        setShowPassword(false);
     };
 
     return (
@@ -122,9 +125,17 @@ const Login: React.FC<LoginProps> = ({ initialAuthError }) => {
                                 <label htmlFor="email-login" className="sr-only">Correo Electrónico</label>
                                 <input id="email-login" name="email" type="email" autoComplete="email" required className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Correo Electrónico" value={email} onChange={(e) => setEmail(e.target.value)} />
                             </div>
-                            <div>
+                            <div className="relative">
                                 <label htmlFor="password-login" className="sr-only">Contraseña</label>
-                                <input id="password-login" name="password" type="password" autoComplete="current-password" required className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <input id="password-login" name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required className="appearance-none relative block w-full px-4 py-3 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
+                                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                                >
+                                    {showPassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
+                                </button>
                             </div>
                         </div>
                         {error && <p className="text-sm text-red-400 text-center">{error}</p>}
@@ -157,9 +168,17 @@ const Login: React.FC<LoginProps> = ({ initialAuthError }) => {
                                 <label htmlFor="email-register" className="sr-only">Correo Electrónico</label>
                                 <input id="email-register" name="email" type="email" autoComplete="email" required className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Correo Electrónico" value={email} onChange={(e) => setEmail(e.target.value)} />
                             </div>
-                            <div>
+                            <div className="relative">
                                 <label htmlFor="password-register" className="sr-only">Contraseña</label>
-                                <input id="password-register" name="password" type="password" required minLength={6} className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Contraseña (mín. 6 caracteres)" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <input id="password-register" name="password" type={showPassword ? 'text' : 'password'} required minLength={6} className="appearance-none relative block w-full px-4 py-3 pr-10 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Contraseña (mín. 6 caracteres)" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
+                                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                                >
+                                    {showPassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
+                                </button>
                             </div>
                         </div>
                         {error && <p className="text-sm text-red-400 text-center">{error}</p>}

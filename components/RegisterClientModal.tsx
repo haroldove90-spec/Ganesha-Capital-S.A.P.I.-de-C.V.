@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { supabase } from '../services/supabase';
 import type { Client } from '../types';
 import { XMarkIcon, ArrowPathIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 interface RegisterClientModalProps {
   onClose: () => void;
@@ -12,6 +13,7 @@ const RegisterClientModal: React.FC<RegisterClientModalProps> = ({ onClose, onCl
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [dob, setDob] = useState('');
     const [gender, setGender] = useState<'Male' | 'Female' | 'Other'>('Male');
     const [city, setCity] = useState('');
@@ -107,7 +109,17 @@ const RegisterClientModal: React.FC<RegisterClientModalProps> = ({ onClose, onCl
                     </div>
                     <div>
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
-                        <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary text-gray-900"/>
+                        <div className="relative mt-1">
+                            <input type={showPassword ? 'text' : 'password'} name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} className="block w-full px-3 py-2 pr-10 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary text-gray-900"/>
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
+                                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                            >
+                                {showPassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
+                            </button>
+                        </div>
                     </div>
                      <div className="grid grid-cols-2 gap-4">
                          <div>
