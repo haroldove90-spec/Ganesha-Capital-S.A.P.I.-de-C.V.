@@ -38,15 +38,13 @@ function App() {
       // Set up an auth state change listener.
       const {
         data: { subscription },
-      } = supabase.auth.onAuthStateChange(async (_event, session) => {
-        setLoading(true);
+      } = supabase.auth.onAuthStateChange((_event, session) => {
         setSession(session);
 
         if (session) {
-          // If a session exists, explicitly fetch the user data to get the most up-to-date role.
-          // This bypasses potential stale data in the session object.
-          const { data: { user } } = await supabase.auth.getUser();
-          const role = user?.user_metadata?.role ?? 'client';
+          // The session object from the listener has the most up-to-date user data.
+          // No need for an extra API call to getUser().
+          const role = session.user.user_metadata?.role ?? 'client';
           setUserRole(role as UserRole);
           setInitialAuthError(null);
         } else {
