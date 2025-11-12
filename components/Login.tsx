@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import { supabase } from '../services/supabase';
 
 const Login: React.FC = () => {
+    const [isLoginView, setIsLoginView] = useState(true);
+    const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+        setSuccessMessage('');
         setLoading(true);
 
         if (!supabase) {
@@ -29,6 +33,79 @@ const Login: React.FC = () => {
         // The App component will automatically update via onAuthStateChange
         setLoading(false);
     };
+    
+    const handleRegister = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+        setSuccessMessage('');
+        setLoading(true);
+
+        if (!supabase) {
+            setError('Servicio de autenticación no disponible.');
+            setLoading(false);
+            return;
+        }
+
+        const { data: authData, error: authError } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    full_name: fullName,
+                    role: 'client',
+                },
+            },
+        });
+
+        if (authError) {
+            setError(authError.message);
+            setLoading(false);
+            return;
+        }
+
+        if (authData.user) {
+            const today = new Date().toISOString().split('T')[0];
+            const { error: insertError } = await supabase
+                .from('clients')
+                .insert({
+                    id: authData.user.id,
+                    name: fullName,
+                    email: email,
+                    dob: '1900-01-01', // Placeholder, user should update this
+                    age: 0,
+                    gender: 'Other',
+                    city: 'N/A',
+                    financialKnowledge: 'Basic',
+                    joinDate: today,
+                    lastInteraction: today,
+                    salesStage: 'Lead',
+                    role: 'Client',
+                    kycStatus: 'Pending',
+                    accountStatus: 'Active',
+                });
+
+            if (insertError) {
+                setError(`Usuario creado, pero falló al guardar el perfil: ${insertError.message}`);
+            } else {
+                setSuccessMessage('¡Registro exitoso! Revisa tu correo para activar tu cuenta.');
+                setIsLoginView(true); // Switch to login view after successful registration
+            }
+        } else {
+            setError("No se pudo crear el usuario. Por favor, intenta de nuevo.");
+        }
+
+        setLoading(false);
+    };
+
+    const toggleView = () => {
+        setIsLoginView(!isLoginView);
+        // Reset fields and messages
+        setEmail('');
+        setPassword('');
+        setFullName('');
+        setError('');
+        setSuccessMessage('');
+    };
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-primary">
@@ -43,63 +120,68 @@ const Login: React.FC = () => {
                         Ganesha Capital SAPI de CV
                     </h2>
                     <p className="mt-2 text-sm text-gray-300">
-                        Toma el control de tu futuro financiero.
+                        {isLoginView ? 'Toma el control de tu futuro financiero.' : 'Crea tu cuenta para comenzar.'}
                     </p>
                 </div>
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <div className="rounded-md space-y-4">
+
+                {isLoginView ? (
+                    // Login Form
+                    <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+                        <div className="rounded-md space-y-4">
+                            <div>
+                                <label htmlFor="email-login" className="sr-only">Correo Electrónico</label>
+                                <input id="email-login" name="email" type="email" autoComplete="email" required className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Correo Electrónico" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            </div>
+                            <div>
+                                <label htmlFor="password-login" className="sr-only">Contraseña</label>
+                                <input id="password-login" name="password" type="password" autoComplete="current-password" required className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            </div>
+                        </div>
+                        {error && <p className="text-sm text-red-400 text-center">{error}</p>}
+                        {successMessage && <p className="text-sm text-green-400 text-center">{successMessage}</p>}
                         <div>
-                            <label htmlFor="email" className="sr-only">Correo Electrónico</label>
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                autoComplete="email"
-                                required
-                                className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white"
-                                placeholder="Correo Electrónico"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
+                            <button type="submit" disabled={loading} className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-md text-white bg-secondary hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-secondary transition-colors disabled:bg-secondary/50">
+                                {loading ? 'Ingresando...' : 'Ingresar'}
+                            </button>
                         </div>
+                        <div className="text-center text-sm">
+                            <span className="text-gray-300">¿No tienes cuenta? </span>
+                            <button type="button" onClick={toggleView} className="font-medium text-secondary hover:text-secondary/80 focus:outline-none">
+                                Regístrate
+                            </button>
+                        </div>
+                    </form>
+                ) : (
+                    // Registration Form
+                    <form className="mt-8 space-y-6" onSubmit={handleRegister}>
+                        <div className="rounded-md space-y-4">
+                             <div>
+                                <label htmlFor="fullName" className="sr-only">Nombre Completo</label>
+                                <input id="fullName" name="fullName" type="text" autoComplete="name" required className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Nombre Completo" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                            </div>
+                            <div>
+                                <label htmlFor="email-register" className="sr-only">Correo Electrónico</label>
+                                <input id="email-register" name="email" type="email" autoComplete="email" required className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Correo Electrónico" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            </div>
+                            <div>
+                                <label htmlFor="password-register" className="sr-only">Contraseña</label>
+                                <input id="password-register" name="password" type="password" required minLength={6} className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Contraseña (mín. 6 caracteres)" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            </div>
+                        </div>
+                        {error && <p className="text-sm text-red-400 text-center">{error}</p>}
                         <div>
-                            <label htmlFor="password" className="sr-only">Contraseña</label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                autoComplete="current-password"
-                                required
-                                className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white"
-                                placeholder="Contraseña"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
+                            <button type="submit" disabled={loading} className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-md text-white bg-secondary hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-secondary transition-colors disabled:bg-secondary/50">
+                                {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
+                            </button>
                         </div>
-                    </div>
-
-                    {error && (
-                        <p className="text-sm text-red-400 text-center">{error}</p>
-                    )}
-
-                    <div>
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-md text-white bg-secondary hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-secondary transition-colors disabled:bg-secondary/50"
-                        >
-                            {loading ? 'Ingresando...' : 'Ingresar'}
-                        </button>
-                    </div>
-
-                     <div className="text-center">
-                        <div className="text-sm">
-                            <a href="#" className="font-medium text-gray-300 hover:text-white">
-                                ¿Olvidaste tu contraseña?
-                            </a>
+                         <div className="text-center text-sm">
+                            <span className="text-gray-300">¿Ya tienes cuenta? </span>
+                            <button type="button" onClick={toggleView} className="font-medium text-secondary hover:text-secondary/80 focus:outline-none">
+                                Ingresa
+                            </button>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                )}
             </div>
         </div>
     );
