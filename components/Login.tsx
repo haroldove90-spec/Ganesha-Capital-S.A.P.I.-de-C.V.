@@ -10,6 +10,7 @@ const Login: React.FC<LoginProps> = ({ initialAuthError }) => {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [dob, setDob] = useState('');
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [loading, setLoading] = useState(false);
@@ -63,6 +64,7 @@ const Login: React.FC<LoginProps> = ({ initialAuthError }) => {
                 data: {
                     full_name: fullName,
                     role: 'client',
+                    dob: dob,
                 },
             },
         });
@@ -90,6 +92,7 @@ const Login: React.FC<LoginProps> = ({ initialAuthError }) => {
         setEmail('');
         setPassword('');
         setFullName('');
+        setDob('');
         setError('');
         setSuccessMessage('');
     };
@@ -145,6 +148,10 @@ const Login: React.FC<LoginProps> = ({ initialAuthError }) => {
                              <div>
                                 <label htmlFor="fullName" className="sr-only">Nombre Completo</label>
                                 <input id="fullName" name="fullName" type="text" autoComplete="name" required className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" placeholder="Nombre Completo" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                            </div>
+                            <div>
+                                <label htmlFor="dob" className="block text-sm font-medium text-gray-300 mb-1">Fecha de Nacimiento</label>
+                                <input id="dob" name="dob" type="date" required className="appearance-none relative block w-full px-4 py-3 border border-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white" value={dob} onChange={(e) => setDob(e.target.value)} />
                             </div>
                             <div>
                                 <label htmlFor="email-register" className="sr-only">Correo Electrónico</label>
