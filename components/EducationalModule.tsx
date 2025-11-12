@@ -1,5 +1,6 @@
 import React from 'react';
 import type { EducationalTopic } from '../types';
+import { TOPIC_ICONS } from '../constants';
 
 interface EducationalModuleProps {
   topic: EducationalTopic;
@@ -7,7 +8,8 @@ interface EducationalModuleProps {
 }
 
 const EducationalModule: React.FC<EducationalModuleProps> = ({ topic, onSelectTopic }) => {
-  const { title, description, icon: Icon } = topic;
+  const { title, description, icon: iconName } = topic;
+  const Icon = TOPIC_ICONS[iconName] || (() => null);
 
   return (
     <div 

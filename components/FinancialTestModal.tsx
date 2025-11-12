@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { XMarkIcon, CheckCircleIcon, XCircleIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 import { LightBulbIcon } from '@heroicons/react/24/outline';
-import type { TestQuestion, UserAnswer, TestResult } from '../types';
+import type { EducationalTopic, TestQuestion, UserAnswer, TestResult } from '../types';
 import { generateTestQuestions, evaluateTestAnswers } from '../services/geminiService';
-import { EDUCATIONAL_TOPICS } from '../constants';
+import { TOPIC_ICONS } from '../constants';
+import { supabase } from '../services/supabase';
 
 
 interface FinancialTestModalProps {
@@ -42,13 +43,24 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose, level 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
     const [finalResults, setFinalResults] = useState<TestResult | null>(null);
+    const [allTopics, setAllTopics] = useState<EducationalTopic[]>([]);
 
     const fetchQuestions = async () => {
         setStatus('loading');
         try {
-            const fetchedQuestions = await generateTestQuestions(level);
+            if (!supabase) {
+                throw new Error("El servicio de base de datos no está disponible, no se puede generar el test.");
+            }
+            const [fetchedQuestions, topicsData] = await Promise.all([
+                generateTestQuestions(level),
+                supabase.from('educational_topics').select('*')
+            ]);
+            
             if (fetchedQuestions.length === 0) throw new Error("No questions returned");
+            if (topicsData.error) throw new Error(topicsData.error.message);
+
             setQuestions(fetchedQuestions);
+            setAllTopics(topicsData.data as EducationalTopic[]);
             setStatus('testing');
         } catch (error) {
             console.error(error);
@@ -166,16 +178,19 @@ const FinancialTestModal: React.FC<FinancialTestModalProps> = ({ onClose, level 
                             <div className="mt-8 text-left max-w-2xl mx-auto">
                                 <h4 className="font-bold text-gray-900 text-center mb-4">Temas recomendados para ti:</h4>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {EDUCATIONAL_TOPICS.filter(t => finalResults.recommendations.includes(t.title)).map(topic => (
-                                        <div key={topic.id} className="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-                                            <div className="flex items-center">
-                                                <div className="flex-shrink-0 bg-primary/10 rounded-md p-2">
-                                                    <topic.icon className="h-5 w-5 text-primary" />
+                                    {allTopics.filter(t => finalResults.recommendations.includes(t.title)).map(topic => {
+                                        const Icon = TOPIC_ICONS[topic.icon] || (() => null);
+                                        return (
+                                            <div key={topic.id} className="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                                                <div className="flex items-center">
+                                                    <div className="flex-shrink-0 bg-primary/10 rounded-md p-2">
+                                                        <Icon className="h-5 w-5 text-primary" />
+                                                    </div>
+                                                    <p className="ml-3 font-semibold text-gray-700">{topic.title}</p>
                                                 </div>
-                                                <p className="ml-3 font-semibold text-gray-700">{topic.title}</p>
                                             </div>
-                                        </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </div>

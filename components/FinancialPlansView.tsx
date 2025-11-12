@@ -1,11 +1,38 @@
-import React, { useState } from 'react';
-import { MOCK_FINANCIAL_PRODUCTS } from '../constants';
+import React, { useState, useEffect } from 'react';
 import type { FinancialProduct } from '../types';
+import { supabase } from '../services/supabase';
 import InterestFormModal from './InterestFormModal';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
 const FinancialPlansView: React.FC = () => {
+    const [products, setProducts] = useState<FinancialProduct[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<FinancialProduct | null>(null);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            if (!supabase) {
+                setError("No se pudo conectar a la base de datos para cargar los planes financieros.");
+                setLoading(false);
+                return;
+            }
+            const { data, error } = await supabase
+                .from('financial_products')
+                .select('*')
+                .eq('status', 'Activo');
+
+            if (error) {
+                setError(error.message);
+                console.error(error);
+            } else {
+                setProducts(data as FinancialProduct[]);
+            }
+            setLoading(false);
+        };
+        fetchProducts();
+    }, []);
 
     const handleInterestClick = (product: FinancialProduct) => {
         setSelectedProduct(product);
@@ -44,12 +71,23 @@ const FinancialPlansView: React.FC = () => {
                     <h1 className="text-2xl font-bold text-gray-900">Planes de Previsión Financiera</h1>
                     <p className="text-gray-500 mt-1">Descubre los planes y fondos que tenemos para ayudarte a alcanzar tus metas.</p>
                 </div>
+                
+                {loading && (
+                    <div className="flex justify-center items-center p-10">
+                        <ArrowPathIcon className="h-8 w-8 text-primary animate-spin" />
+                        <span className="ml-3 text-gray-600">Cargando planes...</span>
+                    </div>
+                )}
+                
+                {error && <p className="text-center text-red-500">Error al cargar los planes: {error}</p>}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {MOCK_FINANCIAL_PRODUCTS.filter(p => p.status === 'Activo').map(product => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
+                {!loading && !error && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {products.map(product => (
+                            <ProductCard key={product.id} product={product} />
+                        ))}
+                    </div>
+                )}
             </div>
 
             {isModalOpen && selectedProduct && (

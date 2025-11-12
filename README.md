@@ -17,6 +17,7 @@ This project was built as a demonstration of a modern, AI-integrated web applica
 ## 🛠️ Tech Stack
 
 -   **Frontend**: React, TypeScript
+-   **Backend**: Supabase (Authentication & Database)
 -   **Build Tool**: Vite
 -   **Styling**: Tailwind CSS (via CDN)
 -   **AI**: Google Gemini API (`@google/genai`)
@@ -31,6 +32,7 @@ This project is now configured with Vite for a modern development and build proc
 
 -   Node.js (v18+) and npm.
 -   A Google Gemini API Key.
+-   A Supabase project with tables matching the schemas defined in `src/types.ts`.
 
 ### Running Locally
 
@@ -41,11 +43,13 @@ This project is now configured with Vite for a modern development and build proc
     ```
 
 2.  **Set up environment variables**:
-    The application requires your Google Gemini API key. Create a file named `.env.local` in the root of the project and add your API key to it:
+    The application requires your Google Gemini API key. Create a file named `.env` in the root of the project and add your key to it.
+    
     ```
+    # Your Google Gemini API Key
     API_KEY=YOUR_GEMINI_API_KEY
     ```
-    Vite will automatically load this variable during development.
+    The Supabase credentials have been integrated directly into the code for this demonstration.
 
 3.  **Run the development server**:
     ```bash
@@ -71,8 +75,6 @@ This project is configured for easy deployment to Vercel.
       - **Build Command**: `npm run build`
       - **Output Directory**: `dist`
     - Go to the "Environment Variables" section in the project settings.
-    - Add your Google Gemini API key as an environment variable:
-      - **Name**: `API_KEY`
-      - **Value**: `YOUR_GEMINI_API_KEY`
+    - Add your Google Gemini API key as an environment variable.
 
 4.  **Deploy**: Click the "Deploy" button. Vercel will build and deploy your site, providing you with a URL.

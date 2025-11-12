@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
+import { supabase } from '../services/supabase';
 
-interface LoginProps {
-    onLogin: (role: 'admin' | 'client') => void;
-}
-
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
-    const [username, setUsername] = useState('');
+const Login: React.FC = () => {
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
 
-        if (username.toLowerCase() === 'admin' && password === 'admin123') {
-            onLogin('admin');
-        } else if (username.toLowerCase() === 'cliente' && password === 'cliente123') {
-            onLogin('client');
-        } else {
-            setError('Usuario o contraseña incorrectos.');
+        if (!supabase) {
+            setError('Servicio de autenticación no disponible. Por favor, revisa la configuración.');
+            setLoading(false);
+            return;
         }
+        
+        const { error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        });
+
+        if (error) {
+            setError(error.message);
+        }
+        // The App component will automatically update via onAuthStateChange
+        setLoading(false);
     };
 
     return (
@@ -41,17 +49,17 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md space-y-4">
                         <div>
-                            <label htmlFor="username" className="sr-only">Usuario</label>
+                            <label htmlFor="email" className="sr-only">Correo Electrónico</label>
                             <input
-                                id="username"
-                                name="username"
-                                type="text"
-                                autoComplete="username"
+                                id="email"
+                                name="email"
+                                type="email"
+                                autoComplete="email"
                                 required
                                 className="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm bg-white"
-                                placeholder="Usuario"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Correo Electrónico"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                         <div>
@@ -77,9 +85,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     <div>
                         <button
                             type="submit"
-                            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-md text-white bg-secondary hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-secondary transition-colors"
+                            disabled={loading}
+                            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-md text-white bg-secondary hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-secondary transition-colors disabled:bg-secondary/50"
                         >
-                            Ingresar
+                            {loading ? 'Ingresando...' : 'Ingresar'}
                         </button>
                     </div>
 

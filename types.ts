@@ -30,7 +30,7 @@ export interface EducationalTopic {
   category: 'Paz Financiera' | 'Libertad Financiera' | 'Abundancia Financiera';
   description: string;
   videoUrl: string;
-  icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
+  icon: string;
 }
 
 export interface TestQuestion {
@@ -129,4 +129,4 @@ export interface FinancialGoal {
     deadline: string;
 }
 
-export type ClientModuleView = 'educacion' | 'prevision' | 'planes';
+export type ClientModuleView = 'dashboard' | 'educacion' | 'prevision' | 'planes' | 'movimientos' | 'herramientas' | 'asesoria' | 'perfil';

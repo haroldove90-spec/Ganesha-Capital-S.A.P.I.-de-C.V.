@@ -1,66 +1,16 @@
-import type { Client, EducationalTopic, SocialLead, ChatEscalation, TestQuestion, FinancialProduct, Transaction, AdminActivityLog, PortfolioSummary, Investment, Notification, FinancialGoal } from './types';
+import type { TestQuestion, Client, SocialLead, ChatEscalation, FinancialProduct, Transaction, AdminActivityLog, EducationalTopic, PortfolioSummary, Investment, Notification, FinancialGoal } from './types';
 import { ShieldCheckIcon, ChartBarIcon, CurrencyDollarIcon, SparklesIcon, ScaleIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
+import type React from 'react';
 
+export const TOPIC_ICONS: Record<string, (props: React.SVGProps<SVGSVGElement>) => React.ReactElement> = {
+  ShieldCheckIcon,
+  ChartBarIcon,
+  CurrencyDollarIcon,
+  SparklesIcon,
+  ScaleIcon,
+  RocketLaunchIcon,
+};
 
-export const MOCK_CLIENTS: Client[] = [
-  { id: 1, name: 'Ana Torres', dob: '1990-05-15', age: 34, gender: 'Female', email: 'ana.torres@example.com', city: 'Mexico City', financialKnowledge: 'Intermediate', joinDate: '2023-01-20', lastInteraction: '2024-07-15', salesStage: 'Client', role: 'Client', kycStatus: 'Verified', accountStatus: 'Active' },
-  { id: 2, name: 'Carlos Rodriguez', dob: '1985-11-22', age: 38, gender: 'Male', email: 'carlos.r@example.com', city: 'Guadalajara', financialKnowledge: 'Advanced', joinDate: '2022-11-10', lastInteraction: '2024-07-20', salesStage: 'Advocate', role: 'Client', kycStatus: 'Verified', accountStatus: 'Active' },
-  { id: 3, name: 'Sofia Gomez', dob: '1998-02-10', age: 26, gender: 'Female', email: 'sofia.g@example.com', city: 'Monterrey', financialKnowledge: 'Basic', joinDate: '2024-03-05', lastInteraction: '2024-07-22', salesStage: 'Prospect', role: 'Client', kycStatus: 'Pending', accountStatus: 'Active' },
-  { id: 4, name: 'Javier Fernandez', dob: '1992-08-30', age: 31, gender: 'Male', email: 'javier.f@example.com', city: 'Puebla', financialKnowledge: 'Intermediate', joinDate: '2023-09-01', lastInteraction: '2024-06-30', salesStage: 'Client', role: 'Client', kycStatus: 'Verified', accountStatus: 'Active' },
-  { id: 5, name: 'Laura Martinez', dob: '2000-07-07', age: 24, gender: 'Female', email: 'laura.m@example.com', city: 'Cancun', financialKnowledge: 'Basic', joinDate: '2024-06-12', lastInteraction: '2024-07-25', salesStage: 'Lead', role: 'Client', kycStatus: 'Rejected', accountStatus: 'Suspended' },
-  { id: 6, name: 'David Lopez', dob: '1980-03-12', age: 44, gender: 'Male', email: 'david.l@example.com', city: 'Tijuana', financialKnowledge: 'Advanced', joinDate: '2021-05-18', lastInteraction: '2024-07-18', salesStage: 'Client', role: 'Client', kycStatus: 'Verified', accountStatus: 'Active' },
-];
-
-export const EDUCATIONAL_TOPICS: EducationalTopic[] = [
-    {
-      id: 'pf1',
-      title: 'Construyendo tu Fondo de Emergencia',
-      category: 'Paz Financiera',
-      description: 'Aprende la importancia de tener un colchón financiero y cómo construirlo paso a paso para afrontar imprevistos sin estrés.',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      icon: ShieldCheckIcon,
-    },
-    {
-      id: 'pf2',
-      title: 'Entendiendo y Manejando Deudas',
-      category: 'Paz Financiera',
-      description: 'Estrategias efectivas para organizar, priorizar y eliminar deudas, recuperando el control de tus finanzas personales.',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      icon: ScaleIcon,
-    },
-    {
-      id: 'lf1',
-      title: 'Principios de Inversión para Principiantes',
-      category: 'Libertad Financiera',
-      description: 'Descubre los conceptos básicos de la inversión, desde acciones hasta fondos, y cómo hacer que tu dinero trabaje para ti.',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      icon: ChartBarIcon,
-    },
-    {
-      id: 'lf2',
-      title: 'Planificación para el Retiro',
-      category: 'Libertad Financiera',
-      description: 'Explora diferentes vehículos de ahorro para el retiro y cómo establecer metas realistas para un futuro financiero seguro.',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      icon: RocketLaunchIcon,
-    },
-    {
-      id: 'af1',
-      title: 'Creando Múltiples Fuentes de Ingreso',
-      category: 'Abundancia Financiera',
-      description: 'Ideas y estrategias para diversificar tus ingresos más allá de tu salario principal, acelerando tu camino hacia la abundancia.',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      icon: CurrencyDollarIcon,
-    },
-    {
-      id: 'af2',
-      title: 'Mentalidad de Abundancia y Crecimiento',
-      category: 'Abundancia Financiera',
-      description: 'Cómo cultivar una mentalidad que atraiga oportunidades y te permita tomar decisiones financieras más audaces y estratégicas.',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      icon: SparklesIcon,
-    },
-];
 
 export const SALES_FUNNEL_DATA = [
   { name: 'Leads', value: 120 },
@@ -69,16 +19,6 @@ export const SALES_FUNNEL_DATA = [
   { name: 'Advocates', value: 25 },
 ];
 
-export const MOCK_SOCIAL_LEADS: SocialLead[] = [
-  { id: 1, name: 'Ricardo Morales', platform: 'Instagram', message: 'Hola, me interesa saber más sobre sus planes de inversión.', timestamp: '2024-07-26 10:30 AM' },
-  { id: 2, name: 'Lucia Fernandez', platform: 'Facebook', message: 'Vi su video sobre fondos de emergencia y tengo una pregunta.', timestamp: '2024-07-26 09:15 AM' },
-  { id: 3, name: 'Jorge Campos', platform: 'WhatsApp', message: 'Me gustaría agendar una asesoría.', timestamp: '2024-07-25 04:55 PM' },
-];
-
-export const MOCK_CHAT_ESCALATIONS: ChatEscalation[] = [
-    { id: 1, clientName: 'Sofia Gomez', lastMessage: 'No entiendo la diferencia entre interés simple y compuesto, ¿me puede ayudar un asesor?', timestamp: '2024-07-26 11:00 AM' },
-    { id: 2, clientName: 'Javier Fernandez', lastMessage: 'Quiero hablar con alguien sobre mi plan actual.', timestamp: '2024-07-25 02:10 PM' },
-];
 
 export const MOCK_TEST_QUESTIONS: Record<'Basic' | 'Intermediate' | 'Advanced', TestQuestion[]> = {
   Basic: [
@@ -104,30 +44,102 @@ export const MOCK_TEST_QUESTIONS: Record<'Basic' | 'Intermediate' | 'Advanced', 
   ],
 };
 
-// Se han actualizado los planes según la solicitud, corrigiendo un posible error en el valor del tercer plan para mantener la coherencia.
+// Fix: Add all missing mock data exports
+export const MOCK_CLIENTS: Client[] = [
+  {
+    id: 1,
+    name: 'Ana Torres',
+    dob: '1990-05-15',
+    age: 34,
+    gender: 'Female',
+    email: 'ana.torres@example.com',
+    city: 'Mexico City',
+    financialKnowledge: 'Intermediate',
+    joinDate: '2022-01-20',
+    lastInteraction: '2024-07-18',
+    salesStage: 'Client',
+    role: 'Client',
+    kycStatus: 'Verified',
+    accountStatus: 'Active',
+  },
+  {
+    id: 2,
+    name: 'Carlos Gomez',
+    dob: '1985-11-02',
+    age: 38,
+    gender: 'Male',
+    email: 'carlos.gomez@example.com',
+    city: 'Guadalajara',
+    financialKnowledge: 'Advanced',
+    joinDate: '2021-09-10',
+    lastInteraction: '2024-07-20',
+    salesStage: 'Advocate',
+    role: 'Client',
+    kycStatus: 'Verified',
+    accountStatus: 'Active',
+  },
+  {
+    id: 3,
+    name: 'Sofia Hernandez',
+    dob: '1995-02-28',
+    age: 29,
+    gender: 'Female',
+    email: 'sofia.h@example.com',
+    city: 'Monterrey',
+    financialKnowledge: 'Basic',
+    joinDate: '2023-03-05',
+    lastInteraction: '2024-06-30',
+    salesStage: 'Prospect',
+    role: 'Client',
+    kycStatus: 'Pending',
+    accountStatus: 'Active',
+  },
+];
+
+export const MOCK_SOCIAL_LEADS: SocialLead[] = [
+  { id: 1, name: 'Ricardo P.', platform: 'Facebook', message: 'Hola, me gustaría saber más sobre sus planes de inversión.', timestamp: 'Julio 24, 2024, 10:30 AM' },
+  { id: 2, name: 'Laura Morales', platform: 'Instagram', message: 'Vi su anuncio y quiero información sobre cómo empezar a ahorrar para mi retiro.', timestamp: 'Julio 24, 2024, 9:15 AM' },
+  { id: 3, name: '+52 55 1234 5678', platform: 'WhatsApp', message: 'Info', timestamp: 'Julio 23, 2024, 6:00 PM' },
+];
+
+export const MOCK_CHAT_ESCALATIONS: ChatEscalation[] = [
+  { id: 1, clientName: 'Ana Torres', lastMessage: 'No entiendo cómo ver el rendimiento de mi plan Futuro Seguro.', timestamp: 'Julio 22, 2024, 2:45 PM' },
+  { id: 2, clientName: 'Carlos Gomez', lastMessage: 'Necesito ayuda para hacer un depósito adicional.', timestamp: 'Julio 21, 2024, 11:00 AM' },
+];
+
 export const MOCK_FINANCIAL_PRODUCTS: FinancialProduct[] = [
-    { id: 'FP001', name: '47 Años', type: 'Plan de Ahorro', riskLevel: 'Bajo', status: 'Activo', monthlyContribution: 2000, finalValue: 1050204, finalValueDescription: 'a tus 65 años' },
-    { id: 'FP002', name: '47 Años', type: 'Plan de Ahorro', riskLevel: 'Bajo', status: 'Activo', monthlyContribution: 3000, finalValue: 1622207, finalValueDescription: 'a tus 65 años' },
-    { id: 'FP003', name: '47 Años', type: 'Plan de Ahorro', riskLevel: 'Bajo', status: 'Activo', monthlyContribution: 4000, finalValue: 2189551, finalValueDescription: 'a tus 65 años' },
-    { id: 'FP004', name: '47 Años', type: 'Plan de Ahorro', riskLevel: 'Bajo', status: 'Activo', monthlyContribution: 5000, finalValue: 2768541, finalValueDescription: 'a tus 65 años' },
+  { id: 'FP001', name: 'Plan Futuro Seguro 2040', type: 'Plan de Ahorro', riskLevel: 'Bajo', status: 'Activo', monthlyContribution: 5000, finalValue: 1500000, finalValueDescription: 'en 15 años' },
+  { id: 'FP002', name: 'Fondo Crecimiento Global', type: 'Fondo de Inversión', riskLevel: 'Alto', status: 'Activo', monthlyContribution: 10000, finalValue: 4000000, finalValueDescription: 'en 20 años' },
+  { id: 'FP003', name: 'Protección Retiro Total', type: 'Seguro de Retiro', riskLevel: 'Medio', status: 'Activo', monthlyContribution: 7500, finalValue: 2500000, finalValueDescription: 'al cumplir 65 años' },
+  { id: 'FP004', name: 'Mi Primer Millón', type: 'Plan de Ahorro', riskLevel: 'Medio', status: 'Inactivo', monthlyContribution: 8000, finalValue: 1000000, finalValueDescription: 'en 10 años' },
 ];
 
 export const MOCK_TRANSACTIONS: Transaction[] = [
-    { id: 'TRN001', clientName: 'Ana Torres', date: '2024-07-25', type: 'Depósito', amount: 10000, status: 'Aprobado' },
-    { id: 'TRN002', clientName: 'Carlos Rodriguez', date: '2024-07-24', type: 'Retiro', amount: 5000, status: 'Aprobado' },
-    { id: 'TRN003', clientName: 'Sofia Gomez', date: '2024-07-23', type: 'Depósito', amount: 7500, status: 'Pendiente' },
-    { id: 'TRN004', clientName: 'Javier Fernandez', date: '2024-07-22', type: 'Intereses generados', amount: 350.75, status: 'Aprobado' },
-    { id: 'TRN005', clientName: 'Ana Torres', date: '2024-07-21', type: 'Retiro', amount: 2000, status: 'Rechazado' },
+  { id: 'TXN001', clientName: 'Ana Torres', date: 'Julio 22, 2024', type: 'Depósito', amount: 5000, status: 'Aprobado' },
+  { id: 'TXN002', clientName: 'Carlos Gomez', date: 'Julio 21, 2024', type: 'Depósito', amount: 10000, status: 'Aprobado' },
+  { id: 'TXN003', clientName: 'Sofia Hernandez', date: 'Julio 20, 2024', type: 'Depósito', amount: 3000, status: 'Pendiente' },
+  { id: 'TXN004', clientName: 'Ana Torres', date: 'Julio 15, 2024', type: 'Intereses generados', amount: 850.75, status: 'Aprobado' },
+  { id: 'TXN005', clientName: 'Carlos Gomez', date: 'Julio 10, 2024', type: 'Retiro', amount: 20000, status: 'Aprobado' },
+  { id: 'TXN006', clientName: 'David Peña', date: 'Julio 09, 2024', type: 'Depósito', amount: 15000, status: 'Rechazado' },
+];
+
+export const EDUCATIONAL_TOPICS: EducationalTopic[] = [
+  { id: 'et1', title: 'Construyendo tu Fondo de Emergencia', category: 'Paz Financiera', description: 'Aprende por qué un fondo de emergencia es tu primer paso hacia la seguridad financiera y cómo construirlo efectivamente.', videoUrl: 'https://www.youtube.com/embed/O5nZt_X_3wM', icon: 'ShieldCheckIcon' },
+  { id: 'et2', title: 'Principios Básicos de Inversión', category: 'Paz Financiera', description: 'Descubre los conceptos fundamentales de la inversión, desde acciones y bonos hasta la importancia de la diversificación.', videoUrl: 'https://www.youtube.com/embed/O5nZt_X_3wM', icon: 'ChartBarIcon' },
+  { id: 'et3', title: 'Saliendo de Deudas Inteligentemente', category: 'Paz Financiera', description: 'Estrategias probadas para manejar y eliminar deudas, recuperando el control de tus finanzas personales.', videoUrl: 'https://www.youtube.com/embed/O5nZt_X_3wM', icon: 'CurrencyDollarIcon' },
+  { id: 'et4', title: 'Creando Múltiples Fuentes de Ingreso', category: 'Libertad Financiera', description: 'Explora cómo diversificar tus ingresos puede acelerar tu camino hacia la independencia económica.', videoUrl: 'https://www.youtube.com/embed/O5nZt_X_3wM', icon: 'SparklesIcon' },
+  { id: 'et5', title: 'Planificación para el Retiro (PPR)', category: 'Libertad Financiera', description: 'Todo lo que necesitas saber sobre los Planes Personales de Retiro para asegurar un futuro cómodo.', videoUrl: 'https://www.youtube.com/embed/O5nZt_X_3wM', icon: 'RocketLaunchIcon' },
+  { id: 'et6', title: 'Optimización Fiscal para Inversionistas', category: 'Abundancia Financiera', description: 'Aprende a maximizar tus rendimientos a través de estrategias fiscales inteligentes y legales.', videoUrl: 'https://www.youtube.com/embed/O5nZt_X_3wM', icon: 'ScaleIcon' },
 ];
 
 export const MOCK_ACTIVITY_LOGS: AdminActivityLog[] = [
-    { id: 1, user: 'admin@ganesha.com', action: 'Aprobó la transacción TRN002', timestamp: '2024-07-26 10:05 AM', ip: '192.168.1.10' },
-    { id: 2, user: 'support@ganesha.com', action: 'Editó el perfil del cliente ID: 3', timestamp: '2024-07-26 09:45 AM', ip: '201.150.33.12' },
-    { id: 3, user: 'admin@ganesha.com', action: 'Creó el nuevo producto financiero FP005', timestamp: '2024-07-25 03:20 PM', ip: '192.168.1.10' },
-    { id: 4, user: 'auditor@ganesha.com', action: 'Inició sesión', timestamp: '2024-07-25 09:00 AM', ip: '187.210.55.98' },
+  { id: 1, user: 'admin@ganesha.com', action: 'Inició sesión', timestamp: 'Julio 25, 2024, 09:01 AM', ip: '187.188.130.1' },
+  { id: 2, user: 'admin@ganesha.com', action: 'Consultó el perfil del cliente: Ana Torres', timestamp: 'Julio 25, 2024, 09:05 AM', ip: '187.188.130.1' },
+  { id: 3, user: 'soporte@ganesha.com', action: 'Inició sesión', timestamp: 'Julio 25, 2024, 09:15 AM', ip: '201.144.100.5' },
+  { id: 4, user: 'admin@ganesha.com', action: 'Agregó nuevo producto: Fondo Crecimiento Global', timestamp: 'Julio 24, 2024, 03:30 PM', ip: '187.188.130.1' },
+  { id: 5, user: 'soporte@ganesha.com', action: 'Resolvió ticket de soporte #1', timestamp: 'Julio 24, 2024, 11:45 AM', ip: '201.144.100.5' },
 ];
 
-// Mock data for the new Client Dashboard
 export const MOCK_PORTFOLIO_SUMMARY: PortfolioSummary = {
     investedCapital: 150000,
     currentValue: 162500,
@@ -136,11 +148,22 @@ export const MOCK_PORTFOLIO_SUMMARY: PortfolioSummary = {
 };
 
 export const MOCK_INVESTMENTS: Investment[] = [
-    { id: 'INV001', productName: 'Fondo Crecimiento Global', category: 'Fondo de Inversión', investedAmount: 75000, currentValue: 82500, returnPercentage: 10.0 },
-    { id: 'INV002', productName: 'Plan Futuro Seguro 2040', category: 'Plan de Ahorro', investedAmount: 50000, currentValue: 52500, returnPercentage: 5.0 },
-    { id: 'INV003', productName: 'Retiro Dorado Plus', category: 'Seguro de Retiro', investedAmount: 25000, currentValue: 27500, returnPercentage: 10.0 },
+    { id: 'inv1', productName: 'Plan Futuro Seguro 2040', category: 'Plan de Ahorro', investedAmount: 100000, currentValue: 108000, returnPercentage: 8.00 },
+    { id: 'inv2', productName: 'Fondo Crecimiento Global', category: 'Fondo de Inversión', investedAmount: 50000, currentValue: 54500, returnPercentage: 9.00 },
 ];
 
+export const MOCK_NOTIFICATIONS: Notification[] = [
+    { id: 1, title: 'Depósito Aprobado', description: 'Tu depósito de $5,000.00 a tu Plan Futuro Seguro 2040 ha sido aplicado.', timestamp: 'hace 2 días', read: false },
+    { id: 2, title: 'Resumen Mensual Disponible', description: 'Tu estado de cuenta de Junio ya está disponible para consulta.', timestamp: 'hace 3 semanas', read: true },
+    { id: 3, title: '¡Nuevo Módulo Educativo!', description: 'Aprende sobre Optimización Fiscal para Inversionistas.', timestamp: 'hace 1 mes', read: true },
+];
+
+export const MOCK_FINANCIAL_GOALS: FinancialGoal[] = [
+    { id: 1, name: 'Enganche para Casa', targetAmount: 500000, currentAmount: 162500, deadline: '2027-12-31' },
+    { id: 2, name: 'Fondo para el Retiro', targetAmount: 5000000, currentAmount: 350000, deadline: '2050-01-01' },
+];
+
+// Mock data for charts that would typically be aggregated from a database
 export const MOCK_PORTFOLIO_HISTORY = [
   { month: 'Ene', value: 150000 },
   { month: 'Feb', value: 151000 },
@@ -149,14 +172,4 @@ export const MOCK_PORTFOLIO_HISTORY = [
   { month: 'May', value: 158200 },
   { month: 'Jun', value: 160100 },
   { month: 'Jul', value: 162500 },
-];
-
-export const MOCK_NOTIFICATIONS: Notification[] = [
-    { id: 1, title: 'Intereses generados', description: 'Has recibido $350.75 en tu "Plan Futuro Seguro 2040".', timestamp: 'hace 2 días', read: false },
-    { id: 2, title: 'Nuevo Módulo Educativo', description: '¡No te pierdas nuestro nuevo video sobre "Mentalidad de Abundancia"!', timestamp: 'hace 5 días', read: false },
-    { id: 3, title: 'Depósito Confirmado', description: 'Tu depósito de $10,000.00 ha sido aprobado.', timestamp: 'hace 1 semana', read: true },
-];
-
-export const MOCK_FINANCIAL_GOALS: FinancialGoal[] = [
-    { id: 1, name: 'Enganche para casa', targetAmount: 300000, currentAmount: 120000, deadline: '2026-12-31' },
 ];

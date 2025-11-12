@@ -1,6 +1,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import type { TestQuestion, UserAnswer } from '../types';
-import { EDUCATIONAL_TOPICS, MOCK_TEST_QUESTIONS } from '../constants';
+import { MOCK_TEST_QUESTIONS } from '../constants';
+import { supabase } from './supabase';
 
 
 const API_KEY = process.env.API_KEY;
@@ -85,7 +86,19 @@ export const evaluateTestAnswers = async (answers: UserAnswer[]) => {
     if (!ai) {
         throw new Error("API key is not configured.");
     }
-    const topicTitles = EDUCATIONAL_TOPICS.map(t => t.title).join(', ');
+    
+    if (!supabase) {
+        throw new Error("Supabase client is not initialized. Cannot fetch educational topics.");
+    }
+    
+    const { data: topics, error: topicsError } = await supabase.from('educational_topics').select('title');
+    
+    if (topicsError || !topics) {
+        console.error("Error fetching educational topics from Supabase:", topicsError);
+        throw new Error("Failed to fetch educational topics for evaluation.");
+    }
+    
+    const topicTitles = topics.map(t => t.title).join(', ');
 
     const prompt = `A user has completed a financial knowledge test. Here are their answers:
     ${JSON.stringify(answers, null, 2)}

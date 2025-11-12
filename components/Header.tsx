@@ -1,14 +1,16 @@
 import React from 'react';
+import type { User } from '@supabase/supabase-js';
 import { ArrowLeftOnRectangleIcon, BellIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
 interface HeaderProps {
     userRole: 'admin' | 'client';
     onLogout: () => void;
+    user: User | null;
 }
 
-const Header: React.FC<HeaderProps> = ({ userRole, onLogout }) => {
-    const userName = userRole === 'admin' ? 'Admin Ganesha' : 'Ana Torres';
-    const userEmail = userRole === 'admin' ? 'admin@ganesha.com' : 'ana.torres@example.com';
+const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user }) => {
+    const userName = user?.user_metadata?.full_name || (userRole === 'admin' ? 'Admin Ganesha' : 'Cliente');
+    const userEmail = user?.email || '';
 
     return (
         <header className="bg-primary shadow-md sticky top-0 z-40 h-24">
