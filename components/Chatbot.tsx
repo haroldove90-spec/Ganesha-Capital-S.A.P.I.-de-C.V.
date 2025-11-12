@@ -1,12 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
-import type { ChatMessage } from '../types';
+import type { ChatMessage, Client } from '../types';
 import { getChatbotResponse } from '../services/geminiService';
+import { supabase } from '../services/supabase';
 import { PaperAirplaneIcon, ChatBubbleOvalLeftEllipsisIcon, XMarkIcon, UserPlusIcon } from '@heroicons/react/24/solid';
 
-const Chatbot: React.FC = () => {
+interface ChatbotProps {
+  client: Client;
+}
+
+const Chatbot: React.FC<ChatbotProps> = ({ client }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { id: 1, sender: 'bot', text: '¡Hola! Soy tu asistente financiero de GANESHA Capital. ¿En qué puedo ayudarte hoy?', timestamp: new Date().toISOString() }
+    { id: 1, sender: 'bot', text: `¡Hola ${client.name.split(' ')[0]}! Soy tu asistente financiero de GANESHA Capital. ¿En qué puedo ayudarte hoy?`, timestamp: new Date().toISOString() }
   ]);
   const [userInput, setUserInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -54,15 +59,46 @@ const Chatbot: React.FC = () => {
     }
   };
   
-  const handleRequestAgent = () => {
-    const botMessage: ChatMessage = {
-      id: Date.now(),
-      sender: 'bot',
-      text: '¡Entendido! Un agente de GANESHA Capital se pondrá en contacto contigo a la brevedad para darte asistencia personalizada. Normalmente te contactarán por email en las próximas 2 horas hábiles.',
-      timestamp: new Date().toISOString(),
-    };
-    setMessages(prev => [...prev, botMessage]);
+  const handleRequestAgent = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    const lastUserMessage = messages.slice().reverse().find(m => m.sender === 'user')?.text || 'El cliente solicitó un agente sin un mensaje previo.';
+
+    let botMessage: ChatMessage;
+
+    try {
+        if (!supabase) throw new Error("Supabase client not available.");
+        
+        const { error } = await supabase.from('chat_escalations').insert({
+            client_name: client.name,
+            last_message: lastUserMessage,
+            // The 'timestamp' column in Supabase should have a `now()` default value.
+        });
+
+        if (error) throw error;
+        
+        botMessage = {
+            id: Date.now(),
+            sender: 'bot',
+            text: '¡Entendido! Un agente de GANESHA Capital se pondrá en contacto contigo a la brevedad para darte asistencia personalizada. Normalmente te contactarán por email en las próximas 2 horas hábiles.',
+            timestamp: new Date().toISOString(),
+        };
+
+    } catch (error) {
+        console.error("Failed to escalate chat:", error);
+        botMessage = {
+            id: Date.now(),
+            sender: 'bot',
+            text: 'Lo siento, hubo un problema al intentar contactar a un agente. Por favor, intenta de nuevo más tarde.',
+            timestamp: new Date().toISOString(),
+        };
+    } finally {
+        setMessages(prev => [...prev, botMessage]);
+        setIsLoading(false);
+    }
   };
+
 
   return (
     <>
@@ -80,7 +116,12 @@ const Chatbot: React.FC = () => {
         <header className="flex items-center justify-between p-4 bg-primary text-white rounded-t-xl">
           <h3 className="font-bold text-lg">Asistente GANESHA</h3>
           <div className="flex items-center space-x-2">
-            <button onClick={handleRequestAgent} className="hover:bg-primary/90 p-1 rounded-full" aria-label="Hablar con un agente">
+            <button 
+              onClick={handleRequestAgent} 
+              className="hover:bg-primary/90 p-1 rounded-full disabled:opacity-50 disabled:cursor-not-allowed" 
+              aria-label="Hablar con un agente"
+              disabled={isLoading}
+            >
                 <UserPlusIcon className="h-6 w-6" title="Hablar con un agente"/>
             </button>
             <button onClick={() => setIsOpen(false)} className="hover:bg-primary/90 p-1 rounded-full" aria-label="Close chat">

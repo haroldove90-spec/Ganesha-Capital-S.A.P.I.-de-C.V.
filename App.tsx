@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard';
 import ClientView from './components/ClientView';
 import Header from './components/Header';
 import Chatbot from './components/Chatbot';
+import { MOCK_CLIENTS } from './constants';
 
 type UserRole = 'admin' | 'client';
 
@@ -85,6 +86,10 @@ function App() {
       setAdminViewAsClient(prev => !prev);
     }
   };
+  
+  // For demonstration, we'll use the first mock client.
+  // In a real app, you would fetch the client profile based on the session user's ID.
+  const currentClient = MOCK_CLIENTS[0];
 
   return (
     <div className={`${isLoggedIn ? 'bg-gray-100' : 'bg-primary'} min-h-screen font-sans`}>
@@ -106,7 +111,7 @@ function App() {
               <ClientView />
             )}
           </main>
-          {(userRole === 'client' || (userRole === 'admin' && adminViewAsClient)) && <Chatbot />}
+          {(userRole === 'client' || (userRole === 'admin' && adminViewAsClient)) && <Chatbot client={currentClient} />}
         </>
       )}
     </div>
