@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { EDUCATIONAL_TOPICS, MOCK_CLIENTS, MOCK_PORTFOLIO_SUMMARY, MOCK_INVESTMENTS, MOCK_PORTFOLIO_HISTORY, MOCK_NOTIFICATIONS, MOCK_FINANCIAL_GOALS } from '../constants';
-import type { EducationalTopic } from '../types';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../services/supabase';
+import type { Client, EducationalTopic } from '../types';
+import { EDUCATIONAL_TOPICS, MOCK_PORTFOLIO_SUMMARY, MOCK_INVESTMENTS, MOCK_PORTFOLIO_HISTORY, MOCK_NOTIFICATIONS, MOCK_FINANCIAL_GOALS } from '../constants';
 import EducationalModal from './EducationalModal';
 import FinancialTestModal from './FinancialTestModal';
 import PlanModal from './PlanModal';
@@ -16,7 +17,8 @@ import {
     CalendarDaysIcon,
     AcademicCapIcon,
     CalculatorIcon,
-    FlagIcon
+    FlagIcon,
+    ArrowPathIcon
 } from '@heroicons/react/24/outline';
 
 
@@ -39,17 +41,70 @@ const DashboardKpiCard: React.FC<{ icon: React.ElementType, title: string, value
 );
 
 const ClientDashboardView: React.FC = () => {
+    const [client, setClient] = useState<Client | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
     const [selectedTopic, setSelectedTopic] = useState<EducationalTopic | null>(null);
     const [isTestModalOpen, setIsTestModalOpen] = useState(false);
     const [isPlanModalOpen, setIsPlanModalOpen] = useState(false);
     const [testLevel] = useState<'Basic' | 'Intermediate' | 'Advanced'>('Basic');
 
-    // Mock data for the current client
-    const client = MOCK_CLIENTS[0];
+
+    useEffect(() => {
+        const fetchClientData = async () => {
+            setLoading(true);
+            setError(null);
+            if (!supabase) {
+                setError("Servicio de base de datos no disponible.");
+                setLoading(false);
+                return;
+            }
+
+            const { data: { user } } = await supabase.auth.getUser();
+
+            if (user) {
+                const { data, error } = await supabase
+                    .from('clients')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+
+                if (error) {
+                    setError('No se pudo cargar tu información. Por favor, intenta de nuevo más tarde.');
+                    console.error("Error fetching client data:", error);
+                } else {
+                    setClient(data);
+                }
+            } else {
+                setError('No se pudo identificar al usuario.');
+            }
+            setLoading(false);
+        };
+
+        fetchClientData();
+    }, []);
+
+    // Mock data for other sections
     const portfolio = MOCK_PORTFOLIO_SUMMARY;
     const investments = MOCK_INVESTMENTS;
     const notifications = MOCK_NOTIFICATIONS;
     const goals = MOCK_FINANCIAL_GOALS;
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-full">
+                <ArrowPathIcon className="h-8 w-8 text-primary animate-spin" />
+                <span className="ml-3 text-gray-600">Cargando tu resumen...</span>
+            </div>
+        );
+    }
+
+    if (error || !client) {
+        return <div className="text-center p-8 text-red-500">{error || 'No se encontró la información del cliente.'}</div>;
+    }
+    
+    const welcomeMessage = client.gender === 'Female' ? 'Bienvenida' : 'Bienvenido';
 
   return (
     <>
@@ -62,12 +117,12 @@ const ClientDashboardView: React.FC = () => {
             <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
                 <div className="flex justify-between items-start">
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-900">Bienvenida de nuevo, {client.name.split(' ')[0]}!</h2>
+                        <h2 className="text-2xl font-bold text-gray-900">{welcomeMessage} de nuevo, {client.name.split(' ')[0]}!</h2>
                         <p className="text-gray-500 mt-1">Aquí tienes un resumen de tu universo financiero.</p>
                     </div>
                     <div className="flex items-center space-x-2 text-sm font-semibold bg-green-100 text-green-800 px-3 py-1 rounded-full">
                         <CheckBadgeIcon className="h-5 w-5" />
-                        <span>KYC Verificado</span>
+                        <span>KYC {client.kycStatus}</span>
                     </div>
                 </div>
             </div>
