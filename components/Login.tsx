@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../services/supabase';
 
-const Login: React.FC = () => {
+interface LoginProps {
+  initialAuthError?: string | null;
+}
+
+const Login: React.FC<LoginProps> = ({ initialAuthError }) => {
     const [isLoginView, setIsLoginView] = useState(true);
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
@@ -9,6 +13,12 @@ const Login: React.FC = () => {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (initialAuthError) {
+          setError(initialAuthError);
+        }
+    }, [initialAuthError]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
