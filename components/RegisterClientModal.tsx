@@ -21,18 +21,6 @@ const RegisterClientModal: React.FC<RegisterClientModalProps> = ({ onClose, onCl
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
-    const calculateAge = (birthDateString: string): number => {
-        if (!birthDateString) return 0;
-        const birthDate = new Date(birthDateString);
-        const today = new Date();
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        return age;
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -63,35 +51,9 @@ const RegisterClientModal: React.FC<RegisterClientModalProps> = ({ onClose, onCl
         }
 
         if (authData.user) {
-            // 2. Insert client profile into 'clients' table
-            const newClientData = {
-                id: authData.user.id,
-                name: fullName,
-                email: email,
-                dob: dob,
-                age: calculateAge(dob),
-                gender: gender,
-                city: city,
-                financialKnowledge: financialKnowledge,
-                joinDate: new Date().toISOString().split('T')[0],
-                lastInteraction: new Date().toISOString().split('T')[0],
-                salesStage: 'Client' as const,
-                role: 'Client' as const,
-                kycStatus: 'Pending' as const,
-                accountStatus: 'Active' as const,
-            };
-
-            const { error: insertError } = await supabase
-                .from('clients')
-                .insert(newClientData);
+            // The database trigger 'on_auth_user_created' will handle creating the client profile.
+            // The client-side insert is removed to fix the Row-Level Security policy violation.
             
-            if (insertError) {
-                // Ideally, you might want to delete the created auth user for consistency
-                setError(`Usuario creado, pero falló al guardar el perfil: ${insertError.message}`);
-                setLoading(false);
-                return;
-            }
-
             // 3. Success
             setLoading(false);
             setSuccess(true);
