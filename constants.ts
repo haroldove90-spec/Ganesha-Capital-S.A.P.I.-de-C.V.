@@ -112,6 +112,7 @@ export const MOCK_FINANCIAL_PRODUCTS: FinancialProduct[] = [
   { id: 'FP002', name: 'Fondo Crecimiento Global', type: 'Fondo de Inversión', riskLevel: 'Alto', status: 'Activo', monthlyContribution: 10000, finalValue: 4000000, finalValueDescription: 'en 20 años' },
   { id: 'FP003', name: 'Protección Retiro Total', type: 'Seguro de Retiro', riskLevel: 'Medio', status: 'Activo', monthlyContribution: 7500, finalValue: 2500000, finalValueDescription: 'al cumplir 65 años' },
   { id: 'FP004', name: 'Mi Primer Millón', type: 'Plan de Ahorro', riskLevel: 'Medio', status: 'Inactivo', monthlyContribution: 8000, finalValue: 1000000, finalValueDescription: 'en 10 años' },
+  { id: 'FP005', name: 'Crédito Personal Express', type: 'Préstamo Personal', riskLevel: 'Medio', status: 'Activo', monthlyContribution: 2500, finalValue: 50000, finalValueDescription: 'a 24 meses' },
 ];
 
 export const MOCK_TRANSACTIONS: Transaction[] = [

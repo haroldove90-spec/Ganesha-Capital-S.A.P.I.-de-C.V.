@@ -4,7 +4,7 @@ import type { EducationalTopic } from '../types';
 import EducationalModal from './EducationalModal';
 import FinancialTestModal from './FinancialTestModal';
 import PlanModal from './PlanModal';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
 import { 
     CheckBadgeIcon, 
     BanknotesIcon,
@@ -90,6 +90,7 @@ const ClientDashboardView: React.FC = () => {
                                 <stop offset="95%" stopColor="#132D48" stopOpacity={0}/>
                                 </linearGradient>
                             </defs>
+                            <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="month" stroke="gray" />
                             <YAxis stroke="gray" tickFormatter={(value) => `$${Number(value) / 1000}k`} />
                             <Tooltip formatter={(value: number) => formatCurrency(value)} />

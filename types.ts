@@ -72,7 +72,7 @@ export interface ChatEscalation {
 export interface FinancialProduct {
   id: string;
   name: string;
-  type: 'Fondo de Inversión' | 'Plan de Ahorro' | 'Seguro de Retiro';
+  type: 'Fondo de Inversión' | 'Plan de Ahorro' | 'Seguro de Retiro' | 'Préstamo Personal';
   riskLevel: 'Bajo' | 'Medio' | 'Alto';
   status: 'Activo' | 'Inactivo';
   monthlyContribution: number;
