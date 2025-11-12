@@ -23,13 +23,20 @@ const DetailRow: React.FC<{ icon: React.ElementType, label: string, value: strin
     </div>
 );
 
-const EditableDetailRow: React.FC<{ icon: React.ElementType, label: string, name: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }> = ({ icon: Icon, label, name, value, onChange }) => (
+const EditableDetailRow: React.FC<{ 
+    icon: React.ElementType, 
+    label: string, 
+    name: string, 
+    value: string, 
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    type?: 'text' | 'email' | 'date' 
+}> = ({ icon: Icon, label, name, value, onChange, type = 'text' }) => (
      <div className="flex items-center py-2">
         <Icon className="h-5 w-5 text-gray-400 mr-4 flex-shrink-0" />
         <div className="flex-1">
             <label htmlFor={name} className="text-sm font-medium text-gray-500">{label}</label>
             <input 
-                type={name === 'email' ? 'email' : 'text'}
+                type={type}
                 id={name}
                 name={name}
                 value={value}
@@ -42,13 +49,17 @@ const EditableDetailRow: React.FC<{ icon: React.ElementType, label: string, name
 
 
 const ClientProfileView: React.FC = () => {
-    const [client, setClient] = useState(MOCK_CLIENTS[0]);
+    // In a real app, you would fetch this, but for now we find the client
+    // and keep a reference to its original data to allow for reverting changes.
+    const originalClient = MOCK_CLIENTS[0];
+    const [client, setClient] = useState(originalClient);
 
     const [isEditingProfile, setIsEditingProfile] = useState(false);
     const [profileData, setProfileData] = useState({
         name: client.name,
         email: client.email,
         city: client.city,
+        dob: client.dob,
     });
 
     const [isChangingPassword, setIsChangingPassword] = useState(false);
@@ -57,8 +68,10 @@ const ClientProfileView: React.FC = () => {
     
     const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     
+    // When the underlying client data changes (e.g., from an external source, though not in this mock setup),
+    // update the view and form data.
     useEffect(() => {
-        setProfileData({ name: client.name, email: client.email, city: client.city });
+        setProfileData({ name: client.name, email: client.email, city: client.city, dob: client.dob });
     }, [client]);
 
     const showNotification = (message: string, type: 'success' | 'error') => {
@@ -68,14 +81,24 @@ const ClientProfileView: React.FC = () => {
 
     const handleProfileEditToggle = () => {
         if (isEditingProfile) {
-            setProfileData({ name: client.name, email: client.email, city: client.city });
+            // If canceling, revert form data to the current client state
+            setProfileData({ name: client.name, email: client.email, city: client.city, dob: client.dob });
         }
         setIsEditingProfile(!isEditingProfile);
     };
 
     const handleProfileSave = () => {
-        console.log("Saving profile data:", profileData);
-        setClient(prevClient => ({ ...prevClient, ...profileData }));
+        // Create a new updated client object
+        const updatedClient = { ...client, ...profileData };
+        
+        // Update the mock data source
+        const clientIndex = MOCK_CLIENTS.findIndex(c => c.id === updatedClient.id);
+        if (clientIndex !== -1) {
+            MOCK_CLIENTS[clientIndex] = updatedClient;
+        }
+
+        // Update the component's state
+        setClient(updatedClient);
         setIsEditingProfile(false);
         showNotification('Perfil actualizado con éxito.', 'success');
     };
@@ -161,9 +184,9 @@ const ClientProfileView: React.FC = () => {
                         {isEditingProfile ? (
                             <div className="space-y-2">
                                 <EditableDetailRow icon={UserIcon} label="Nombre Completo" name="name" value={profileData.name} onChange={handleProfileInputChange} />
-                                <EditableDetailRow icon={EnvelopeIcon} label="Correo Electrónico" name="email" value={profileData.email} onChange={handleProfileInputChange} />
+                                <EditableDetailRow icon={EnvelopeIcon} label="Correo Electrónico" name="email" value={profileData.email} onChange={handleProfileInputChange} type="email" />
                                 <EditableDetailRow icon={MapPinIcon} label="Ciudad" name="city" value={profileData.city} onChange={handleProfileInputChange} />
-                                <DetailRow icon={CakeIcon} label="Fecha de Nacimiento" value={client.dob} />
+                                <EditableDetailRow icon={CakeIcon} label="Fecha de Nacimiento" name="dob" value={profileData.dob} onChange={handleProfileInputChange} type="date" />
                             </div>
                         ) : (
                             <>
