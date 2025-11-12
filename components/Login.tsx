@@ -46,7 +46,7 @@ const Login: React.FC = () => {
             return;
         }
 
-        const { data: authData, error: authError } = await supabase.auth.signUp({
+        const { data, error: authError } = await supabase.auth.signUp({
             email,
             password,
             options: {
@@ -57,44 +57,21 @@ const Login: React.FC = () => {
             },
         });
 
+        setLoading(false);
+
         if (authError) {
             setError(authError.message);
-            setLoading(false);
             return;
         }
 
-        if (authData.user) {
-            const today = new Date().toISOString().split('T')[0];
-            const { error: insertError } = await supabase
-                .from('clients')
-                .insert({
-                    id: authData.user.id,
-                    name: fullName,
-                    email: email,
-                    dob: '1900-01-01', // Placeholder, user should update this
-                    age: 0,
-                    gender: 'Other',
-                    city: 'N/A',
-                    financialKnowledge: 'Basic',
-                    joinDate: today,
-                    lastInteraction: today,
-                    salesStage: 'Lead',
-                    role: 'Client',
-                    kycStatus: 'Pending',
-                    accountStatus: 'Active',
-                });
-
-            if (insertError) {
-                setError(`Usuario creado, pero falló al guardar el perfil: ${insertError.message}`);
-            } else {
-                setSuccessMessage('¡Registro exitoso! Revisa tu correo para activar tu cuenta.');
-                setIsLoginView(true); // Switch to login view after successful registration
-            }
+        // The database trigger 'on_auth_user_created' will handle creating the client profile.
+        // The client-side insert was removed to fix the Row-Level Security policy violation.
+        if (data.user) {
+            setSuccessMessage('¡Registro exitoso! Revisa tu correo para activar tu cuenta.');
+            setIsLoginView(true); // Switch to login view after successful registration
         } else {
             setError("No se pudo crear el usuario. Por favor, intenta de nuevo.");
         }
-
-        setLoading(false);
     };
 
     const toggleView = () => {
