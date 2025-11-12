@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { MOCK_CLIENTS } from '../constants';
+import { supabase } from '../services/supabase';
+import type { Client } from '../types';
 import { 
     UserIcon, 
     CakeIcon, 
     MapPinIcon, 
     EnvelopeIcon, 
     CheckBadgeIcon, 
-    ShieldCheckIcon,
     PencilIcon,
     CheckIcon,
-    XMarkIcon
+    XMarkIcon,
+    ArrowPathIcon
 } from '@heroicons/react/24/outline';
 
 
@@ -49,29 +50,55 @@ const EditableDetailRow: React.FC<{
 
 
 const ClientProfileView: React.FC = () => {
-    // In a real app, you would fetch this, but for now we find the client
-    // and keep a reference to its original data to allow for reverting changes.
-    const originalClient = MOCK_CLIENTS[0];
-    const [client, setClient] = useState(originalClient);
+    const [client, setClient] = useState<Client | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [fetchError, setFetchError] = useState<string | null>(null);
 
     const [isEditingProfile, setIsEditingProfile] = useState(false);
-    const [profileData, setProfileData] = useState({
-        name: client.name,
-        email: client.email,
-        city: client.city,
-        dob: client.dob,
-    });
+    const [profileData, setProfileData] = useState({ name: '', email: '', city: '', dob: '' });
 
     const [isChangingPassword, setIsChangingPassword] = useState(false);
-    const [passwordData, setPasswordData] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    const [passwordData, setPasswordData] = useState({ newPassword: '', confirmPassword: '' });
     const [passwordError, setPasswordError] = useState('');
     
     const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     
-    // When the underlying client data changes (e.g., from an external source, though not in this mock setup),
-    // update the view and form data.
     useEffect(() => {
-        setProfileData({ name: client.name, email: client.email, city: client.city, dob: client.dob });
+        const fetchClientProfile = async () => {
+            if (!supabase) {
+                setFetchError("Servicio de base de datos no disponible.");
+                setLoading(false);
+                return;
+            }
+
+            const { data: { user } } = await supabase.auth.getUser();
+
+            if (user) {
+                const { data, error } = await supabase
+                    .from('clients')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+
+                if (error) {
+                    setFetchError('No se pudo cargar tu perfil. Por favor, intenta de nuevo más tarde.');
+                    console.error("Error fetching client profile:", error);
+                } else {
+                    setClient(data);
+                }
+            } else {
+                setFetchError('No se pudo identificar al usuario.');
+            }
+            setLoading(false);
+        };
+
+        fetchClientProfile();
+    }, []);
+
+    useEffect(() => {
+        if (client) {
+            setProfileData({ name: client.name, email: client.email, city: client.city, dob: client.dob });
+        }
     }, [client]);
 
     const showNotification = (message: string, type: 'success' | 'error') => {
@@ -80,28 +107,58 @@ const ClientProfileView: React.FC = () => {
     };
 
     const handleProfileEditToggle = () => {
-        if (isEditingProfile) {
+        if (isEditingProfile && client) {
             // If canceling, revert form data to the current client state
             setProfileData({ name: client.name, email: client.email, city: client.city, dob: client.dob });
         }
         setIsEditingProfile(!isEditingProfile);
     };
 
-    const handleProfileSave = () => {
-        // Create a new updated client object
-        const updatedClient = { ...client, ...profileData };
-        
-        // Update the mock data source
-        const clientIndex = MOCK_CLIENTS.findIndex(c => c.id === updatedClient.id);
-        if (clientIndex !== -1) {
-            MOCK_CLIENTS[clientIndex] = updatedClient;
+    const handleProfileSave = async () => {
+        if (!client || !supabase) return;
+
+        // 1. Update public.clients table
+        const { data: updatedClientData, error: clientError } = await supabase
+            .from('clients')
+            .update({
+                name: profileData.name,
+                city: profileData.city,
+                dob: profileData.dob,
+            })
+            .eq('id', client.id)
+            .select()
+            .single();
+
+        if (clientError) {
+            showNotification('Error al actualizar el perfil.', 'error');
+            console.error(clientError);
+            return;
         }
 
-        // Update the component's state
-        setClient(updatedClient);
+        // 2. Update auth.users metadata for name
+        if (profileData.name !== client.name) {
+            const { error: userError } = await supabase.auth.updateUser({
+                data: { full_name: profileData.name }
+            });
+            if (userError) console.error("Error updating user metadata:", userError);
+        }
+
+        // 3. Handle auth email update, which requires confirmation
+        if (profileData.email !== client.email) {
+            const { error: emailError } = await supabase.auth.updateUser({ email: profileData.email });
+            if (emailError) {
+                showNotification(`Perfil guardado, pero no se pudo actualizar el email: ${emailError.message}`, 'error');
+            } else {
+                showNotification('Perfil actualizado. Revisa tu nuevo correo para confirmar el cambio.', 'success');
+            }
+        } else {
+            showNotification('Perfil actualizado con éxito.', 'success');
+        }
+
+        setClient(updatedClientData);
         setIsEditingProfile(false);
-        showNotification('Perfil actualizado con éxito.', 'success');
     };
+
 
     const handleProfileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -110,7 +167,7 @@ const ClientProfileView: React.FC = () => {
     
     const handlePasswordChangeToggle = () => {
         setIsChangingPassword(!isChangingPassword);
-        setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+        setPasswordData({ newPassword: '', confirmPassword: '' });
         setPasswordError('');
     };
     
@@ -119,7 +176,7 @@ const ClientProfileView: React.FC = () => {
         setPasswordData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handlePasswordSave = (e: React.FormEvent) => {
+    const handlePasswordSave = async (e: React.FormEvent) => {
         e.preventDefault();
         setPasswordError('');
         if (passwordData.newPassword !== passwordData.confirmPassword) {
@@ -130,12 +187,22 @@ const ClientProfileView: React.FC = () => {
             setPasswordError('La nueva contraseña debe tener al menos 6 caracteres.');
             return;
         }
-        console.log("Changing password...");
-        showNotification('Contraseña cambiada con éxito.', 'success');
-        handlePasswordChangeToggle();
+        
+        if (!supabase) return;
+
+        const { error } = await supabase.auth.updateUser({ password: passwordData.newPassword });
+
+        if (error) {
+            setPasswordError(error.message);
+            showNotification('Error al cambiar la contraseña.', 'error');
+        } else {
+            showNotification('Contraseña cambiada con éxito.', 'success');
+            handlePasswordChangeToggle();
+        }
     };
 
     const getKycStatusPill = () => {
+        if (!client) return null;
         switch (client.kycStatus) {
             case 'Verified':
                 return <span className="px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 flex items-center gap-2"><CheckBadgeIcon className="h-5 w-5" /> Verificado</span>;
@@ -145,6 +212,19 @@ const ClientProfileView: React.FC = () => {
                 return <span className="px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800">Rechazado</span>;
         }
     };
+    
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-full">
+                <ArrowPathIcon className="h-8 w-8 text-primary animate-spin" />
+                <span className="ml-3 text-gray-600">Cargando perfil...</span>
+            </div>
+        );
+    }
+
+    if (fetchError || !client) {
+        return <div className="text-center p-8 text-red-500">{fetchError || 'No se encontró el perfil del cliente.'}</div>;
+    }
 
     return (
         <div className="space-y-6">
@@ -223,10 +303,6 @@ const ClientProfileView: React.FC = () => {
                             </button>
                             {isChangingPassword && (
                                 <form onSubmit={handlePasswordSave} className="space-y-3 pt-2 border-t">
-                                     <div>
-                                        <label htmlFor="currentPassword" className="text-xs font-medium text-gray-500">Contraseña Actual</label>
-                                        <input type="password" name="currentPassword" id="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordInputChange} required className="mt-1 block w-full px-2 py-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm text-gray-900"/>
-                                     </div>
                                       <div>
                                         <label htmlFor="newPassword" className="text-xs font-medium text-gray-500">Nueva Contraseña</label>
                                         <input type="password" name="newPassword" id="newPassword" value={passwordData.newPassword} onChange={handlePasswordInputChange} required className="mt-1 block w-full px-2 py-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm text-gray-900"/>
