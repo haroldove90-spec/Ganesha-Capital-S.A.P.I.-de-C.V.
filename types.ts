@@ -1,7 +1,7 @@
 import type React from 'react';
 
 export interface Client {
-  id: number;
+  id: string;
   name: string;
   dob: string;
   age: number;

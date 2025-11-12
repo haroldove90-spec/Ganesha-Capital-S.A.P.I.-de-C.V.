@@ -47,7 +47,7 @@ export const MOCK_TEST_QUESTIONS: Record<'Basic' | 'Intermediate' | 'Advanced', 
 // Fix: Add all missing mock data exports
 export const MOCK_CLIENTS: Client[] = [
   {
-    id: 1,
+    id: '1',
     name: 'Ana Torres',
     dob: '1990-05-15',
     age: 34,
@@ -63,7 +63,7 @@ export const MOCK_CLIENTS: Client[] = [
     accountStatus: 'Active',
   },
   {
-    id: 2,
+    id: '2',
     name: 'Carlos Gomez',
     dob: '1985-11-02',
     age: 38,
@@ -79,7 +79,7 @@ export const MOCK_CLIENTS: Client[] = [
     accountStatus: 'Active',
   },
   {
-    id: 3,
+    id: '3',
     name: 'Sofia Hernandez',
     dob: '1995-02-28',
     age: 29,
