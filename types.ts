@@ -8,6 +8,9 @@ export interface Client {
   gender: 'Male' | 'Female' | 'Other';
   email: string;
   city: string;
+  phone_number?: string | null;
+  address?: string | null;
+  birth_city?: string | null;
   financialKnowledge: 'Basic' | 'Intermediate' | 'Advanced';
   joinDate: string;
   lastInteraction: string;

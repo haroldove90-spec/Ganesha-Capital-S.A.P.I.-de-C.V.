@@ -2,7 +2,7 @@
 
 import React from 'react';
 import type { Client } from '../types';
-import { UserIcon, CakeIcon, MapPinIcon, SparklesIcon, CalendarDaysIcon, ChatBubbleLeftRightIcon, ShieldCheckIcon, AcademicCapIcon, ClipboardDocumentListIcon } from '@heroicons/react/24/outline';
+import { UserIcon, CakeIcon, MapPinIcon, SparklesIcon, CalendarDaysIcon, ChatBubbleLeftRightIcon, ShieldCheckIcon, AcademicCapIcon, ClipboardDocumentListIcon, PhoneIcon, HomeModernIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 
 interface ClientDetailProps {
   client: Client;
@@ -51,7 +51,10 @@ const ClientDetail: React.FC<ClientDetailProps> = ({ client }) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <DetailItem icon={UserIcon} label="Género" value={client.gender} />
             <DetailItem icon={CakeIcon} label="Edad" value={client.age} />
-            <DetailItem icon={MapPinIcon} label="Ciudad" value={client.city} />
+            <DetailItem icon={PhoneIcon} label="Teléfono" value={client.phone_number || 'No especificado'} />
+            <DetailItem icon={HomeModernIcon} label="Dirección" value={client.address || 'No especificado'} />
+            <DetailItem icon={MapPinIcon} label="Ciudad de Residencia" value={client.city} />
+            <DetailItem icon={GlobeAltIcon} label="Ciudad de Nacimiento" value={client.birth_city || 'No especificado'} />
             <DetailItem icon={CalendarDaysIcon} label="Fecha de Ingreso" value={client.joinDate} />
             <DetailItem icon={ChatBubbleLeftRightIcon} label="Última Interacción" value={client.lastInteraction} />
           </div>

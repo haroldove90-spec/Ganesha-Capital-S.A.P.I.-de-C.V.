@@ -8,9 +8,10 @@ interface HeaderProps {
     user: User | null;
     isViewingAsClient?: boolean;
     onToggleView?: () => void;
+    unreadNotificationsCount?: number;
 }
 
-const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user, isViewingAsClient, onToggleView }) => {
+const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user, isViewingAsClient, onToggleView, unreadNotificationsCount = 0 }) => {
     const userName = user?.user_metadata?.full_name || (userRole === 'admin' ? 'Admin Ganesha' : 'Cliente');
     const userEmail = user?.email || '';
 
@@ -26,8 +27,14 @@ const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user, isViewingAsCl
                     <h1 className="text-xl font-bold text-white ml-3">Ganesha Capital SAPI de CV</h1>
                 </div>
                 <div className="flex items-center space-x-4">
-                    <button className="p-2 rounded-full text-gray-300 hover:bg-white/10 hover:text-white">
+                    <button className="relative p-2 rounded-full text-gray-300 hover:bg-white/10 hover:text-white">
                         <BellIcon className="h-6 w-6" />
+                        {unreadNotificationsCount > 0 && (
+                           <span className="absolute top-1 right-1 flex h-3 w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                            </span>
+                        )}
                     </button>
                     <div className="flex items-center">
                          <UserCircleIcon className="h-10 w-10 text-white" />

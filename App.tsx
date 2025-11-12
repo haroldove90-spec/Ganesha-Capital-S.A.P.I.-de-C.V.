@@ -6,7 +6,7 @@ import Dashboard from './components/Dashboard';
 import ClientView from './components/ClientView';
 import Header from './components/Header';
 import Chatbot from './components/Chatbot';
-import { MOCK_CLIENTS } from './constants';
+import { MOCK_CLIENTS, MOCK_NOTIFICATIONS } from './constants';
 
 type UserRole = 'admin' | 'client';
 
@@ -91,6 +91,8 @@ function App() {
   // In a real app, you would fetch the client profile based on the session user's ID.
   const currentClient = MOCK_CLIENTS[0];
 
+  const unreadNotificationsCount = MOCK_NOTIFICATIONS.filter(n => !n.read).length;
+
   return (
     <div className={`${isLoggedIn ? 'bg-gray-100' : 'bg-primary'} min-h-screen font-sans`}>
       {!isLoggedIn ? (
@@ -103,6 +105,7 @@ function App() {
             user={session.user} 
             isViewingAsClient={adminViewAsClient}
             onToggleView={handleToggleAdminView}
+            unreadNotificationsCount={unreadNotificationsCount}
           />
           <main className="p-4 md:p-6">
             {userRole === 'admin' ? (

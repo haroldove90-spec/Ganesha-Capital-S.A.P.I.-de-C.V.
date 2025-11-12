@@ -61,6 +61,9 @@ export const MOCK_CLIENTS: Client[] = [
     role: 'Client',
     kycStatus: 'Verified',
     accountStatus: 'Active',
+    phone_number: '55-1234-5678',
+    address: 'Av. Insurgentes Sur 123, Roma Nte., 06700',
+    birth_city: 'Puebla',
   },
   {
     id: '2',
@@ -77,6 +80,9 @@ export const MOCK_CLIENTS: Client[] = [
     role: 'Client',
     kycStatus: 'Verified',
     accountStatus: 'Active',
+    phone_number: '33-9876-5432',
+    address: null,
+    birth_city: 'Guadalajara',
   },
   {
     id: '3',
@@ -93,6 +99,9 @@ export const MOCK_CLIENTS: Client[] = [
     role: 'Client',
     kycStatus: 'Pending',
     accountStatus: 'Active',
+    phone_number: null,
+    address: null,
+    birth_city: null,
   },
 ];
 
