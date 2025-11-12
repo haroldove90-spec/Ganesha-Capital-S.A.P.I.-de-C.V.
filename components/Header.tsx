@@ -1,14 +1,16 @@
 import React from 'react';
 import type { User } from '@supabase/supabase-js';
-import { ArrowLeftOnRectangleIcon, BellIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftOnRectangleIcon, BellIcon, UserCircleIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/outline';
 
 interface HeaderProps {
     userRole: 'admin' | 'client';
     onLogout: () => void;
     user: User | null;
+    isViewingAsClient?: boolean;
+    onToggleView?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user }) => {
+const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user, isViewingAsClient, onToggleView }) => {
     const userName = user?.user_metadata?.full_name || (userRole === 'admin' ? 'Admin Ganesha' : 'Cliente');
     const userEmail = user?.email || '';
 
@@ -34,6 +36,18 @@ const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user }) => {
                             <p className="text-xs text-gray-300">{userEmail}</p>
                         </div>
                     </div>
+                     {userRole === 'admin' && onToggleView && (
+                        <button
+                        onClick={onToggleView}
+                        className="flex items-center p-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                        title={isViewingAsClient ? "Volver a la vista de Administrador" : "Ver como Cliente"}
+                        >
+                        <ArrowsRightLeftIcon className="h-6 w-6" />
+                        <span className="ml-2 hidden lg:block text-sm font-medium">
+                            {isViewingAsClient ? "Vista Admin" : "Vista Cliente"}
+                        </span>
+                        </button>
+                    )}
                     <button 
                         onClick={onLogout}
                         className="flex items-center p-2 rounded-full text-gray-300 hover:bg-white/10 hover:text-white"
