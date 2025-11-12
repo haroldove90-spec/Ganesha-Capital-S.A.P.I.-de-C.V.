@@ -11,6 +11,7 @@ type UserRole = 'admin' | 'client';
 
 function App() {
   const [session, setSession] = useState<Session | null>(null);
+  const [userRole, setUserRole] = useState<UserRole>('client');
   const [loading, setLoading] = useState(true);
   const [initialAuthError, setInitialAuthError] = useState<string | null>(null);
   const [adminViewAsClient, setAdminViewAsClient] = useState(false);
@@ -34,23 +35,26 @@ function App() {
     }
     
     if (supabase) {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session);
-        setLoading(false); // Stop loading after session check
-      });
-
+      // Set up an auth state change listener.
       const {
         data: { subscription },
-      } = supabase.auth.onAuthStateChange((_event, session) => {
+      } = supabase.auth.onAuthStateChange(async (_event, session) => {
+        setLoading(true);
         setSession(session);
-        if (!session) {
-          // Reset admin view when logging out
+
+        if (session) {
+          // If a session exists, explicitly fetch the user data to get the most up-to-date role.
+          // This bypasses potential stale data in the session object.
+          const { data: { user } } = await supabase.auth.getUser();
+          const role = user?.user_metadata?.role ?? 'client';
+          setUserRole(role as UserRole);
+          setInitialAuthError(null);
+        } else {
+          // If no session, reset to default client state.
+          setUserRole('client');
           setAdminViewAsClient(false);
         }
-        // If a session is established, it means login was successful, so we can clear any initial error.
-        if(session) {
-          setInitialAuthError(null);
-        }
+        setLoading(false);
       });
 
       return () => subscription.unsubscribe();
@@ -62,7 +66,7 @@ function App() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-primary">
-        <svg className="animate-spin h-10 w-10 text-white" xmlns="http://www.w.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <svg className="animate-spin h-10 w-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
@@ -71,7 +75,6 @@ function App() {
   }
   
   const isLoggedIn = !!session;
-  const userRole: UserRole = session?.user?.user_metadata?.role ?? 'client';
 
   const handleLogout = async () => {
     if (supabase) {

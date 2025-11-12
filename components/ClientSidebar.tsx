@@ -7,6 +7,7 @@ import {
   SparklesIcon,
   CalendarDaysIcon,
   UserCircleIcon,
+  ClipboardDocumentListIcon,
 } from '@heroicons/react/24/outline';
 import type { ClientModuleView } from '../types';
 
@@ -18,6 +19,7 @@ interface ClientSidebarProps {
 const ClientSidebar: React.FC<ClientSidebarProps> = ({ currentView, setView }) => {
   const navItems = [
     { id: 'dashboard' as ClientModuleView, name: 'Resumen', icon: ChartPieIcon },
+    { id: 'prevision' as ClientModuleView, name: 'Previsión', icon: ClipboardDocumentListIcon },
     { id: 'planes' as ClientModuleView, name: 'Planes de Previsión', icon: CircleStackIcon },
     { id: 'movimientos' as ClientModuleView, name: 'Movimientos', icon: ArrowsRightLeftIcon },
     { id: 'herramientas' as ClientModuleView, name: 'Herramientas', icon: SparklesIcon },

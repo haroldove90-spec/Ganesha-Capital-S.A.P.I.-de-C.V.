@@ -18,10 +18,10 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
   const navItems = [
     { id: 'analisis' as CrmView, name: 'Análisis', icon: ChartBarIcon },
-    { id: 'usuarios' as CrmView, name: 'Usuarios', icon: UsersIcon },
+    { id: 'usuarios' as CrmView, name: 'Clientes', icon: UsersIcon },
+    { id: 'comunicacion' as CrmView, name: 'Comunicaciones', icon: ChatBubbleLeftRightIcon },
     { id: 'productos' as CrmView, name: 'Productos', icon: CircleStackIcon },
     { id: 'movimientos' as CrmView, name: 'Movimientos', icon: ArrowsRightLeftIcon },
-    { id: 'comunicacion' as CrmView, name: 'Comunicación', icon: ChatBubbleLeftRightIcon },
     { id: 'educacion' as CrmView, name: 'Educación', icon: AcademicCapIcon },
     { id: 'seguridad' as CrmView, name: 'Seguridad', icon: ShieldCheckIcon },
   ];
