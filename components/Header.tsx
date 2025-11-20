@@ -1,6 +1,6 @@
 import React from 'react';
 import type { User } from '@supabase/supabase-js';
-import { ArrowLeftOnRectangleIcon, BellIcon, UserCircleIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftOnRectangleIcon, BellIcon, UserCircleIcon, ArrowsRightLeftIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 
 interface HeaderProps {
     userRole: 'admin' | 'client';
@@ -9,11 +9,12 @@ interface HeaderProps {
     isViewingAsClient?: boolean;
     onToggleView?: () => void;
     unreadNotificationsCount?: number;
+    onRoleSwitch?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user, isViewingAsClient, onToggleView, unreadNotificationsCount = 0 }) => {
+const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user, isViewingAsClient, onToggleView, unreadNotificationsCount = 0, onRoleSwitch }) => {
     const userName = user?.user_metadata?.full_name || (userRole === 'admin' ? 'Admin Ganesha' : 'Cliente');
-    const userEmail = user?.email || '';
+    const userEmail = user?.email || (userRole === 'admin' ? 'admin@ganesha.com' : 'cliente@example.com');
 
     return (
         <header className="bg-primary shadow-md sticky top-0 z-40 h-24">
@@ -40,12 +41,24 @@ const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user, isViewingAsCl
                          <UserCircleIcon className="h-10 w-10 text-white" />
                          <div className="ml-3 hidden md:block">
                             <p className="text-sm font-medium text-white">
-                                {userRole === 'admin' && <span className="font-bold text-secondary">Admin: </span>}
+                                {userRole === 'admin' ? <span className="font-bold text-secondary">Admin: </span> : <span className="font-bold text-secondary">Cliente: </span>}
                                 {userName}
                             </p>
                             <p className="text-xs text-gray-300">{userEmail}</p>
                         </div>
                     </div>
+                     {onRoleSwitch && (
+                        <button
+                        onClick={onRoleSwitch}
+                        className="flex items-center p-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                        title="Cambiar Rol (Demo)"
+                        >
+                        <UserGroupIcon className="h-6 w-6" />
+                        <span className="ml-2 hidden lg:block text-sm font-medium">
+                            {userRole === 'admin' ? "Ser Cliente" : "Ser Admin"}
+                        </span>
+                        </button>
+                    )}
                      {userRole === 'admin' && onToggleView && (
                         <button
                         onClick={onToggleView}

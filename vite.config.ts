@@ -1,12 +1,13 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
+// Fix: Import `cwd` from the 'process' module to resolve TypeScript type errors.
+import { cwd } from 'process';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
-  // FIX: Cast 'process' to 'any' to resolve a TypeScript error where 'cwd' is not found on the 'Process' type. This is likely due to missing Node.js type definitions in the project configuration.
-  const env = loadEnv(mode, (process as any).cwd(), '');
+  const env = loadEnv(mode, cwd(), '');
 
   return {
     define: {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { supabase } from './services/supabase';
-import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import ClientView from './components/ClientView';
 import Header from './components/Header';
@@ -13,72 +12,26 @@ type UserRole = 'admin' | 'client';
 function App() {
   const [session, setSession] = useState<Session | null>(null);
   const [userRole, setUserRole] = useState<UserRole>('client');
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true); // Ya no es necesario al omitir la autenticación
   const [initialAuthError, setInitialAuthError] = useState<string | null>(null);
   const [adminViewAsClient, setAdminViewAsClient] = useState(false);
 
   useEffect(() => {
-    // Check for auth errors in the URL hash on initial load.
-    const hash = window.location.hash;
-    if (hash.includes('error=access_denied')) {
-      const params = new URLSearchParams(hash.substring(1));
-      const errorDescription = params.get('error_description');
-      if (errorDescription) {
-        // Translate common Supabase errors for better UX
-        if (errorDescription.includes('invalid or has expired')) {
-          setInitialAuthError('El enlace de confirmación ha expirado o ya fue utilizado. Por favor, intenta iniciar sesión o regístrate de nuevo.');
-        } else {
-          setInitialAuthError('No se pudo completar la autenticación. Por favor, intenta de nuevo.');
-        }
-      }
-      // Clean up the URL hash to avoid showing the error on refresh.
-      window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
-    }
-    
-    if (supabase) {
-      // Set up an auth state change listener.
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session);
-
-        if (session) {
-          // The session object from the listener has the most up-to-date user data.
-          // No need for an extra API call to getUser().
-          const role = session.user.user_metadata?.role ?? 'client';
-          setUserRole(role as UserRole);
-          setInitialAuthError(null);
-        } else {
-          // If no session, reset to default client state.
-          setUserRole('client');
-          setAdminViewAsClient(false);
-        }
-        setLoading(false);
-      });
-
-      return () => subscription.unsubscribe();
-    } else {
-      setLoading(false); // Supabase not available, stop loading.
-    }
+    // La lógica de autenticación se ha desactivado temporalmente para fines de demostración.
+    // El rol del usuario se puede cambiar con el nuevo botón en el encabezado.
+    // Para reactivar la autenticación, restaura el contenido original de useEffect.
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-primary">
-        <svg className="animate-spin h-10 w-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-      </div>
-    );
-  }
-  
-  const isLoggedIn = !!session;
+  // El bloque de carga se elimina ya que la autenticación se omite.
 
   const handleLogout = async () => {
     if (supabase) {
       await supabase.auth.signOut();
     }
+    // Restablecer manualmente el estado ya que el listener de autenticación está desactivado
+    setSession(null);
+    setUserRole('client');
+    setAdminViewAsClient(false);
   };
 
   const handleToggleAdminView = () => {
@@ -86,37 +39,45 @@ function App() {
       setAdminViewAsClient(prev => !prev);
     }
   };
+
+  const handleRoleSwitch = () => {
+    setUserRole(prevRole => {
+        const newRole = prevRole === 'admin' ? 'client' : 'admin';
+        // Al cambiar a cliente, nos aseguramos de no estar en modo "admin viendo como cliente".
+        if (newRole === 'client') {
+            setAdminViewAsClient(false);
+        }
+        return newRole;
+    });
+  };
   
-  // For demonstration, we'll use the first mock client.
-  // In a real app, you would fetch the client profile based on the session user's ID.
+  // Para la demostración, usaremos el primer cliente de muestra.
+  // En una aplicación real, obtendrías el perfil del cliente basado en el ID del usuario de la sesión.
   const currentClient = MOCK_CLIENTS[0];
 
   const unreadNotificationsCount = MOCK_NOTIFICATIONS.filter(n => !n.read).length;
 
   return (
-    <div className={`${isLoggedIn ? 'bg-gray-100' : 'bg-primary'} min-h-screen font-sans`}>
-      {!isLoggedIn ? (
-        <Login initialAuthError={initialAuthError} />
-      ) : (
-        <>
-          <Header 
-            userRole={userRole} 
-            onLogout={handleLogout} 
-            user={session.user} 
-            isViewingAsClient={adminViewAsClient}
-            onToggleView={handleToggleAdminView}
-            unreadNotificationsCount={unreadNotificationsCount}
-          />
-          <main className="p-4 md:p-6">
-            {userRole === 'admin' ? (
-              adminViewAsClient ? <ClientView /> : <Dashboard />
-            ) : (
-              <ClientView />
-            )}
-          </main>
-          {(userRole === 'client' || (userRole === 'admin' && adminViewAsClient)) && <Chatbot client={currentClient} />}
-        </>
-      )}
+    <div className="bg-gray-100 min-h-screen font-sans">
+      <>
+        <Header 
+          userRole={userRole} 
+          onLogout={handleLogout} 
+          user={session?.user ?? null} 
+          isViewingAsClient={adminViewAsClient}
+          onToggleView={handleToggleAdminView}
+          unreadNotificationsCount={unreadNotificationsCount}
+          onRoleSwitch={handleRoleSwitch}
+        />
+        <main className="p-4 md:p-6">
+          {userRole === 'admin' ? (
+            adminViewAsClient ? <ClientView /> : <Dashboard />
+          ) : (
+            <ClientView />
+          )}
+        </main>
+        {(userRole === 'client' || (userRole === 'admin' && adminViewAsClient)) && <Chatbot client={currentClient} />}
+      </>
     </div>
   );
 }

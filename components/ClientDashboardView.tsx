@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../services/supabase';
-import type { Client, EducationalTopic } from '../types';
-import { EDUCATIONAL_TOPICS, MOCK_PORTFOLIO_SUMMARY, MOCK_INVESTMENTS, MOCK_PORTFOLIO_HISTORY, MOCK_NOTIFICATIONS, MOCK_FINANCIAL_GOALS } from '../constants';
+import React, { useState } from 'react';
+import type { EducationalTopic } from '../types';
+import { EDUCATIONAL_TOPICS, MOCK_PORTFOLIO_SUMMARY, MOCK_INVESTMENTS, MOCK_PORTFOLIO_HISTORY, MOCK_NOTIFICATIONS, MOCK_FINANCIAL_GOALS, MOCK_CLIENTS } from '../constants';
 import EducationalModal from './EducationalModal';
 import FinancialTestModal from './FinancialTestModal';
 import PlanModal from './PlanModal';
@@ -17,8 +16,7 @@ import {
     CalendarDaysIcon,
     AcademicCapIcon,
     CalculatorIcon,
-    FlagIcon,
-    ArrowPathIcon
+    FlagIcon
 } from '@heroicons/react/24/outline';
 
 
@@ -41,9 +39,7 @@ const DashboardKpiCard: React.FC<{ icon: React.ElementType, title: string, value
 );
 
 const ClientDashboardView: React.FC = () => {
-    const [client, setClient] = useState<Client | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const client = MOCK_CLIENTS[0]; // Use mock client data for demo purposes
 
     const [selectedTopic, setSelectedTopic] = useState<EducationalTopic | null>(null);
     const [isTestModalOpen, setIsTestModalOpen] = useState(false);
@@ -51,58 +47,11 @@ const ClientDashboardView: React.FC = () => {
     const [testLevel] = useState<'Basic' | 'Intermediate' | 'Advanced'>('Basic');
 
 
-    useEffect(() => {
-        const fetchClientData = async () => {
-            setLoading(true);
-            setError(null);
-            if (!supabase) {
-                setError("Servicio de base de datos no disponible.");
-                setLoading(false);
-                return;
-            }
-
-            const { data: { user } } = await supabase.auth.getUser();
-
-            if (user) {
-                const { data, error } = await supabase
-                    .from('clients')
-                    .select('*')
-                    .eq('id', user.id)
-                    .single();
-
-                if (error) {
-                    setError('No se pudo cargar tu información. Por favor, intenta de nuevo más tarde.');
-                    console.error("Error fetching client data:", error);
-                } else {
-                    setClient(data);
-                }
-            } else {
-                setError('No se pudo identificar al usuario.');
-            }
-            setLoading(false);
-        };
-
-        fetchClientData();
-    }, []);
-
     // Mock data for other sections
     const portfolio = MOCK_PORTFOLIO_SUMMARY;
     const investments = MOCK_INVESTMENTS;
     const notifications = MOCK_NOTIFICATIONS;
     const goals = MOCK_FINANCIAL_GOALS;
-
-    if (loading) {
-        return (
-            <div className="flex justify-center items-center h-full">
-                <ArrowPathIcon className="h-8 w-8 text-primary animate-spin" />
-                <span className="ml-3 text-gray-600">Cargando tu resumen...</span>
-            </div>
-        );
-    }
-
-    if (error || !client) {
-        return <div className="text-center p-8 text-red-500">{error || 'No se encontró la información del cliente.'}</div>;
-    }
     
     const welcomeMessage = client.gender === 'Female' ? 'Bienvenida' : 'Bienvenido';
 

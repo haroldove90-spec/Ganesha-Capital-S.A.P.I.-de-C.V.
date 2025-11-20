@@ -1,51 +1,23 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { supabase } from '../services/supabase';
+import React, { useState, useMemo } from 'react';
+import { MOCK_CLIENTS } from '../constants';
 import type { Client } from '../types';
 import ClientTable from './ClientTable';
 import ClientDetail from './ClientDetail';
 import RegisterClientModal from './RegisterClientModal';
-import { UserPlusIcon, ArrowPathIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { UserPlusIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 const UserManagementView: React.FC = () => {
-  const [clients, setClients] = useState<Client[]>([]);
-  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [clients, setClients] = useState<Client[]>(MOCK_CLIENTS);
+  const [selectedClient, setSelectedClient] = useState<Client | null>(MOCK_CLIENTS.length > 0 ? MOCK_CLIENTS[0] : null);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [kycStatusFilter, setKycStatusFilter] = useState('all');
   const [accountStatusFilter, setAccountStatusFilter] = useState('all');
 
-  const fetchClients = async () => {
-    setLoading(true);
-    setError(null);
-
-    if (!supabase) {
-      setError("El servicio de base de datos no está disponible.");
-      setLoading(false);
-      return;
-    }
-    const { data, error } = await supabase.from('clients').select('*');
-
-    if (error) {
-      setError(error.message);
-      console.error("Error fetching clients:", error);
-    } else {
-      setClients(data);
-      if (data && data.length > 0 && !selectedClient) {
-        setSelectedClient(data[0]);
-      }
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchClients();
-  }, []);
-
   const handleClientRegistered = () => {
     setIsRegisterModalOpen(false);
-    fetchClients(); // Refetch list to show the new client
+    // En una aplicación real, se volverían a obtener los clientes.
+    // Para esta demostración, simplemente cerramos el modal.
   };
 
   const filteredClients = useMemo(() => {
@@ -64,19 +36,6 @@ const UserManagementView: React.FC = () => {
 
 
   const renderContent = () => {
-    if (loading) {
-      return (
-        <div className="flex justify-center items-center h-full">
-          <ArrowPathIcon className="h-8 w-8 text-primary animate-spin" />
-          <span className="ml-3 text-gray-600">Cargando clientes...</span>
-        </div>
-      );
-    }
-
-    if (error) {
-      return <div className="text-center p-8 text-red-500">Error al cargar clientes: {error}</div>;
-    }
-
     return (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
         <div className="lg:col-span-1 bg-white p-4 rounded-lg shadow-md border border-gray-200 overflow-y-auto">

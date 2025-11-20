@@ -27,7 +27,7 @@ export const getChatbotResponse = async (prompt: string): Promise<string> => {
         }
     });
 
-    return response.text;
+    return response.text ?? "Lo siento, no pude generar una respuesta. Por favor, intenta de nuevo.";
   } catch (error) {
     console.error("Error fetching response from Gemini API:", error);
     return "Lo siento, estoy teniendo problemas para conectarme en este momento. Por favor, inténtalo de nuevo más tarde.";
@@ -66,7 +66,10 @@ export const generateTestQuestions = async (level: 'Basic' | 'Intermediate' | 'A
             }
         });
         
-        const jsonText = response.text.trim();
+        const jsonText = response.text?.trim();
+        if (!jsonText) {
+             throw new Error("Empty response from Gemini API");
+        }
         const questions = JSON.parse(jsonText);
         // Ensure options are shuffled and IDs are sequential
         return questions.map((q: Omit<TestQuestion, 'id'>, index: number) => ({
@@ -129,7 +132,10 @@ export const evaluateTestAnswers = async (answers: UserAnswer[]) => {
             }
         });
 
-        const jsonText = response.text.trim();
+        const jsonText = response.text?.trim();
+        if (!jsonText) {
+            throw new Error("Empty response from Gemini API for test evaluation.");
+        }
         return JSON.parse(jsonText);
 
     } catch (error) {

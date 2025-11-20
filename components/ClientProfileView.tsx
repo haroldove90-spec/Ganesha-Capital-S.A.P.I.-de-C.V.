@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../services/supabase';
 import type { Client } from '../types';
+import { MOCK_CLIENTS } from '../constants';
 import { 
     UserIcon, 
     CakeIcon, 
@@ -65,29 +66,11 @@ const ClientProfileView: React.FC = () => {
     
     useEffect(() => {
         const fetchClientProfile = async () => {
-            if (!supabase) {
-                setFetchError("Servicio de base de datos no disponible.");
-                setLoading(false);
-                return;
-            }
-
-            const { data: { user } } = await supabase.auth.getUser();
-
-            if (user) {
-                const { data, error } = await supabase
-                    .from('clients')
-                    .select('*')
-                    .eq('id', user.id)
-                    .single();
-
-                if (error) {
-                    setFetchError('No se pudo cargar tu perfil. Por favor, intenta de nuevo más tarde.');
-                    console.error("Error fetching client profile:", error);
-                } else {
-                    setClient(data);
-                }
+            // For this demo, we'll directly use mock data to ensure the view is populated.
+            if (MOCK_CLIENTS.length > 0) {
+                setClient(MOCK_CLIENTS[0]);
             } else {
-                setFetchError('No se pudo identificar al usuario.');
+                setFetchError('No hay datos de cliente de muestra disponibles.');
             }
             setLoading(false);
         };
@@ -115,7 +98,10 @@ const ClientProfileView: React.FC = () => {
     };
 
     const handleProfileSave = async () => {
-        if (!client || !supabase) return;
+        if (!client || !supabase) {
+            showNotification('La función de guardado no está disponible en el modo de demostración.', 'error');
+            return;
+        }
 
         // 1. Update public.clients table
         const { data: updatedClientData, error: clientError } = await supabase
@@ -188,7 +174,10 @@ const ClientProfileView: React.FC = () => {
             return;
         }
         
-        if (!supabase) return;
+        if (!supabase) {
+            showNotification('La función de cambio de contraseña no está disponible en el modo de demostración.', 'error');
+            return;
+        };
 
         const { error } = await supabase.auth.updateUser({ password: passwordData.newPassword });
 

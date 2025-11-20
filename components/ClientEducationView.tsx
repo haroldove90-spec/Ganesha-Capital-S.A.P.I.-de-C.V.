@@ -1,40 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../services/supabase';
+import React, { useState } from 'react';
 import type { EducationalTopic } from '../types';
 import EducationalModule from './EducationalModule';
 import EducationalModal from './EducationalModal';
 import FinancialTestModal from './FinancialTestModal';
-import { ArrowPathIcon } from '@heroicons/react/24/outline';
+import { EDUCATIONAL_TOPICS } from '../constants';
 
 const ClientEducationView: React.FC = () => {
-    const [topics, setTopics] = useState<EducationalTopic[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [selectedTopic, setSelectedTopic] = useState<EducationalTopic | null>(null);
     const [isTestModalOpen, setIsTestModalOpen] = useState(false);
 
-    useEffect(() => {
-        const fetchTopics = async () => {
-            if (!supabase) {
-                setError("No se pudo conectar a la base de datos para cargar el contenido educativo.");
-                setLoading(false);
-                return;
-            }
-            const { data, error } = await supabase
-                .from('educational_topics')
-                .select('*');
-
-            if (error) {
-                setError(error.message);
-                console.error(error);
-            } else {
-                setTopics(data as EducationalTopic[]);
-            }
-            setLoading(false);
-        };
-
-        fetchTopics();
-    }, []);
+    const topics = EDUCATIONAL_TOPICS;
 
     const topicsByCat: Record<string, EducationalTopic[]> = topics.reduce((acc, topic) => {
         if (!acc[topic.category]) {
@@ -60,16 +35,7 @@ const ClientEducationView: React.FC = () => {
                     </button>
                 </div>
                 
-                {loading && (
-                    <div className="flex justify-center items-center p-10">
-                        <ArrowPathIcon className="h-8 w-8 text-primary animate-spin" />
-                        <span className="ml-3 text-gray-600">Cargando contenido...</span>
-                    </div>
-                )}
-
-                {error && <p className="text-center text-red-500">Error al cargar el contenido: {error}</p>}
-                
-                {!loading && !error && Object.entries(topicsByCat).map(([category, topics]) => (
+                {Object.entries(topicsByCat).map(([category, topics]) => (
                     <div key={category}>
                         <h2 className="text-xl font-bold text-gray-800 mb-4">{category}</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
