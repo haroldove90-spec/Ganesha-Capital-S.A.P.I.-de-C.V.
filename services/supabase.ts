@@ -4,8 +4,8 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 // NOTA: Para fines de demostración, las credenciales de Supabase se proporcionan aquí.
 // En un entorno de producción, estas deben almacenarse de forma segura en variables de entorno
 // y acceder a ellas a través de `process.env.VITE_SUPABASE_URL` y `process.env.VITE_SUPABASE_ANON_KEY`.
-const supabaseUrl = 'https://ztljxzfbgvujoetnkdzc.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0bGp4emZiZ3Z1am9ldG5rZHpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIzNDM5MzgsImV4cCI6MjA3NzkxOTkzOH0.gTp2j38h2ATgylDKPzbYtCc13OeahFFjK56zGFUl4ug';
+const supabaseUrl = 'https://cspnkekodmaqexznksjs.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzcG5rZWtvZG1hcWV4em5rc2pzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ2MzQ1ODUsImV4cCI6MjA4MDIxMDU4NX0.Kvi9XN8M7iSIK4jKOPeZVvVPu5PyaLbf6vM2OTdj17s';
 
 let supabase: SupabaseClient | null = null;
 
