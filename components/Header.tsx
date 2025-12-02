@@ -21,11 +21,10 @@ const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user, isViewingAsCl
             <div className="mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
                 <div className="flex items-center">
                     <img 
-                        src="https://appdesignmex.com/libertadfinanciera.png" 
-                        alt="Ganesha Capital SAPI de CV Logo" 
-                        className="h-12 w-auto"
+                        src="https://ganeshacapital.com.mx/wp-content/uploads/2025/11/Ganesha-Logo-Elefante-transparente.png" 
+                        alt="Ganesha Capital Logo" 
+                        className="h-16 w-auto"
                     />
-                    <h1 className="text-xl font-bold text-white ml-3">Ganesha Capital SAPI de CV</h1>
                 </div>
                 <div className="flex items-center space-x-4">
                     <button className="relative p-2 rounded-full text-gray-300 hover:bg-white/10 hover:text-white">

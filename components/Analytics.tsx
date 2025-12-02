@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, PieChart, Pie, Cell, LineChart, Line, CartesianGrid } from 'recharts';
 import { SALES_FUNNEL_DATA } from '../constants';
@@ -26,7 +27,7 @@ const SalesFunnelChart: React.FC = () => {
                     <YAxis dataKey="name" type="category" width={80} />
                     <Tooltip wrapperClassName="rounded-md shadow-lg border-none" contentStyle={{backgroundColor: 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(5px)'}}/>
                     <Legend />
-                    <Bar dataKey="value" fill="#132D48" barSize={30} />
+                    <Bar dataKey="value" fill="#010101" barSize={30} />
                 </BarChart>
             </ResponsiveContainer>
         </div>
@@ -39,7 +40,7 @@ const ClientKnowledgeChart: React.FC = () => {
         { name: 'Intermedio', value: 45 },
         { name: 'Avanzado', value: 30 },
     ];
-    const COLORS = ['#BA933D', '#132D48', '#5e768e'];
+    const COLORS = ['#B78335', '#010101', '#5e768e'];
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 h-96">
@@ -88,7 +89,7 @@ const UserGrowthChart: React.FC = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="clientes" stroke="#132D48" strokeWidth={2} activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="clientes" stroke="#010101" strokeWidth={2} activeDot={{ r: 8 }} />
                 </LineChart>
             </ResponsiveContainer>
         </div>

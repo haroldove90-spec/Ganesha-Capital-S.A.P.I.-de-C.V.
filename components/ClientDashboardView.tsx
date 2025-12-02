@@ -90,8 +90,8 @@ const ClientDashboardView: React.FC = () => {
                         <AreaChart data={MOCK_PORTFOLIO_HISTORY} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                              <defs>
                                 <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#132D48" stopOpacity={0.8}/>
-                                <stop offset="95%" stopColor="#132D48" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#010101" stopOpacity={0.8}/>
+                                <stop offset="95%" stopColor="#010101" stopOpacity={0}/>
                                 </linearGradient>
                             </defs>
                             <CartesianGrid strokeDasharray="3 3" />
@@ -99,7 +99,7 @@ const ClientDashboardView: React.FC = () => {
                             <YAxis stroke="gray" tickFormatter={(value) => `$${Number(value) / 1000}k`} />
                             <Tooltip formatter={(value: number) => formatCurrency(value)} />
                             <Legend />
-                            <Area type="monotone" dataKey="value" name="Valor del Portafolio" stroke="#132D48" fillOpacity={1} fill="url(#colorValue)" />
+                            <Area type="monotone" dataKey="value" name="Valor del Portafolio" stroke="#010101" fillOpacity={1} fill="url(#colorValue)" />
                         </AreaChart>
                     </ResponsiveContainer>
                 </div>

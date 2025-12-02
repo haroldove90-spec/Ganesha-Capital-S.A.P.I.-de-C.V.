@@ -105,14 +105,11 @@ const Login: React.FC<LoginProps> = ({ initialAuthError }) => {
             <div className="w-full max-w-sm p-8 space-y-8">
                 <div className="text-center">
                      <img 
-                        src="https://appdesignmex.com/libertadfinanciera.png" 
-                        alt="Ganesha Capital SAPI de CV Logo" 
-                        className="mx-auto h-24 w-auto"
+                        src="https://ganeshacapital.com.mx/wp-content/uploads/2025/11/Ganesha-Logo-Elefante-transparente.png" 
+                        alt="Ganesha Capital Logo" 
+                        className="mx-auto h-28 w-auto"
                      />
-                    <h2 className="mt-6 text-3xl font-extrabold text-white">
-                        Ganesha Capital SAPI de CV
-                    </h2>
-                    <p className="mt-2 text-sm text-gray-300">
+                    <p className="mt-6 text-sm text-gray-300">
                         {isLoginView ? 'Toma el control de tu futuro financiero.' : 'Crea tu cuenta para comenzar.'}
                     </p>
                 </div>
