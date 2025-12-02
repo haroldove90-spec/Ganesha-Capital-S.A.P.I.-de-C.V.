@@ -33,9 +33,6 @@ const ClientSidebar: React.FC<ClientSidebarProps> = ({ currentView, setView }) =
       fixed bottom-0 left-0 right-0 z-30 bg-primary shadow-[0_-2px_5px_rgba(0,0,0,0.1)]
       md:relative md:bg-primary md:p-4 md:rounded-lg md:shadow-md md:w-64 flex md:flex-col justify-start
     ">
-       <div className="hidden md:flex flex-col items-center justify-center p-4 mb-4 border-b border-white/10">
-          <img src="https://ganeshacapital.com.mx/wp-content/uploads/2025/11/Ganesha-Logo-Elefante-transparente.png" alt="Ganesha Capital Logo" className="h-20 w-auto" />
-      </div>
       <nav className="w-full">
         <ul className="flex flex-row justify-around p-2 md:flex-col md:gap-2 md:p-0">
           {navItems.map(item => (
