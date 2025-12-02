@@ -17,13 +17,13 @@ const Header: React.FC<HeaderProps> = ({ userRole, onLogout, user, isViewingAsCl
     const userEmail = user?.email || (userRole === 'admin' ? 'admin@ganesha.com' : 'cliente@example.com');
 
     return (
-        <header className="bg-primary shadow-md sticky top-0 z-40 h-24">
+        <header className="bg-primary shadow-md sticky top-0 z-40 h-16 md:h-24">
             <div className="mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
                 <div className="flex items-center">
                     <img 
                         src="https://ganeshacapital.com.mx/wp-content/uploads/2025/11/Ganesha-Logo-Elefante-transparente.png" 
                         alt="Ganesha Capital Logo" 
-                        className="h-16 w-auto"
+                        className="h-12 md:h-16 w-auto"
                     />
                 </div>
                 <div className="flex items-center space-x-4">
